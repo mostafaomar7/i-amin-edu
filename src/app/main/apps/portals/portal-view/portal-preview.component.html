@@ -1,0 +1,36 @@
+<div class="content-wrapper container-xxl p-0">
+  <div class="content-body">
+    <section class="gate-preview-wrapper">
+      <div class="row gate-preview">
+        <!-- Invoice -->
+        <div class="col-xl-12 col-md-8 col-12 printRef">
+          <div class="card gate-preview-card">
+            <div class="card-body gate-padding pb-0">
+              <div class="mt-md-0 mt-2">
+                <h4 class="gate-title">
+                  Gate
+                  <hr class="gate-spacing" />
+
+                  <span class="gate-number">#{{ apiData.id }}</span>
+                </h4>
+                <div class="gate-date-wrapper">
+                  <p class="gate-date-title">Gate English Name:</p>
+                  <p class="gate-date">{{apiData }}</p>
+                </div>
+                <div class="gate-date-wrapper">
+                  <p class="gate-date-title">Gate Arabic Name:</p>
+                  <p class="gate-date">{{apiData }}</p>
+                </div>
+                <div class="gate-date-wrapper">
+                  <p class="gate-date-title">Educational Stage:</p>
+                  <p class="gate-date">{{ apiData.dueDate }}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+</div>

@@ -1,0 +1,165 @@
+<!-- Screen Header -->
+<div class="card">
+  <h5 class="card-header">{{ "ADD_COURSE" | translate }}</h5>
+</div>
+
+<div *ngIf="isLoading" class="spinner-grow" role="status">
+  <span class="sr-only">{{ "LOADING" | translate }}</span>
+</div>
+
+<!-- Add Course Form -->
+<form class="card p-4" *ngIf="!isLoading" [formGroup]="courseForm" (ngSubmit)="onSubmit()">
+  <div class="row">
+
+    <!-- Title -->
+    <div class="form-group col-md-6 col-12">
+      <label for="name">{{ "COURSENAME" | translate }}</label>
+      <input type="text" id="name" class="form-control" formControlName="name" required />
+      <small *ngIf="courseForm.get('name').hasError('required') && courseForm.get('name').touched"
+        class="form-text text-danger">
+        {{ "REQUIRED_FIELD" | translate }}
+      </small>
+    </div>
+
+    <!-- Duration -->
+    <div class="form-group col-md-6 col-12">
+      <label for="duration">{{ "Duration" | translate }}</label>
+      <input type="number" id="duration" class="form-control" formControlName="duration" required />
+      <small *ngIf="courseForm.get('duration').hasError('required') && courseForm.get('duration').touched"
+        class="form-text text-danger">
+        {{ "REQUIRED_FIELD" | translate }}
+      </small>
+    </div>
+
+    <!-- Info SubTitle -->
+    <div class="form-group col-12">
+      <label for="info">{{ "info" | translate }}</label>
+      <textarea id="info" class="form-control" formControlName="info" rows="2" required></textarea>
+      <small *ngIf="courseForm.get('info').hasError('required') && courseForm.get('info').touched"
+        class="form-text text-danger">
+        {{ "REQUIRED_FIELD" | translate }}
+      </small>
+    </div>
+
+    <!-- Price -->
+    <div class="form-group col-md-6 col-12">
+      <label for="price">{{ "price" | translate }}</label>
+      <input type="number" id="price" class="form-control" formControlName="price" required />
+      <small *ngIf="courseForm.get('price').hasError('required') && courseForm.get('price').touched"
+        class="form-text text-danger">
+        {{ "REQUIRED_FIELD" | translate }}
+      </small>
+    </div>
+
+    <!-- Discount -->
+    <div class="form-group col-md-6 col-12">
+      <label for="discount">{{ "discount" | translate }}</label>
+      <input type="number" id="discount" class="form-control" formControlName="discount" required />
+      <small *ngIf="courseForm.get('discount').hasError('required') && courseForm.get('discount').touched"
+        class="form-text text-danger">
+        {{ "REQUIRED_FIELD" | translate }}
+      </small>
+    </div>
+
+    <!-- Educational Subject -->
+    <div class="form-group col-md-6 col-12">
+      <label for="subjectId">{{ "SUBJECT" | translate }}</label>
+      <select id="subjectId" class="form-control" formControlName="subjectId" (change)="onSubjectChange()">
+        <option *ngFor="let subject of subjects" [value]="subject.id">{{ subject.nameEn }}</option>
+      </select>
+      <small *ngIf="courseForm.get('subjectId').hasError('required') && courseForm.get('subjectId').touched"
+        class="form-text text-danger">
+        {{ 'REQUIRED_FIELD' | translate }}
+      </small>
+    </div>
+
+    <!-- Educational Portal -->
+    <div class="form-group col-md-6 col-12">
+      <label for="educationalPortalId">{{ "PORTAL" | translate }}</label>
+      <select id="educationalPortalId" class="form-control" formControlName="educationalPortalId"
+        (change)="onGateChange('portal', $event)">
+        <option *ngFor="let portal of educationalPoratals" [value]="portal.id">{{ portal.nameEn }}</option>
+      </select>
+      <small
+        *ngIf="courseForm.get('educationalPortalId').hasError('required') && courseForm.get('educationalPortalId').touched"
+        class="form-text text-danger">
+        {{ 'REQUIRED_FIELD' | translate }}
+      </small>
+    </div>
+
+    <!-- Educational Stage -->
+    <div class="form-group col-md-6 col-12">
+      <label for="stageId">{{ "Stage" | translate }}</label>
+      <select id="stageId" class="form-control" formControlName="stageId" (change)="onGateChange('stage', $event)">
+        <option *ngFor="let item of stages" [value]="item.id">{{ item.name }}</option>
+      </select>
+      <small *ngIf="courseForm.get('stageId').hasError('required') && courseForm.get('stageId').touched"
+        class="form-text text-danger">
+        {{ 'REQUIRED_FIELD' | translate }}
+      </small>
+    </div>
+
+    <!-- Course Teacher -->
+    <div class="form-group col-md-6 col-12" *ngIf="userType !== 3">
+      <label for="teacherId">{{ "Instructor" | translate }}</label>
+      <select id="teacherId" class="form-control" formControlName="teacherId" (change)="onGateChange('teacher', $event)">
+        <option *ngFor="let item of teachers" [value]="item.id">{{ item.user.firstName }} {{item.user.lastName}}</option>
+      </select>
+      <small *ngIf="courseForm.get('teacherId').hasError('required') && courseForm.get('teacherId').touched"
+        class="form-text text-danger">
+        {{ 'REQUIRED_FIELD' | translate }}
+      </small>
+    </div>
+
+
+
+    <!-- Upload File -->
+    <div class="form-group col-md-6 col-12">
+      <fieldset class="form-group">
+        <label for="file-upload-single">{{ 'SELECT_IMAGE' | translate }}</label>
+        <div class="custom-file">
+          <input type="file" accept="image/*" class="custom-file-input" (change)="onFileSelected($event)"
+            id="file-upload-single" />
+          <label class="custom-file-label">{{ 'CHOOSE_FILE' | translate }}</label>
+        </div>
+      </fieldset>
+      <div *ngIf="selectedFile">
+        <img [src]="selectedFile || 'coverImage'" alt="{{ 'IMAGE' | translate }}"
+          style="width: 240px; height: 200px;" />
+        <button type="button" class="btn btn-danger btn-sm round m-1" rippleEffect (click)="deleteImage()">
+          <i class="feather icon-x"></i>
+        </button>
+      </div>
+      <small *ngIf="courseForm.get('coverImage').hasError('required') && !selectedFile" class="form-text text-danger">
+        {{ 'REQUIRED_FIELD' | translate }}
+      </small>
+    </div>
+
+    <!-- Course Status -->
+    <div class="form-group col-md-6 col-12">
+      <label for="isActive">{{ "status" | translate }}</label>
+      <div class="d-flex">
+        <div class="custom-control custom-radio m-4">
+          <input type="radio" id="active" formControlName="isActive" class="custom-control-input layout-name"
+            [value]="true" [checked]="isActive" />
+          <label class="custom-control-label" for="active">{{ "is_active" | translate }}</label>
+        </div>
+        <div class="custom-control custom-radio m-4">
+          <input type="radio" id="notActive" formControlName="isActive" class="custom-control-input layout-name"
+            [value]="false" [checked]="!isActive" />
+          <label class="custom-control-label" for="notActive">{{ "not_active" | translate }}</label>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
+
+<!-- Actions -->
+<div class="mb-4">
+  <button type="submit" rippleEffect class="btn btn-primary col-3 mr-2" (click)="onSubmit()">
+    {{ 'SUBMIT' | translate }}
+  </button>
+  <button type="reset" rippleEffect class="btn btn-outline-secondary col-3" (click)="back()">
+    {{ 'CANCEL' | translate }}
+  </button>
+</div>

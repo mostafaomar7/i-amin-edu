@@ -1,0 +1,41 @@
+<div class="card">
+  <div class="row">
+    <div class="col-md-5 p-4">
+      <img class="col-md" style="height: 500px;" [src]="course?.coverImage" alt="{{ 'COURSE_IMAGE' | translate }}">
+    </div>
+
+    <div class="card-body col-md-6 p-4">
+      <p class="card-title mt-3">{{ course?.nameEn }}</p>
+      <p class="card-text">{{ course?.infoEn }}</p>
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item">
+          <strong>{{ 'INSTRUCTOR' | translate }}: </strong>
+          {{ course?.teacher?.user?.firstName }} {{ course?.teacher?.user?.lastName }}
+        </li>
+        <li class="list-group-item">
+          <strong>{{ 'PRICE' | translate }}: </strong> {{ course?.price }} EGP
+        </li>
+        <li class="list-group-item">
+          <strong>{{ 'DURATION' | translate }}: </strong> {{ course?.duration }} {{ 'MINUTES' | translate }}
+        </li>
+        <li class="list-group-item">
+          <strong>{{ 'REGISTERED_STUDENTS' | translate }}: </strong>
+          {{ course?.registeredStudents }} {{ 'STUDENTS' | translate }}
+        </li>
+        <li class="list-group-item">
+          <strong>{{ 'SUBJECT' | translate }}: </strong> {{ course?.subject?.nameEn }}
+        </li>
+        <li class="list-group-item">
+          <strong>{{ 'STAGE' | translate }}: </strong> {{ course?.stage?.name }}
+        </li>
+        <li class="list-group-item">
+          <strong>{{ 'EDUCATIONAL_PORTAL' | translate }}: </strong> {{ course?.educationalPortal?.nameEn }}
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card-footer text-muted">
+    {{ 'CREATED_AT' | translate }}: {{ course?.createdAt | date: 'medium' }}
+  </div>
+</div>

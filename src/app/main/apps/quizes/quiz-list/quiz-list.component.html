@@ -1,0 +1,140 @@
+<div class="content-wrapper container-xxl p-0">
+    <div class="content-body">
+        <!-- Admin List -->
+        <section class="admins-list-wrapper">
+            <!-- Card Header -->
+            <div *ngIf="hasHeader" class="card">
+                <h5 class="card-header">{{ 'Course Classes' | translate }}</h5>
+            </div>
+
+            <!-- Loading Spinner -->
+            <div *ngIf="isLoading" class="spinner-grow" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+
+            <!-- Main Card -->
+            <div *ngIf="!isLoading" class="card">
+                <div *ngIf="!playVideo" class="row p-2">
+                    <!-- Show Entries -->
+                    <div class="col-md-6 col-12">
+                        <div class="d-flex justify-content-between align-items-center m-1">
+                            <label class="d-flex align-items-center">{{ "SHOW" | translate }}
+                                <select class="form-control mx-25" [(ngModel)]="selectedOption">
+                                    <option value="10">10</option>
+                                    <option value="25">25</option>
+                                    <option value="50">50</option>
+                                    <option value="100">100</option>
+                                </select>
+                                {{ "ENTRIES" | translate }}
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Search Input -->
+                    <div class="col-md-6 col-12 d-flex justify-content-start justify-content-md-end">
+                        <div class="d-flex align-items-center justify-content-end">
+                            <label class="d-flex align-items-center m-2 ml-md-0">{{ "SEARCH" | translate }}:</label>
+                            <input [(ngModel)]="searchValue" name="searchValue" type="search" class="form-control"
+                                (keyup)="filterUpdate($event)" (search)="filterUpdate($event)" />
+                            <!-- Add New Button -->
+                            <button class="btn btn-primary m-2 col-4" rippleEffect (click)="addItem()">
+                                {{ "ADD_NEW" | translate }}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div *ngIf="playVideo">
+                    <button type="button" class="btn btn-danger btn-md round m-1" rippleEffect (click)="viewItem()">
+                        <i class="feather icon-x"></i>
+                    </button>
+                    <video controls class="w-100" style="max-width: 100%; height: 450px;">
+                        <source src="{{ currentVideoUrl }}" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                </div>
+
+                <!-- View Table -->
+                <ngx-datatable *ngIf="!playVideo" [rows]="rows" [rowHeight]="50" class="bootstrap core-bootstrap"
+                    [limit]="selectedOption" [columnMode]="ColumnMode.force" [headerHeight]="50" [footerHeight]="50"
+                    [scrollbarH]="true">
+
+
+
+                    <!-- { "classType": 1, "classStatus": 1, "mediaUrl": "https://www.youtube.com", "duration": 40,
+                    "orderId": 1, "createdAt": "2023-11-22T15:38:18.000Z", "updatedAt": "2023-11-22T15:38:18.000Z",
+                    "courseId": 1, "sessionId": null, "fileId": null, "examId": null
+                    } -->
+
+                    <!-- ID -->
+                    <ngx-datatable-column name="#" [width]="20">
+                        <ng-template let-row='row' let-rowIndex='rowIndex' ngx-datatable-cell-template>
+                            {{ rowIndex+1 }}</ng-template>
+                    </ngx-datatable-column>
+
+
+                    <!-- Name -->
+                    <ngx-datatable-column name="{{ 'Name' | translate }}" prop="name">
+                        <ng-template let-row="row" let name="value" ngx-datatable-cell-template>
+                            <div class="d-flex align-items-center">
+                                {{ (this.locale === 'en') ? row.nameEn : row.nameAr }}
+                            </div>
+                        </ng-template>
+                    </ngx-datatable-column>
+
+                    <!-- Status -->
+                    <ngx-datatable-column name="{{ 'Class Status' | translate }}" prop="classStatus">
+                        <ng-template let-row="row" let-name="value" ngx-datatable-cell-template>
+                            <div *ngIf="row.classStatus == 1" class="badge badge-light-primary">
+                                {{ 'FREE' | translate }}
+                            </div>
+                            <div *ngIf="row.classStatus == 2" class="badge badge-light-danger">
+                                {{ 'LOCKED' | translate }}
+                            </div>
+                        </ng-template>
+                    </ngx-datatable-column>
+
+                    <!-- Duration -->
+                    <ngx-datatable-column name="{{ 'Duration' | translate }}" prop="title">
+                        <ng-template let-row="row" let-name="value" ngx-datatable-cell-template>
+                            <div class="d-flex align-items-center">
+                                {{ row.duration }} Minutes
+                            </div>
+                        </ng-template>
+                    </ngx-datatable-column>
+
+                    <!-- Created At -->
+                    <!-- <ngx-datatable-column name="{{ 'Created At' | translate }}" prop="createdAt">
+                        <ng-template let-row=row let-name=value ngx-datatable-cell-template>
+                            <div class=d-flex align-items-center>
+                                {{ row.createdAt | date:'MMMM dd, yyyy' }}
+                            </div>
+                        </ng-template>
+                    </ngx-datatable-column> -->
+
+                    <!-- Actions -->
+                    <ngx-datatable-column name="{{ 'ACTIONS' | translate }}" [sortable]="false">
+                        <ng-template ngx-datatable-cell-template let-row="row">
+                            <div class="row">
+                                <!-- View Action -->
+                                <button (click)="viewItem(row)" class="btn btn-flat-secondary" rippleEffect>
+                                    <span [data-feather]="'eye'"></span>
+                                </button>
+                                <!-- Edit Action -->
+                                <button (click)="editItem(row)" class="btn btn-flat-secondary" rippleEffect>
+                                    <span [data-feather]="'edit'"></span>
+                                </button>
+                                <!-- Delete Action -->
+                                <button class="btn btn-flat-danger" rippleEffect (click)="ConfirmDelete(row.id)">
+                                    <span [data-feather]="'trash'"></span>
+                                </button>
+                            </div>
+                        </ng-template>
+                    </ngx-datatable-column>
+
+                </ngx-datatable>
+            </div>
+        </section>
+        <!-- Gate List -->
+    </div>
+</div>

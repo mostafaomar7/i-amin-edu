@@ -1,0 +1,72 @@
+<div class="card">
+    <h5 class="card-header">{{ "ADD_CLASS" | translate }}</h5>
+</div>
+
+<div *ngIf="isLoading" class="spinner-grow" role="status">
+    <span class="sr-only">{{ "LOADING" | translate }}...</span>
+</div>
+
+<form class="card p-4" *ngIf="!isLoading" [formGroup]="newItemForm" (ngSubmit)="onSubmit()">
+    <div class="row">
+        <div class="form-group col-md-6 col-12">
+            <label for="nameEn">{{ "CLASS_NAME" | translate }}</label>
+            <input type="text" id="name" class="form-control" formControlName="nameEn" required />
+            <small *ngIf="newItemForm.get('nameEn').hasError('required') && newItemForm.get('nameEn').touched"
+                class="form-text text-danger">{{ "REQUIRED_FIELD" | translate }}</small>
+        </div>
+
+        <div class="form-group col-md-6 col-12">
+            <label for="isActive">{{ "DURATION" | translate }}</label>
+            <input type="number" id="duration" class="form-control" formControlName="duration" required />
+            <small *ngIf="newItemForm.get('duration').hasError('required') && newItemForm.get('duration').touched"
+                class="form-text text-danger">{{ "REQUIRED_FIELD" | translate }}</small>
+        </div>
+
+        <div class="form-group col-md-6 col-12">
+            <fieldset class="form-group">
+                <label for="file-upload-single">{{ 'SELECT_VIDEO' | translate }}</label>
+                <div class="custom-file">
+                    <input type="file" accept="video/*" class="custom-file-input" (change)="onFileSelected($event)"
+                        id="file-upload-single" />
+                    <label class="custom-file-label">{{ 'CHOOSE_FILE' | translate }}</label>
+                </div>
+            </fieldset>
+            <div *ngIf="selectedFile">
+                <video controls class="w-100" style="max-width: 100%; height: 400px;">
+                    <source src="{{ selectedFile }}" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <button type="button" class="btn btn-danger btn-sm round m-1" rippleEffect (click)="deleteImage()">
+                    <i class="feather icon-x"></i>
+                </button>
+            </div>
+            <small *ngIf="newItemForm.get('mediaUrl').hasError('required') && !selectedFile"
+                class="form-text text-danger">{{ 'REQUIRED_FIELD' | translate }}</small>
+        </div>
+
+        <div class="form-group col-md-6 col-12">
+            <label for="classStatus">{{ "CLASS_STATUS" | translate }}</label>
+            <div class="d-flex">
+                <div class="custom-control custom-radio mr-1">
+                    <input type="radio" id="active" formControlName="classStatus"
+                        class="custom-control-input layout-name" [value]="1" [checked]="classStatus == 1" />
+                    <label class="custom-control-label" for="active">{{ "FREE" | translate }}</label>
+                </div>
+                <div class="custom-control custom-radio mr-1">
+                    <input type="radio" id="notActive" formControlName="classStatus"
+                        class="custom-control-input layout-name" [value]="2" [checked]="classStatus == 2" />
+                    <label class="custom-control-label" for="notActive">{{ "LOCKED" | translate }}</label>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+<div class="mb-4">
+    <button type="submit" rippleEffect class="btn btn-primary col-3 mr-2" (click)="onSubmit()">
+        {{ 'SUBMIT' | translate }}
+    </button>
+    <button type="reset" rippleEffect class="btn btn-outline-secondary col-3" (click)="back()">
+        {{ 'CANCEL' | translate }}
+    </button>
+</div>

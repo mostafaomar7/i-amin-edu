@@ -1,0 +1,157 @@
+<!-- Screen Header -->
+<div class="card">
+    <h5 class="card-header">{{ 'ADD_TEACHER' | translate }}</h5>
+</div>
+<!-- Screen Header -->
+
+<div *ngIf="isLoading" class="spinner-grow" role="status">
+    <span class="sr-only">{{ 'LOADING' | translate }}...</span>
+</div>
+
+<form *ngIf="!isLoading" [formGroup]="teacherForm" (ngSubmit)="onSubmit()">
+    <div class="row">
+
+        <!-- First Name -->
+        <div class="form-group col-md-6 col-12">
+            <label for="firstName">{{ 'FIRST_NAME' | translate }}</label>
+            <input type="text" id="firstName" class="form-control" formControlName="firstName" required />
+            <small *ngIf="teacherForm.get('firstName').hasError('required') && teacherForm.get('firstName').touched"
+                class="form-text text-danger">
+                {{ 'REQUIRED_FIELD' | translate }}
+            </small>
+        </div>
+
+        <!-- Last Name -->
+        <div class="form-group col-md-6 col-12">
+            <label for="lastName">{{ 'LAST_NAME' | translate }}</label>
+            <input type="text" id="lastName" class="form-control" formControlName="lastName" required />
+            <small *ngIf="teacherForm.get('lastName').hasError('required') && teacherForm.get('lastName').touched"
+                class="form-text text-danger">
+                {{ 'REQUIRED_FIELD' | translate }}
+            </small>
+        </div>
+
+        <!-- Email -->
+        <div class="form-group col-md-6 col-12">
+            <label for="email">{{ 'EMAIL' | translate }}</label>
+            <input type="email" id="email" class="form-control" formControlName="email" required />
+            <small *ngIf="teacherForm.get('email').hasError('required') && teacherForm.get('email').touched"
+                class="form-text text-danger">
+                {{ 'REQUIRED_FIELD' | translate }}
+            </small>
+        </div>
+
+        <!-- Password -->
+        <div class="form-group col-md-6 col-12">
+            <label for="password">{{ 'PASSWORD' | translate }}</label>
+            <input type="password" id="password" class="form-control" formControlName="password" />
+        </div>
+
+        <!-- Phone -->
+        <div class="form-group col-md-6 col-12">
+            <label for="phone">{{ 'PHONE' | translate }}</label>
+            <input type="tel" id="phone" class="form-control" formControlName="phone" required />
+            <small *ngIf="teacherForm.get('phone').hasError('required') && teacherForm.get('phone').touched"
+                class="form-text text-danger">
+                {{ 'REQUIRED_FIELD' | translate }}
+            </small>
+        </div>
+
+        <!-- Status -->
+        <div class="form-group col-md-6 col-12">
+            <label class="form-label" for="accountStatus">{{ 'STATUS' | translate }}</label>
+            <select id="accountStatus" class="form-control" formControlName="accountStatus" (change)="onStatusChange()">
+                <option [value]="1">{{ 'DISABLED' | translate }}</option>
+                <option [value]="2">{{ 'APPROVED' | translate }}</option>
+                <option [value]="3">{{ 'BLOCKED' | translate }}</option>
+            </select>
+            <small
+                *ngIf="teacherForm.get('accountStatus').hasError('required') && teacherForm.get('accountStatus').touched"
+                class="form-text text-danger">
+                {{ 'REQUIRED_FIELD' | translate }}
+            </small>
+        </div>
+
+        <!-- Educational Gate -->
+        <div class="form-group col-md-6 col-12">
+            <label class="form-label" for="educationalPortalId">{{ 'EDUCATIONAL_GATES' | translate }}</label>
+            <select id="educationalPortalId" class="form-control" formControlName="educationalPortalId"
+                (change)="onGateChange()">
+                <option *ngFor="let gate of educationalGates" [value]="gate.id">{{ gate.nameEn }}</option>
+            </select>
+            <small
+                *ngIf="teacherForm.get('educationalPortalId').hasError('required') && teacherForm.get('educationalPortalId').touched"
+                class="form-text text-danger">
+                {{ 'REQUIRED_FIELD' | translate }}
+            </small>
+        </div>
+
+        <!-- Educational Subject -->
+        <div class="form-group col-md-6 col-12">
+            <label class="form-label" for="subjectId">{{ 'EDUCATIONAL_SUBJECT' | translate }}</label>
+            <select id="subjectId" class="form-control" formControlName="subjectId" (change)="onSubjectChange()">
+                <option *ngFor="let subject of subjects" [value]="subject.id">{{ subject.nameEn }}</option>
+            </select>
+            <small *ngIf="teacherForm.get('subjectId').hasError('required') && teacherForm.get('subjectId').touched"
+                class="form-text text-danger">
+                {{ 'REQUIRED_FIELD' | translate }}
+            </small>
+        </div>
+
+        <!-- Experience (Arabic) -->
+        <div class="form-group col-md-6 col-12">
+            <label for="experienceAr">{{ 'EXPERIENCE_ARABIC' | translate }}</label>
+            <textarea id="experienceAr" class="form-control" formControlName="experienceAr" rows="4"
+                required></textarea>
+            <small
+                *ngIf="teacherForm.get('experienceAr').hasError('required') && teacherForm.get('experienceAr').touched"
+                class="form-text text-danger">
+                {{ 'REQUIRED_FIELD' | translate }}
+            </small>
+        </div>
+
+        <!-- Experience (English) -->
+        <div class="form-group col-md-6 col-12">
+            <label for="experienceEn">{{ 'EXPERIENCE_ENGLISH' | translate }}</label>
+            <textarea id="experienceEn" class="form-control" formControlName="experienceEn" rows="4"
+                required></textarea>
+            <small
+                *ngIf="teacherForm.get('experienceEn').hasError('required') && teacherForm.get('experienceEn').touched"
+                class="form-text text-danger">
+                {{ 'REQUIRED_FIELD' | translate }}
+            </small>
+        </div>
+
+        <!-- Upload File -->
+        <div class="form-group col-md-6 col-12">
+            <fieldset class="form-group">
+                <label for="file-upload-single">{{ 'SELECT_IMAGE' | translate }}</label>
+                <div class="custom-file">
+                    <input type="file" accept="image/*" class="custom-file-input" (change)="onFileSelected($event)"
+                        id="file-upload-single" />
+                    <label class="custom-file-label">{{ 'CHOOSE_FILE' | translate }}</label>
+                </div>
+            </fieldset>
+            <div *ngIf="selectedFile">
+                <img [src]="selectedFile || 'image'" alt="{{ 'IMAGE' | translate }}"
+                    style="width: 200px; height: 200px;" />
+                <button type="button" class="btn btn-danger btn-sm round m-1" rippleEffect (click)="deleteImage()">
+                    <i class="feather icon-x"></i>
+                </button>
+            </div>
+            <small *ngIf="teacherForm.get('image').hasError('required') && !selectedFile" class="form-text text-danger">
+                {{ 'REQUIRED_FIELD' | translate }}
+            </small>
+        </div>
+
+        <!-- Actions -->
+        <div class="col-12">
+            <button type="submit" rippleEffect class="btn btn-primary mr-1" (click)="onSubmit()">
+                {{ 'SUBMIT' | translate }}
+            </button>
+            <button type="reset" rippleEffect class="btn btn-outline-secondary" (click)="back()">
+                {{ 'CANCEL' | translate }}
+            </button>
+        </div>
+    </div>
+</form>

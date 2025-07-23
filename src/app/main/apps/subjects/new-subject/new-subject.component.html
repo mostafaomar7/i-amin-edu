@@ -1,0 +1,110 @@
+<!-- Screen Header -->
+<div class="card">
+    <h5 class="card-header">{{ 'ADD_GATE' | translate }}</h5>
+</div>
+<!-- Screen Header -->
+
+<div *ngIf="isLoading" class="spinner-grow" role="status">
+    <span class="sr-only">{{ 'LOADING' | translate }}...</span>
+</div>
+
+<form *ngIf="!isLoading" [formGroup]="subjectForm" (ngSubmit)="onSubmit()">
+
+    <div class="row">
+
+        <!-- SlUG -->
+        <div class="form-group col-md-12 col-12">
+            <label for="slug">{{ 'SLUG' | translate }}</label>
+            <input type="text" id="slug" class="form-control" formControlName="slug" required />
+            <small *ngIf="subjectForm.get('slug').hasError('required') && subjectForm.get('slug').touched"
+                class="form-text text-danger">
+                {{ 'REQUIRED_FIELD' | translate }}
+            </small>
+        </div>
+
+        <!-- English Title -->
+        <div class="form-group col-md-6 col-12">
+            <label for="nameEn">{{ 'ENGLISH_TITLE' | translate }}</label>
+            <input type="text" id="nameEn" class="form-control" formControlName="nameEn" required />
+            <small *ngIf="subjectForm.get('nameEn').hasError('required') && subjectForm.get('nameEn').touched"
+                class="form-text text-danger">
+                {{ 'REQUIRED_FIELD' | translate }}
+            </small>
+        </div>
+
+        <!-- Arabic Title -->
+        <div class="form-group col-md-6 col-12">
+            <label for="nameAr">{{ 'ARABIC_TITLE' | translate }}</label>
+            <input type="text" id="nameAr" class="form-control" formControlName="nameAr" required />
+            <small *ngIf="subjectForm.get('nameAr').hasError('required') && subjectForm.get('nameAr').touched"
+                class="form-text text-danger">
+                {{ 'REQUIRED_FIELD' | translate }}
+            </small>
+        </div>
+
+        <!-- English SubTitle -->
+        <div class="form-group col-md-6 col-12">
+            <label for="titleEn">{{ 'ENGLISH_SUBTITLE' | translate }}</label>
+            <input type="text" id="titleEn" class="form-control" formControlName="titleEn" required />
+            <small *ngIf="subjectForm.get('titleEn').hasError('required') && subjectForm.get('titleEn').touched"
+                class="form-text text-danger">
+                {{ 'REQUIRED_FIELD' | translate }}
+            </small>
+        </div>
+
+        <!-- Arabic SubTitle -->
+        <div class="form-group col-md-6 col-12">
+            <label for="titleAr">{{ 'ARABIC_SUBTITLE' | translate }}</label>
+            <input type="text" id="titleAr" class="form-control" formControlName="titleAr" required />
+            <small *ngIf="subjectForm.get('titleAr').hasError('required') && subjectForm.get('titleAr').touched"
+                class="form-text text-danger">
+                {{ 'REQUIRED_FIELD' | translate }}
+            </small>
+        </div>
+
+        <!-- Status -->
+        <div class="form-group col-md-6 col-12">
+            <label class="form-label" for="active">{{ 'STATUS' | translate }}</label>
+            <select id="active" class="form-control" formControlName="active" (change)="onStatusChange()">
+                <option [value]="true">{{ 'ENABLE' | translate }}</option>
+                <option [value]="false">{{ 'DISABLE' | translate }}</option>
+            </select>
+            <small *ngIf="subjectForm.get('active').hasError('required') && subjectForm.get('active').touched"
+                class="form-text text-danger">
+                {{ 'REQUIRED_FIELD' | translate }}
+            </small>
+        </div>
+
+        <!-- Upload File -->
+        <div class="form-group col-md-6 col-12">
+            <fieldset class="form-group">
+                <label for="file-upload-single">{{ 'SELECT_IMAGE' | translate }}</label>
+                <div class="custom-file">
+                    <input type="file" accept="image/*" class="custom-file-input" (change)="onFileSelected($event)"
+                        id="file-upload-single" />
+                    <label class="custom-file-label">{{ 'CHOOSE_FILE' | translate }}</label>
+                </div>
+            </fieldset>
+            <div *ngIf="selectedFile">
+                <img [src]="selectedFile || 'imageUrl'" alt="{{ 'IMAGE' | translate }}"
+                    style="width: 200px; height: 200px;" />
+                <button type="button" class="btn btn-danger btn-sm round m-1" rippleEffect (click)="deleteImage()">
+                    <i class="feather icon-x"></i>
+                </button>
+            </div>
+            <small *ngIf="subjectForm.get('imageUrl').hasError('required') && !selectedFile" class="form-text text-danger">
+                {{ 'REQUIRED_FIELD' | translate }}
+            </small>
+        </div>
+
+        <!-- Actions -->
+        <div class=" col-12 ">
+            <button type="submit" rippleEffect class=" btn btn-primary mr-1 " (click)="onSubmit()">
+                {{ 'SUBMIT' | translate }}
+            </button>
+            <button type="reset" rippleEffect class="btn btn-outline-secondary" (click)="back()">
+                {{ 'CANCEL' | translate }}
+            </button>
+        </div>
+    </div>
+</form>

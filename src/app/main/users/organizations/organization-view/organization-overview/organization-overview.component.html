@@ -1,0 +1,99 @@
+<!-- Statistics card section start -->
+<section id="statistics-card">
+
+    <!-- Stats Vertical Card -->
+    <div class="row">
+
+        <!-- Total Earning Amount -->
+        <div class="col-md-6 col-sm-6">
+            <div class="card text-center">
+                <div class="card-body">
+                    <div class="avatar bg-light-info p-50 m-0 mb-4">
+                        <div class="avatar-content">
+                            <i data-feather="activity" class="font-medium-5"></i>
+                        </div>
+                    </div>
+                    <h2 class="font-weight-bolder">{{currnetBalance}} EGP</h2>
+                    <p class="mb-0 line-ellipsis">{{ 'STATISTICS.CURRENT_BALANCE' | translate }}</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Total Withdrew Amount -->
+        <div class="col-md-6 col-sm-6">
+            <div class="card text-center">
+                <div class="card-body">
+                    <div class="avatar bg-light-info p-50 m-0 mb-4">
+                        <div class="avatar-content">
+                            <i data-feather="check-circle" class="font-medium-5"></i>
+                        </div>
+                    </div>
+                    <h2 class="font-weight-bolder">{{totalWithdrawBalance}} EGP</h2>
+                    <p class="mb-0 line-ellipsis">{{ 'STATISTICS.TOTAL_WITHDRAWN' | translate }}</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Total Courses -->
+        <div class="col-md-3 col-sm-3">
+            <div class="card text-center">
+                <div class="card-body">
+                    <div class="avatar bg-light-warning p-50 m-0 mb-4">
+                        <div class="avatar-content">
+                            <i data-feather="book-open" class="font-medium-5"></i>
+                        </div>
+                    </div>
+                    <h2 class="font-weight-bolder">{{coursesNumber}}</h2>
+                    <p class="mb-0 line-ellipsis">{{ 'STATISTICS.TOTAL_COURSES' | translate }}</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Total Instructors -->
+        <div class="col-md-3 col-sm-3">
+            <div class="card text-center">
+                <div class="card-body">
+                    <div class="avatar bg-light-warning p-50 m-0 mb-4">
+                        <div class="avatar-content">
+                            <i data-feather="users" class="font-medium-5"></i>
+                        </div>
+                    </div>
+                    <h2 class="font-weight-bolder">{{instructorNumbers}}</h2>
+                    <p class="mb-0 line-ellipsis">{{ 'STATISTICS.TOTAL_INSTRUCTORS' | translate }}</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Total Students -->
+        <div class="col-md-3 col-sm-3">
+            <div class="card text-center">
+                <div class="card-body">
+                    <div class="avatar bg-light-warning p-50 m-0 mb-4">
+                        <div class="avatar-content">
+                            <i data-feather="users" class="font-medium-5"></i>
+                        </div>
+                    </div>
+                    <h2 class="font-weight-bolder">{{studentsNumber}}</h2>
+                    <p class="mb-0 line-ellipsis">{{ 'STATISTICS.TOTAL_STUDENTS' | translate }}</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Total Enrollment -->
+        <div class="col-md-3 col-sm-3">
+            <div class="card text-center">
+                <div class="card-body">
+                    <div class="avatar bg-light-warning p-50 m-0 mb-4">
+                        <div class="avatar-content">
+                            <i data-feather="git-pull-request" class="font-medium-5"></i>
+                        </div>
+                    </div>
+                    <h2 class="font-weight-bolder">{{studentsNumber}}</h2>
+                    <p class="mb-0 line-ellipsis">{{ 'STATISTICS.TOTAL_ENROLLMENT' | translate }}</p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</section>

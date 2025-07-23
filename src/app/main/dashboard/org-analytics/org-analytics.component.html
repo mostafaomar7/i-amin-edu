@@ -1,0 +1,25 @@
+<div class="content-wrapper container-xxl p-0">
+    <div class="content-body">
+
+        <h3 class="p-2"> {{'OVERVIEW' | translate}}</h3>
+        <app-organization-overview></app-organization-overview>
+    </div>
+
+    <!-- Card Advance -->
+    <div class="row match-height">
+
+        <!-- Recently Added Courses -->
+        <div class="col-12">
+            <h3 class="p-2">{{ 'RECENT_COURSES' | translate}}</h3>
+            <app-course-list [selectedCenterId]="1" [isBestSelling]="true" [hasActions]="false"
+                [hasHeader]="false"></app-course-list>
+        </div>
+
+        <!-- Recently Added Instructors -->
+        <div class="col-12">
+            <h3 class="p-2">{{'RECENT_INSTRUCTORS' | translate}}</h3>
+            <app-instructors-list [selectedCenterId]="1" [isBestSelling]="true" [hasActions]="false"
+                [hasHeader]="false"></app-instructors-list>
+        </div>
+
+    </div>

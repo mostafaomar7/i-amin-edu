@@ -1,0 +1,101 @@
+<div class="card">
+    <h5 class="card-header">{{ 'ADD_NEW' | translate }}</h5>
+</div>
+
+<div *ngIf="isLoading" class="spinner-grow" role="status">
+    <span class="sr-only">{{ 'LOADING' | translate }}...</span>
+</div>
+
+<form class="card p-4" *ngIf="!isLoading" [formGroup]="organizationForm" (ngSubmit)="onSubmit()">
+    <div class="row">
+
+        <div class="form-group col-md-6 col-12">
+            <label for="firstName">{{ 'FIRST_NAME' | translate }}</label>
+            <input type="text" id="firstName" class="form-control" formControlName="firstName" required />
+            <small
+                *ngIf="organizationForm.get('firstName').hasError('required') && organizationForm.get('firstName').touched"
+                class="form-text text-danger">
+                {{ 'REQUIRED_FIELD' | translate }}
+            </small>
+        </div>
+
+        <div class="form-group col-md-6 col-12">
+            <label for="lastName">{{ 'LAST_NAME' | translate }}</label>
+            <input type="text" id="lastName" class="form-control" formControlName="lastName" required />
+            <small
+                *ngIf="organizationForm.get('lastName').hasError('required') && organizationForm.get('lastName').touched"
+                class="form-text text-danger">
+                {{ 'REQUIRED_FIELD' | translate }}
+            </small>
+        </div>
+
+        <div class="form-group col-md-6 col-12">
+            <label for="commission">{{ 'COMMISSION' | translate }}</label>
+            <input type="text" id="commission" class="form-control" formControlName="commission" required />
+            <small
+                *ngIf="organizationForm.get('commission').hasError('required') && organizationForm.get('commission').touched"
+                class="form-text text-danger">
+                {{ 'REQUIRED_FIELD' | translate }}
+            </small>
+        </div>
+
+        <div class="form-group col-md-6 col-12">
+            <label for="email">{{ 'EMAIL' | translate }}</label>
+            <input type="email" id="email" class="form-control" formControlName="email" required />
+            <small *ngIf="organizationForm.get('email').hasError('required') && organizationForm.get('email').touched"
+                class="form-text text-danger">
+                {{ 'REQUIRED_FIELD' | translate }}
+            </small>
+        </div>
+
+        <div class="form-group col-md-6 col-12">
+            <label for="password">{{ 'PASSWORD' | translate }}</label>
+            <input type="password" id="password" class="form-control" formControlName="password" />
+        </div>
+
+        <div class="form-group col-md-6 col-12">
+            <label class="form-label" for="accountStatus">{{ 'STATUS' | translate }}</label>
+            <select id="accountStatus" class="form-control" formControlName="accountStatus" (change)="onStatusChange()">
+                <option [value]="1">{{ 'DISABLED' | translate }}</option>
+                <option [value]="2">{{ 'APPROVED' | translate }}</option>
+            </select>
+            <small
+                *ngIf="organizationForm.get('accountStatus').hasError('required') && organizationForm.get('accountStatus').touched"
+                class="form-text text-danger">
+                {{ 'REQUIRED_FIELD' | translate }}
+            </small>
+        </div>
+
+        <div class="form-group col-md-6 col-12">
+            <fieldset class="form-group">
+                <label for="file-upload-single">{{ 'SELECT_IMAGE' | translate }}</label>
+                <div class="custom-file">
+                    <input type="file" accept="image/*" class="custom-file-input" (change)="onFileSelected($event)"
+                        id="file-upload-single" />
+                    <label class="custom-file-label">{{ 'CHOOSE_FILE' | translate }}</label>
+                </div>
+            </fieldset>
+            <div *ngIf="selectedFile">
+                <img [src]="selectedFile || 'image'" alt="{{ 'IMAGE' | translate }}"
+                    style="width: 200px; height: 200px;" />
+                <button type="button" class="btn btn-danger btn-sm round m-1" rippleEffect (click)="deleteImage()">
+                    <i class="feather icon-x"></i>
+                </button>
+            </div>
+            <small *ngIf="organizationForm.get('image').hasError('required') && !selectedFile"
+                class="form-text text-danger">
+                {{ 'REQUIRED_FIELD' | translate }}
+            </small>
+        </div>
+
+    </div>
+</form>
+
+<div>
+    <button type="submit" rippleEffect class=" btn btn-primary col-3 mr-2" (click)="onSubmit()">
+        {{ 'SUBMIT' | translate }}
+    </button>
+    <button type="reset" rippleEffect class="btn btn-outline-secondary col-3" (click)="back()">
+        {{ 'CANCEL' | translate }}
+    </button>
+</div>

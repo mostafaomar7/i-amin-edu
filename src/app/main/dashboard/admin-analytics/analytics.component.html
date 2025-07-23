@@ -1,0 +1,117 @@
+<div class="content-wrapper container-xxl p-0">
+    <div class="content-body">
+        <!-- Card Advance -->
+        <div class="row match-height">
+
+            <!-- Enrolments -->
+            <div class="col-lg-3 col-sm-6 col-12">
+                <div class="card">
+                    <div class="card-header d-flex flex-column align-items-start pb-0">
+                        <div class="avatar p-50 m-0" style="background-color: #FF9F43;">
+                            <div class="avatar-content">
+                                <i class="fas fa-user-graduate"></i>
+                            </div>
+                        </div>
+                        <h2 class="font-weight-bolder mt-1"> {{totalEnrollmentOverYear}} </h2>
+                        <h4 class="mb-0">{{ 'ENROLMENTS' | translate }}</h4>
+                        <p class="mb-0" style="color: gray;">{{ 'THIS_YEAR' | translate }}</p>
+                    </div>
+
+                    <!-- Apexchart component-->
+                    <div id="enrollment" #gainedChartRef>
+                        <apx-chart [series]="enrollment.series" [chart]="enrollment.chart" [stroke]="enrollment.stroke"
+                            [fill]="enrollment.fill" [tooltip]="enrollment.tooltip" [colors]="enrollment.colors"
+                            [dataLabels]="enrollment.dataLabels"></apx-chart>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Organizations -->
+            <div class="col-lg-3 col-sm-6 col-12">
+                <div class="card">
+                    <div class="card-header d-flex flex-column align-items-start pb-0">
+                        <div class="avatar p-50 m-0" style="background-color: #FF5888;">
+                            <div class="avatar-content">
+                                <i class="fas fa-university"></i>
+                            </div>
+                        </div>
+                        <h2 class="font-weight-bolder mt-1"> {{totalOrganizationsOverYear}} </h2>
+                        <h4 class="mb-0">{{ 'ORGANIZATIONS' | translate }}</h4>
+                        <p class="mb-0" style="color: gray;">{{ 'THIS_YEAR' | translate }}</p>
+                    </div>
+
+                    <!-- Apexchart component-->
+                    <div id="organizations" #gainedChartRef>
+                        <apx-chart [series]="organizations.series" [chart]="organizations.chart"
+                            [stroke]="organizations.stroke" [fill]="organizations.fill"
+                            [tooltip]="organizations.tooltip" [colors]="organizations.colors"
+                            [dataLabels]="organizations.dataLabels"></apx-chart>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Total Instructors -->
+            <div class="col-lg-3 col-sm-6 col-12">
+                <div class="card">
+                    <div class="card-header d-flex flex-column align-items-start pb-0">
+                        <div class="avatar p-50 m-0" style="background-color: #b9c3cd;">
+                            <div class="avatar-content">
+                                <i class="fas fa-chalkboard-teacher"></i>
+                            </div>
+                        </div>
+                        <h2 class="font-weight-bolder mt-1"> {{totalInstructorOverYear}} </h2>
+                        <h4 class="mb-0">{{ 'TOTAL_INSTRUCTORS' | translate }}</h4>
+                        <p class="mb-0" style="color: gray;">{{ 'THIS_YEAR' | translate }}</p>
+                    </div>
+
+                    <!-- Apexchart component-->
+                    <div id="totalInstructors" #gainedChartRef1>
+                        <apx-chart [series]="totalInstructors.series" [chart]="totalInstructors.chart"
+                            [stroke]="totalInstructors.stroke" [fill]="totalInstructors.fill"
+                            [tooltip]="totalInstructors.tooltip" [colors]="totalInstructors.colors"
+                            [dataLabels]="totalInstructors.dataLabels"></apx-chart>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Total Courses -->
+            <div class="col-lg-3 col-sm-6 col-12">
+                <div class="card">
+                    <div class="card-header d-flex flex-column align-items-start pb-0">
+                        <div class="avatar p-50 m-0" style="background-color: #00cfe8;">
+                            <div class="avatar-content">
+                                <i class="fas fa-book-open"></i>
+                            </div>
+                        </div>
+                        <h2 class="font-weight-bolder mt-1"> {{totalCoursesOverYear}} </h2>
+                        <h4 class="mb-0">{{ 'TOTAL_COURSES' | translate }}</h4>
+                        <p class="mb-0" style="color: gray;">{{ 'THIS_YEAR' | translate }}</p>
+                    </div>
+
+                    <!-- Apexchart component-->
+                    <div id="totalCourses" #gainedChartRef>
+                        <apx-chart [series]="totalCourses.series" [chart]="totalCourses.chart"
+                            [stroke]="totalCourses.stroke" [fill]="totalCourses.fill" [tooltip]="totalCourses.tooltip"
+                            [colors]="totalCourses.colors" [dataLabels]="totalCourses.dataLabels"></apx-chart>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- Recently Added Courses -->
+            <div class="col-lg-12 col-sm-6">
+                <h4>{{ 'RECENTLY_ADDED_COURSES' | translate }}</h4>
+                <app-course-list [selectedCenterId]="0" [isBestSelling]="true" [hasActions]="false"
+                    [hasHeader]="false"></app-course-list>
+            </div>
+
+            <!-- Recently Added Instructors -->
+            <div class="col-lg-12 col-sm-6 col-12">
+                <h4>{{ 'RECENTLY_ADDED_INSTRUCTORS' | translate }}</h4>
+                <app-instructors-list [selectedCenterId]="0" [isBestSelling]="true" [hasActions]="false"
+                    [hasHeader]="false"></app-instructors-list>
+            </div>
+
+        </div>
+    </div>
+</div>

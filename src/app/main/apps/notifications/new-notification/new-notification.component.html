@@ -1,0 +1,67 @@
+<!-- Screen Header -->
+<div class="card">
+    <h5 class="card-header">{{ 'ADD_GATE' | translate }}</h5>
+</div>
+<!-- Screen Header -->
+
+<div *ngIf="isLoading" class="spinner-grow" role="status">
+    <span class="sr-only">{{ 'LOADING' | translate }}...</span>
+</div>
+
+<form *ngIf="!isLoading" [formGroup]="notificationForm" (ngSubmit)="onSubmit()">
+
+    <div class="row">
+
+        <!-- English Title -->
+        <div class="form-group col-md-6 col-12">
+            <label for="title">{{ 'ENGLISH_TITLE' | translate }}</label>
+            <input type="text" id="title" class="form-control" formControlName="title" required />
+            <small *ngIf="notificationForm.get('title').hasError('required') && notificationForm.get('title').touched"
+                class="form-text text-danger">
+                {{ 'REQUIRED_FIELD' | translate }}
+            </small>
+        </div>
+
+        <!-- Arabic Title -->
+        <div class="form-group col-md-6 col-12">
+            <label for="titleAr">{{ 'ARABIC_TITLE' | translate }}</label>
+            <input type="text" id="titleAr" class="form-control" formControlName="titleAr" required />
+            <small
+                *ngIf="notificationForm.get('titleAr').hasError('required') && notificationForm.get('titleAr').touched"
+                class="form-text text-danger">
+                {{ 'REQUIRED_FIELD' | translate }}
+            </small>
+        </div>
+
+        <!-- English Body -->
+        <div class="form-group col-md-6 col-12">
+            <label for="body">{{ 'ENGLISH_MESSAGE' | translate }}</label>
+            <textarea id="body" class="form-control" formControlName="body" rows="2" required></textarea>
+
+            <small *ngIf="notificationForm.get('body').hasError('required') && notificationForm.get('body').touched"
+                class="form-text text-danger">
+                {{ 'REQUIRED_FIELD' | translate }}
+            </small>
+        </div>
+
+        <!-- Arabic Body -->
+        <div class="form-group col-md-6 col-12">
+            <label for="bodyAr">{{ 'ARABIC_MESSAGE' | translate }}</label>
+            <textarea id="bodyAr" class="form-control" formControlName="bodyAr" rows="2" required></textarea>
+            <small *ngIf="notificationForm.get('bodyAr').hasError('required') && notificationForm.get('bodyAr').touched"
+                class="form-text text-danger">
+                {{ 'REQUIRED_FIELD' | translate }}
+            </small>
+        </div>
+
+        <!-- Actions -->
+        <div class=" col-12 ">
+            <button type="submit" rippleEffect class=" btn btn-primary mr-1 " (click)="onSubmit()">
+                {{ 'SEND' | translate }}
+            </button>
+            <button type="reset" rippleEffect class="btn btn-outline-secondary" (click)="back()">
+                {{ 'CANCEL' | translate }}
+            </button>
+        </div>
+    </div>
+</form>

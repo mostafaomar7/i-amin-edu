@@ -1,0 +1,56 @@
+<div class="content-wrapper container-xxl p-0">
+  <div class="content-body">
+    <!-- Organization List -->
+    <section class="organizations-list-wrapper">
+      <!-- Card Header -->
+      <div class="card pb-3 pr-3 pl-3">
+        <h5 class="card-header">{{ 'ORGANIZATION.DETAILS' | translate }}</h5>
+
+        <ul ngbNav #navJustified="ngbNav" class="nav nav-pills nav-justified bg-light-info">
+
+          <!-- Organization Overview -->
+          <li ngbNavItem>
+            <a ngbNavLink>{{ 'ORGANIZATION.OVERVIEW' | translate }}</a>
+            <ng-template ngbNavContent>
+              <app-organization-overview [selectedCenterId]="centerId"></app-organization-overview>
+            </ng-template>
+          </li>
+
+          <!-- Organization Courses -->
+          <li ngbNavItem>
+            <a ngbNavLink>{{ 'ORGANIZATION.COURSES' | translate }}</a>
+            <ng-template ngbNavContent>
+              <app-course-list [selectedCenterId]="centerId" [hasHeader]="false" [hasActions]="false"></app-course-list>
+            </ng-template>
+          </li>
+
+          <!-- Organization Instructors -->
+          <li ngbNavItem>
+            <a ngbNavLink>{{ 'ORGANIZATION.INSTRUCTORS' | translate }}</a>
+            <ng-template ngbNavContent>
+              <app-instructors-list [selectedCenterId]="centerId" [hasHeader]="false" [hasActions]="false">
+              </app-instructors-list>
+            </ng-template>
+          </li>
+
+          <!-- Organization Payout Requests -->
+          <li ngbNavItem>
+            <a ngbNavLink>{{ 'ORGANIZATION.PAYOUT_REQUESTS' | translate }}</a>
+            <ng-template ngbNavContent>
+              <app-payout-requests-list [selectedCenterId]="1" [hasHeader]="false"></app-payout-requests-list>
+            </ng-template>
+          </li>
+
+        </ul>
+      </div>
+
+      <!-- Loading Spinner -->
+      <div *ngIf="isLoading" class="spinner-grow" role="status">
+        <span class="sr-only">{{ 'ORGANIZATION.LOADING' | translate }}</span>
+      </div>
+
+      <div [ngbNavOutlet]="navJustified" class="mt-1"></div>
+
+    </section>
+  </div>
+</div>

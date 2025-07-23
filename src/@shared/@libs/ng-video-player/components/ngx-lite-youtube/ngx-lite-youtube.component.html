@@ -1,0 +1,27 @@
+<div
+  [ngStyle]="{ 'background-image': _bannerSrc }"
+  class="ngx-lite-video{{ styleClass ? ' ' + styleClass : '' }}"
+  (click)="_showIframe$.next(true)"
+  [ngClass]="{ 'ngx-lite-with-title': videoTitle }"
+>
+  <iframe
+    *ngIf="_showIframe$ | async"
+    width="560"
+    height="315"
+    [src]="_videoUrl"
+    title="YouTube video player"
+    frameborder="0"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture;"
+    allowfullscreen
+  ></iframe>
+
+  <!-- Play btn before iframe is loaded -->
+  <div class="ngx-lite-video__play" *ngIf="!_showIframe$.value">
+    <button class="youtube-logo" aria-label="YouTube Play Button"></button>
+  </div>
+
+  <!-- Title shown before iframe is loaded -->
+  <p *ngIf="videoTitle && !_showIframe$.value" class="ngx-lite-video__title">
+    {{ videoTitle }}
+  </p>
+</div>

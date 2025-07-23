@@ -1,0 +1,93 @@
+<div *ngIf="horizontalMenu" class="navbar-header d-xl-block d-none">
+    <!-- Navbar brand -->
+    <ul class="nav navbar-nav flex-row">
+        <li class="nav-item">
+            <a [routerLink]="['/']" class="navbar-brand">
+                <span class="brand-logo">
+                    <!-- <img src="{{ coreConfig.app.appLogoImage }}" alt="brand-logo" width="36" /> -->
+                </span>
+                <h2 class="brand-text mb-0 white">{{ coreConfig.app.appName }}</h2>
+            </a>
+        </li>
+    </ul>
+    <!--/ Navbar brand -->
+</div>
+
+<div class="navbar-container d-flex content">
+    <div class="bookmark-wrapper d-flex align-items-center">
+        <!-- Menu Toggler | Menu icon will be hidden in case of layout without menu -->
+        <ul *ngIf="!coreConfig.layout.menu.hidden" class="nav navbar-nav d-xl-none">
+            <li class="nav-item">
+                <a (click)="toggleSidebar('menu')" class="nav-link menu-toggle">
+                    <span [class]="'ficon'" [data-feather]="'menu'"></span>
+                </a>
+            </li>
+        </ul>
+        <!--/ Menu Toggler -->
+
+        <!-- Toggle skin -->
+        <li class="nav-item d-none d-lg-block">
+            <a (click)="toggleDarkSkin()" class="nav-link nav-link-style btn" type="button">
+                <span [ngClass]="currentSkin === 'dark' ? 'icon-sun' : 'icon-moon'"
+                    class="ficon font-medium-5 feather"></span>
+            </a>
+        </li>
+        <!--/ Toggle skin -->
+    </div>
+
+    <ul class="nav navbar-nav align-items-center ml-auto">
+        <!-- ? Language selection | Uncomment if needed-->
+        <li class="nav-item dropdown dropdown-language" ngbDropdown>
+            <a class="nav-link dropdown-toggle" id="dropdown-flag" ngbDropdownToggle>
+                <i class="flag-icon flag-icon-{{ languageOptions[_translateService.currentLang].flag }}"></i><span
+                    class="selected-language">{{ languageOptions[_translateService.currentLang].title }}</span></a>
+            <div aria-labelledby="dropdown-flag" ngbDropdownMenu>
+                <a (click)="setLanguage(lang)" *ngFor="let lang of _translateService.getLangs()" ngbDropdownItem>
+                    <i class="flag-icon flag-icon-{{ languageOptions[lang].flag }}"></i> {{
+                    languageOptions[lang].title
+                    }}
+                </a>
+            </div>
+        </li>
+        <!--/ Language selection -->
+
+        <!-- User Dropdown -->
+        <li class="nav-item dropdown-user" ngbDropdown>
+            <a aria-expanded="false" aria-haspopup="true" class="nav-link dropdown-toggle dropdown-user-link"
+                id="dropdown-user" id="navbarUserDropdown" ngbDropdownToggle>
+                <div class="user-nav d-sm-flex d-none">
+                    <span class="user-name font-weight-bolder">{{ userData?.firstName + ' ' + userData?.lastName
+                        }}</span><span class="user-status">{{ userData?.userType | userType }}</span>
+                </div>
+                <app-image-display [class]="'avatar-status-online'"
+                    [defaultSrc]="'assets/images/default-user-image.png'" [height]="'40px'" [src]="userData?.image"
+                    [width]="'40px'">
+                </app-image-display>
+                <!--                <span class="avatar">-->
+                <!--                    <img alt="avatar" class="round"-->
+                <!--                         height="40"-->
+                <!--                         src="../../../../assets/images/portrait/small/avatar-s-11.jpg"-->
+                <!--                         width="40"/>-->
+                <!--                    <span class="avatar-status-online"></span>-->
+                <!--                </span>-->
+            </a>
+            <div aria-labelledby="navbarUserDropdown" class="dropdown-menu dropdown-menu-right" ngbDropdownMenu>
+                <!-- <a [routerLink]="['/']" ngbDropdownItem><span [class]="'mr-50'" [data-feather]="'user'"></span>
+                    Profile</a> -->
+                <!--                <a [routerLink]="['/']" ngbDropdownItem><span [class]="'mr-50'"-->
+                <!--                                                                             [data-feather]="'mail'"></span> Inbox</a>-->
+                <!--                <a [routerLink]="['/']" ngbDropdownItem><span [class]="'mr-50'" [data-feather]="'check-square'"></span>-->
+                <!--                    Task-->
+                <!--                </a>-->
+                <!--                <a [routerLink]="['/']" ngbDropdownItem>-->
+                <!--                    <span [class]="'mr-50'"-->
+                <!--                          [data-feather]="'message-square'"></span>-->
+                <!--                    Chats</a>-->
+                <div class="dropdown-divider"></div>
+                <a (click)="logout()" ngbDropdownItem>
+                    <span [class]="'mr-50'" [data-feather]="'power'"></span> Logout</a>
+            </div>
+        </li>
+        <!--/ User Dropdown -->
+    </ul>
+</div>

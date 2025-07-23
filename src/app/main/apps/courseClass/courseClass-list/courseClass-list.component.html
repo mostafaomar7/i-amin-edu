@@ -1,0 +1,111 @@
+<div class="content-wrapper container-xxl p-0">
+    <div class="content-body">
+        <section class="admins-list-wrapper">
+            <div *ngIf="hasHeader" class="card">
+                <h5 class="card-header">{{ 'COURSE_CLASSES' | translate }}</h5>
+            </div>
+
+            <div *ngIf="isLoading" class="spinner-grow" role="status">
+                <span class="sr-only">{{ 'LOADING' | translate }}</span>
+            </div>
+
+            <div *ngIf="!isLoading" class="card">
+                <div *ngIf="!playVideo" class="row p-2">
+                    <div class="col-md-6 col-12">
+                        <div class="d-flex justify-content-between align-items-center m-1">
+                            <label class="d-flex align-items-center">{{ "SHOW" | translate }}
+                                <select [(ngModel)]="selectedOption" class="form-control mx-25">
+                                    <option value="10">10</option>
+                                    <option value="25">25</option>
+                                    <option value="50">50</option>
+                                    <option value="100">100</option>
+                                </select>
+                                {{ "ENTRIES" | translate }}
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 col-12 d-flex justify-content-start justify-content-md-end">
+                        <div class="d-flex align-items-center justify-content-end">
+                            <label class="d-flex align-items-center m-2 ml-md-0">{{ "SEARCH" | translate }}:</label>
+                            <input (keyup)="filterUpdate($event)" (search)="filterUpdate($event)"
+                                [(ngModel)]="searchValue" class="form-control" name="searchValue" type="search" />
+                            <button (click)="addItem()" class="btn btn-primary m-2 col-4" rippleEffect>
+                                {{ "ADD_NEW" | translate }}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div *ngIf="playVideo">
+                    <button (click)="viewItem(null)" class="btn btn-danger btn-md round m-1" rippleEffect type="button">
+                        <i class="feather icon-x"></i>
+                    </button>
+
+                    <div style="padding:56.25% 0 0 0;position:relative;">
+                        <iframe [src]="currentVideoUrl"
+                            style="position:absolute;top:0;left:0;width:100%;height:100%;"
+                            frameborder="0"
+                            allow="autoplay; picture-in-picture; fullscreen">
+                        </iframe>
+                    </div>
+                </div>
+
+                <ngx-datatable *ngIf="!playVideo" [columnMode]="ColumnMode.force" [footerHeight]="50"
+                    [headerHeight]="50" [limit]="selectedOption" [rowHeight]="50" [rows]="rows" [scrollbarH]="true"
+                    class="bootstrap core-bootstrap">
+
+                    <ngx-datatable-column [width]="20" name="#">
+                        <ng-template let-row='row' let-rowIndex='rowIndex' ngx-datatable-cell-template>
+                            {{ rowIndex + 1 }}
+                        </ng-template>
+                    </ngx-datatable-column>
+
+                    <ngx-datatable-column name="{{ 'NAME' | translate }}" prop="name">
+                        <ng-template let-row="row" let-name="value" ngx-datatable-cell-template>
+                            <div class="d-flex align-items-center">
+                                {{ (this.locale === 'en') ? row.nameEn : row.nameAr }}
+                            </div>
+                        </ng-template>
+                    </ngx-datatable-column>
+
+                    <ngx-datatable-column name="{{ 'CLASS_STATUS' | translate }}" prop="classStatus">
+                        <ng-template let-name="value" let-row="row" ngx-datatable-cell-template>
+                            <div *ngIf="row.classStatus == 1" class="badge badge-light-primary">
+                                {{ 'FREE' | translate }}
+                            </div>
+                            <div *ngIf="row.classStatus == 2" class="badge badge-light-danger">
+                                {{ 'LOCKED' | translate }}
+                            </div>
+                        </ng-template>
+                    </ngx-datatable-column>
+
+                    <ngx-datatable-column name="{{ 'DURATION' | translate }}" prop="title">
+                        <ng-template let-name="value" let-row="row" ngx-datatable-cell-template>
+                            <div class="d-flex align-items-center">
+                                {{ row.duration }} {{ 'MINUTES' | translate }}
+                            </div>
+                        </ng-template>
+                    </ngx-datatable-column>
+
+                    <ngx-datatable-column [sortable]="false" name="{{ 'ACTIONS' | translate }}">
+                        <ng-template let-row="row" ngx-datatable-cell-template>
+                            <div class="row">
+                                <button (click)="viewItem(row)" class="btn btn-flat-secondary" rippleEffect>
+                                    <span [data-feather]="'eye'"></span>
+                                </button>
+                                <button (click)="editItem(row)" class="btn btn-flat-secondary" rippleEffect>
+                                    <span [data-feather]="'edit'"></span>
+                                </button>
+                                <button (click)="ConfirmDelete(row.id)" class="btn btn-flat-danger" rippleEffect>
+                                    <span [data-feather]="'trash'"></span>
+                                </button>
+                            </div>
+                        </ng-template>
+                    </ngx-datatable-column>
+
+                </ngx-datatable>
+            </div>
+        </section>
+    </div>
+</div>

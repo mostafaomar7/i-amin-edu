@@ -1,0 +1,57 @@
+<!-- Screen Header -->
+<div class="card">
+    <h5 class="card-header">{{ 'ADD_GATE' | translate }}</h5>
+</div>
+<!-- Screen Header -->
+
+<div *ngIf="isLoading" class="spinner-grow" role="status">
+    <span class="sr-only">{{ 'LOADING' | translate }}...</span>
+</div>
+
+<form *ngIf="!isLoading" [formGroup]="stageForm" (ngSubmit)="onSubmit()">
+
+    <div class="row">
+
+        <!-- English Title -->
+        <div class="form-group col-md-6 col-12">
+            <label for="name">{{ 'ENGLISH_TITLE' | translate }}</label>
+            <input type="text" id="name" class="form-control" formControlName="name" required />
+            <small *ngIf="stageForm.get('name').hasError('required') && stageForm.get('name').touched" class="form-text text-danger">
+                {{ 'REQUIRED_FIELD' | translate }}
+            </small>
+        </div>
+
+        <!-- Arabic Title -->
+        <div class="form-group col-md-6 col-12">
+            <label for="nameAr">{{ 'ARABIC_TITLE' | translate }}</label>
+            <input type="text" id="nameAr" class="form-control" formControlName="nameAr" required />
+            <small *ngIf="stageForm.get('nameAr').hasError('required') && stageForm.get('nameAr').touched" class="form-text text-danger">
+                {{ 'REQUIRED_FIELD' | translate }}
+            </small>
+        </div>
+
+
+        <!-- Status -->
+        <div class="form-group col-md-6 col-12">
+            <label class="form-label" for="isEnable">{{ 'STATUS' | translate }}</label>
+            <select id="isEnable" class="form-control" formControlName="isEnable" (change)="onStatusChange()">
+                <option [value]="true">{{ 'ENABLE' | translate }}</option>
+                <option [value]="false">{{ 'DISABLE' | translate }}</option>
+            </select>
+            <small *ngIf="stageForm.get('isEnable').hasError('required') && stageForm.get('isEnable').touched" class="form-text text-danger">
+                {{ 'REQUIRED_FIELD' | translate }}
+            </small>
+        </div>
+
+
+        <!-- Actions -->
+        <div class=" col-12 ">
+            <button type="submit" rippleEffect class=" btn btn-primary mr-1 " (click)="onSubmit()">
+                {{ 'SUBMIT' | translate }}
+            </button>
+            <button type="reset" rippleEffect class="btn btn-outline-secondary" (click)="back()">
+                {{ 'CANCEL' | translate }}
+            </button>
+        </div>
+    </div>
+</form>

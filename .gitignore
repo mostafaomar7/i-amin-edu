@@ -1,0 +1,39 @@
+# Node dependencies
+node_modules/
+
+# Compiled output
+/dist/
+/tmp/
+/out-tsc/
+
+# Environment variables
+.env
+*.env
+*.env.*
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+
+# Angular specific files
+.angular
+.angular-cache
+
+# VS Code files
+.vscode/
+
+# IntelliJ/IDEA files
+.idea/
+
+# Compiled TypeScript
+*.js
+*.js.map
+
+# TypeScript cache
+*.tsbuildinfo
+
+# System and project specific files
+*.iml
+*.swp
+*.DS_Store

@@ -1,0 +1,99 @@
+<div class="auth-wrapper auth-v2">
+    <div class="auth-inner row m-0">
+        <!-- Register -->
+        <div class="d-flex col-lg-12 align-items-center auth-bg">
+            <div class="col-12 col-sm-8 col-md-6 col-lg-6 mx-auto mt-4">
+                <img class="mt-4" src="../../../../../assets/images/logo/logo.png" alt="brand-logo" height="50" />
+                <br><br>
+                <h2 class="card-title font-weight-bold mb-1">{{ 'REGISTER_AS_ORG' | translate }} 👋</h2>
+                <p class="card-text mb-2">{{ 'CREATE_ACCOUNT_START_ADVENTURE' | translate }}</p>
+                <br>
+                <ngb-alert [type]="'danger'" [dismissible]="false" *ngIf="error">
+                    <div class="alert-body">
+                        <p>{{ error }}</p>
+                    </div>
+                </ngb-alert>
+                <form class="auth-login-form mt-2" [formGroup]="viewForm" (ngSubmit)="onSubmit()">
+                    <div class="row">
+                        <!-- First Name -->
+                        <div class="form-group col-md-6 col-12">
+                            <label for="firstName">{{ 'FIRST_NAME' | translate }}</label>
+                            <input type="text" id="firstName" class="form-control" formControlName="firstName"
+                                required />
+                            <small
+                                *ngIf="viewForm.get('firstName').hasError('required') && viewForm.get('firstName').touched"
+                                class="form-text text-danger">
+                                {{ 'REQUIRED_FIELD' | translate }}
+                            </small>
+                        </div>
+                        <!-- Last Name -->
+                        <div class="form-group col-md-6 col-12">
+                            <label for="lastName">{{ 'LAST_NAME' | translate }}</label>
+                            <input type="text" id="lastName" class="form-control" formControlName="lastName" required />
+                            <small
+                                *ngIf="viewForm.get('lastName').hasError('required') && viewForm.get('lastName').touched"
+                                class="form-text text-danger">
+                                {{ 'REQUIRED_FIELD' | translate }}
+                            </small>
+                        </div>
+                        <!-- Email -->
+                        <div class="form-group col-md-6 col-12">
+                            <label for="email">{{ 'EMAIL' | translate }}</label>
+                            <input type="email" id="email" class="form-control" formControlName="email" required />
+                            <small *ngIf="viewForm.get('email').hasError('required') && viewForm.get('email').touched"
+                                class="form-text text-danger">
+                                {{ 'REQUIRED_FIELD' | translate }}
+                            </small>
+                            <small *ngIf="viewForm.get('email').hasError('email') && viewForm.get('email').touched"
+                                class="form-text text-danger">
+                                {{ 'INVALID_EMAIL' | translate }}
+                            </small>
+                        </div>
+                        <!-- Password -->
+                        <div class="form-group col-md-6 col-12">
+                            <label for="password">{{ 'PASSWORD' | translate }}</label>
+                            <input type="password" id="password" class="form-control" formControlName="password" />
+                        </div>
+                        <!-- Phone -->
+                        <div class="form-group col-md-6 col-12">
+                            <label for="phone">{{ 'PHONE' | translate }}</label>
+                            <input type="tel" id="phone" class="form-control" formControlName="phone" required
+                                pattern="[0-9]{11}" />
+                            <small *ngIf="viewForm.get('phone').hasError('required') && viewForm.get('phone').touched"
+                                class="form-text text-danger">
+                                {{ 'REQUIRED_FIELD' | translate }}
+                            </small>
+                            <small *ngIf="viewForm.get('phone').hasError('pattern') && viewForm.get('phone').touched"
+                                class="form-text text-danger">
+                                {{ 'INVALID_PHONE_NUMBER' | translate }}
+                            </small>
+                        </div>
+                        <!-- Organization Info -->
+                        <div class="form-group col-12">
+                            <label for="info">{{ 'ORG_INFO' | translate }}</label>
+                            <textarea id="info" class="form-control" formControlName="info" rows="4"
+                                required></textarea>
+                            <small *ngIf="viewForm.get('info').hasError('required') && viewForm.get('info').touched"
+                                class="form-text text-danger">
+                                {{ 'REQUIRED_FIELD' | translate }}
+                            </small>
+                        </div>
+                    </div>
+                    <br>
+                    <button [disabled]="loading" class="btn btn-primary btn-block" tabindex="4" rippleEffect>
+                        <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                        {{ 'CREATE_ACCOUNT' | translate }}
+                    </button>
+                </form>
+                <p class="text-center mt-2">
+                    <span>{{ 'ALREADY_HAVE_ACCOUNT' | translate }}</span>
+                    <a routerLink="/pages/auth/login"><span>&nbsp;{{ 'LOGIN' | translate }}</span></a>
+                </p>
+                <div class="divider my-2" hidden>
+                    <div class="divider-text">{{ 'OR' | translate }}</div>
+                </div>
+            </div>
+        </div>
+        <!-- /Login -->
+    </div>
+</div>

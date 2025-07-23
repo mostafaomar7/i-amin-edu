@@ -1,0 +1,48 @@
+<div class="content-wrapper container-xxl p-0">
+  <div class="content-body">
+
+    <!-- Couser details -->
+    <section>
+
+      <!-- Card Header -->
+      <div class="card pb-3 pr-3 pl-3">
+        <h5 class="card-header">{{ 'COURSE_DETAILS' | translate }}</h5>
+
+        <ul ngbNav #navJustified="ngbNav" class="nav nav-pills nav-justified bg-light-info">
+
+          <!-- Course Overview -->
+          <li ngbNavItem>
+            <a ngbNavLink>{{ 'OVERVIEW' | translate }}</a>
+            <ng-template ngbNavContent>
+              <app-course-overview [course]="course"></app-course-overview>
+            </ng-template>
+          </li>
+
+          <!-- Course Classes -->
+          <li ngbNavItem>
+            <a ngbNavLink>{{ 'COURSE_CLASSES' | translate }}</a>
+            <ng-template ngbNavContent>
+              <app-courseClass-list [selectedCourseId]="this.course.id" [hasHeader]="false"></app-courseClass-list>
+            </ng-template>
+          </li>
+
+          <!-- Students Enrollments -->
+          <li ngbNavItem>
+            <a ngbNavLink>{{ 'REGISTERED_STUDENTS' | translate }}</a>
+            <ng-template ngbNavContent>
+              <app-courseStudent-list [selectedCourseId]="this.course.id" [hasHeader]="false"></app-courseStudent-list>
+            </ng-template>
+          </li>
+
+        </ul>
+      </div>
+
+      <!-- Loading Spinner -->
+      <div *ngIf="isLoading" class="spinner-grow" role="status">
+        <span class="sr-only">{{ 'LOADING' | translate }}</span>
+      </div>
+
+      <div [ngbNavOutlet]="navJustified" class="mt-1"></div>
+    </section>
+  </div>
+</div>

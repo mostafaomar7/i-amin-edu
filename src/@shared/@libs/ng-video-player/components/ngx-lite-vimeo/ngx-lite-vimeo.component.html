@@ -1,0 +1,27 @@
+<div
+  *ngIf="_vimeoBanner$ | async as vimeoBanner"
+  [ngStyle]="{ 'background-image': vimeoBanner.bannerSrc }"
+  class="ngx-lite-video{{ styleClass ? ' ' + styleClass : '' }}"
+  (click)="_showIframe$.next(true)"
+  [ngClass]="{ 'ngx-lite-with-title': showTitle }"
+>
+  <iframe
+    *ngIf="_showIframe$ | async"
+    width="640"
+    height="360"
+    frameborder="0"
+    allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+    allowfullscreen
+    [src]="_videoUrl"
+  ></iframe>
+
+  <!-- Play btn before iframe is loaded -->
+  <div class="ngx-lite-video__play" *ngIf="!_showIframe$.value">
+    <button class="vimeo-logo" aria-label="Vimeo Play Button"></button>
+  </div>
+
+  <!-- Title shown before iframe is loaded -->
+  <p *ngIf="showTitle && !_showIframe$.value" class="ngx-lite-video__title">
+    {{ vimeoBanner.title }}
+  </p>
+</div>

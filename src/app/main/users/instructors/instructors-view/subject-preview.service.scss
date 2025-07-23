@@ -1,0 +1,17 @@
+@import '@core/scss/angular/libs/flatpickr.component.scss';
+// Preview
+// Windows Print Dialogue
+@media print {
+    @page {
+        margin: 0;
+    }
+    .teacher-actions,
+    .main-menu,
+    .buy-now {
+        visibility: hidden;
+    }
+    .printRef {
+        max-width: 100% !important;
+        flex: 0 0 100%;
+    }
+}

@@ -1,0 +1,96 @@
+<div class="card">
+    <h5 class="card-header">{{ 'TRANSACTION_HISTORY' | translate }}</h5>
+</div>
+
+<div *ngIf="isLoading" class="spinner-grow" role="status">
+    <span class="sr-only">{{ 'LOADING' | translate }}...</span>
+</div>
+
+<div class="row p-2">
+    <div class="col-md-6 col-12">
+        <div class="d-flex justify-content-between align-items-center m-1">
+            <label class="d-flex align-items-center">{{ "SHOW" | translate }}
+                <select class="form-control mx-25" [(ngModel)]="selectedOption">
+                    <option value="10">10</option>
+                    <option value="25">25</option>
+                    <option value="50">50</option>
+                    <option value="100">100</option>
+                </select>
+                {{ "ENTRIES" | translate }}
+            </label>
+        </div>
+    </div>
+
+    <div class="col-md-6 col-12 d-flex justify-content-start justify-content-md-end">
+        <div class="d-flex align-items-center justify-content-end">
+            <label class="d-flex align-items-center m-2 ml-md-0">{{ "SEARCH" | translate }}:</label>
+            <input [(ngModel)]="searchValue" name="searchValue" type="search" class="form-control"
+                (keyup)="filterUpdate($event)" (search)="filterUpdate($event)" />
+        </div>
+    </div>
+</div>
+
+<!-- View Table -->
+<ngx-datatable [rows]="rows" [rowHeight]="50" class="bootstrap core-bootstrap" [limit]="selectedOption"
+    [columnMode]="ColumnMode.force" [headerHeight]="50" [footerHeight]="50" [scrollbarH]="true">
+
+    <!-- Transaction ID -->
+    <ngx-datatable-column name="{{ 'TRANSACTION_ID' | translate }}" [width]="100">
+        <ng-template let-row='row' let-rowIndex='rowIndex' ngx-datatable-cell-template>
+            {{ row.id }}
+        </ng-template>
+    </ngx-datatable-column>
+
+    <!-- User Name -->
+    <ngx-datatable-column name="{{ 'USER_NAME' | translate }}" prop="name">
+        <ng-template let-row="row" let name="value" ngx-datatable-cell-template>
+            <div class="d-flex align-items-center">
+                {{ row.user.firstName }} {{ row.user.lastName }}
+            </div>
+        </ng-template>
+    </ngx-datatable-column>
+
+    <!-- Amount -->
+    <ngx-datatable-column name="{{ 'AMOUNT' | translate }}" prop="name">
+        <ng-template let-row="row" let name="value" ngx-datatable-cell-template>
+            <div class="d-flex align-items-center">
+                {{ row.amount }} {{ 'EGP' | translate }}
+            </div>
+        </ng-template>
+    </ngx-datatable-column>
+
+    <!-- Transaction Status -->
+    <ngx-datatable-column name="{{ 'TRANSACTION_STATUS' | translate }}" prop="transactinStatus">
+        <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+            <div *ngIf="row.transactinStatus == 1" class="badge badge-light-warning">{{ 'PENDING' | translate }}</div>
+            <div *ngIf="row.transactinStatus == 2" class="badge badge-light-success">{{ 'COMPLETED' | translate }}</div>
+            <div *ngIf="row.transactinStatus == 3" class="badge badge-light-danger">{{ 'REJECTED' | translate }}</div>
+        </ng-template>
+    </ngx-datatable-column>
+
+    <!-- Transaction Type -->
+    <ngx-datatable-column name="{{ 'TRANSACTION_TYPE' | translate }}" prop="transactionType">
+        <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+            <div *ngIf="row.transactionType == 0" class="badge badge-light-secondary">{{ 'NOT_SET' | translate }}</div>
+            <div *ngIf="row.transactionType == 1" class="badge badge-light-primary">{{ 'CREDIT_CARD' | translate }}
+            </div>
+            <div *ngIf="row.transactionType == 2" class="badge badge-light-info">{{ 'PAYMOB_CASH' | translate }}</div>
+            <div *ngIf="row.transactionType == 4" class="badge badge-light-danger">{{ 'SESSION_REFUND' | translate }}
+            </div>
+            <div *ngIf="row.transactionType == 5" class="badge badge-light-success">{{ 'SESSION_RESERVATION' | translate
+                }}</div>
+            <div *ngIf="row.transactionType == 6" class="badge badge-light-secondary">{{ 'BANK_ACCOUNT_WITHDRAW' |
+                translate }}</div>
+            <div *ngIf="row.transactionType == 7" class="badge badge-light-primary">{{ 'COURSE_RESERVATION' | translate
+                }}</div>
+        </ng-template>
+    </ngx-datatable-column>
+
+    <!-- Created At -->
+    <ngx-datatable-column name="{{ 'CREATED_AT' | translate }}" prop="createdAt">
+        <ng-template let-row=row let-name=value ngx-datatable-cell-template>
+            <div class=d-flex align-items-center>{{ row.createdAt | date:'MMMM dd, yyyy' }}</div>
+        </ng-template>
+    </ngx-datatable-column>
+
+</ngx-datatable>

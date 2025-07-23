@@ -1,0 +1,31 @@
+<!-- Screen Header -->
+<div class="card">
+    <h5 class="card-header">{{ 'SUPPORT_INFO' | translate }}</h5>
+</div>
+<!-- Screen Header -->
+
+<div *ngIf="isLoading" class="spinner-grow" role="status">
+    <span class="sr-only">{{ 'LOADING' | translate }}...</span>
+</div>
+
+<form *ngIf="!isLoading" [formGroup]="supportForm" (ngSubmit)="onSubmit()">
+
+    <div class="row">
+
+        <!-- Reply Message -->
+        <div class="form-group col-md-6 col-12">
+            <label for="bodyAr">{{ 'REPLY_MESSAGE' | translate }}</label>
+            <textarea id="bodyAr" class="form-control" formControlName="bodyAr" rows="6" required></textarea>
+        </div>
+
+        <!-- Actions -->
+        <div class="col-12">
+            <button type="submit" rippleEffect class="btn btn-primary mr-1" (click)="onSubmit()">
+                {{ 'SEND' | translate }}
+            </button>
+            <button type="reset" rippleEffect class="btn btn-outline-secondary" (click)="back()">
+                {{ 'CANCEL' | translate }}
+            </button>
+        </div>
+    </div>
+</form>

@@ -1,0 +1,36 @@
+<div class="content-wrapper container-xxl p-0">
+  <div class="content-body">
+    <section class="admin-preview-wrapper">
+      <div class="row admin-preview">
+        <!-- Invoice -->
+        <div class="col-xl-12 col-md-8 col-12 printRef">
+          <div class="card admin-preview-card">
+            <div class="card-body admin-padding pb-0">
+              <div class="mt-md-0 mt-2">
+                <h4 class="admin-title">
+                  Admin
+                  <hr class="admin-spacing" />
+
+                  <span class="admin-number">#{{ apiData.id }}</span>
+                </h4>
+                <div class="admin-date-wrapper">
+                  <p class="admin-date-title">Admin English Name:</p>
+                  <p class="admin-date">{{apiData }}</p>
+                </div>
+                <div class="admin-date-wrapper">
+                  <p class="admin-date-title">Admin Arabic Name:</p>
+                  <p class="admin-date">{{apiData }}</p>
+                </div>
+                <div class="admin-date-wrapper">
+                  <p class="admin-date-title">Educational Stage:</p>
+                  <p class="admin-date">{{ apiData.dueDate }}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+</div>

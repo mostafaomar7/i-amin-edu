@@ -1,0 +1,36 @@
+<div class="content-wrapper container-xxl p-0">
+  <div class="content-body">
+    <section class="teacher-preview-wrapper">
+      <div class="row teacher-preview">
+        <!-- Invoice -->
+        <div class="col-xl-12 col-md-8 col-12 printRef">
+          <div class="card teacher-preview-card">
+            <div class="card-body teacher-padding pb-0">
+              <div class="mt-md-0 mt-2">
+                <h4 class="teacher-title">
+                  Permission
+                  <hr class="teacher-spacing" />
+
+                  <span class="teacher-number">#{{ apiData.id }}</span>
+                </h4>
+                <div class="teacher-date-wrapper">
+                  <p class="teacher-date-title">Permission English Name:</p>
+                  <p class="teacher-date">{{apiData }}</p>
+                </div>
+                <div class="teacher-date-wrapper">
+                  <p class="teacher-date-title">Permission Arabic Name:</p>
+                  <p class="teacher-date">{{apiData }}</p>
+                </div>
+                <div class="teacher-date-wrapper">
+                  <p class="teacher-date-title">Educational Stage:</p>
+                  <p class="teacher-date">{{ apiData.dueDate }}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+</div>

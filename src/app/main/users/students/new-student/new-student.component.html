@@ -1,0 +1,106 @@
+<!-- Screen Header -->
+<div class="card">
+    <h5 class="card-header">{{ 'ADD_GATE' | translate }}</h5>
+</div>
+<!-- Screen Header -->
+
+<div *ngIf="isLoading" class="spinner-grow" role="status">
+    <span class="sr-only">{{ 'LOADING' | translate }}...</span>
+</div>
+
+<form *ngIf="!isLoading" [formGroup]="studentForm" (ngSubmit)="onSubmit()">
+
+    <div class="row">
+
+        <!-- First Name -->
+        <div class="form-group col-md-6 col-12">
+            <label for="firstName">{{ 'FIRST_NAME' | translate }}</label>
+            <input type="text" id="firstName" class="form-control" formControlName="firstName" required />
+            <small *ngIf="studentForm.get('firstName').hasError('required') && studentForm.get('firstName').touched"
+                class="form-text text-danger">
+                {{ 'REQUIRED_FIELD' | translate }}
+            </small>
+        </div>
+
+        <!-- Last Name -->
+        <div class="form-group col-md-6 col-12">
+            <label for="lastName">{{ 'LAST_NAME' | translate }}</label>
+            <input type="text" id="lastName" class="form-control" formControlName="lastName" required />
+            <small *ngIf="studentForm.get('lastName').hasError('required') && studentForm.get('lastName').touched"
+                class="form-text text-danger">
+                {{ 'REQUIRED_FIELD' | translate }}
+            </small>
+        </div>
+
+
+        <!-- Email -->
+        <div class="form-group col-md-6 col-12">
+            <label for="email">{{ 'EMAIL' | translate }}</label>
+            <input type="email" id="email" class="form-control" formControlName="email" required />
+            <small *ngIf="studentForm.get('email').hasError('required') && studentForm.get('email').touched"
+                class="form-text text-danger">
+                {{ 'REQUIRED_FIELD' | translate }}
+            </small>
+        </div>
+
+        <!-- Phone -->
+        <div class="form-group col-md-6 col-12">
+            <label for="phone">{{ 'PHONE' | translate }}</label>
+            <input type="tel" id="phone" class="form-control" formControlName="phone" required />
+            <small *ngIf="studentForm.get('phone').hasError('required') && studentForm.get('phone').touched"
+                class="form-text text-danger">
+                {{ 'REQUIRED_FIELD' | translate }}
+            </small>
+        </div>
+
+        <!-- Status -->
+        <div class="form-group col-md-6 col-12">
+            <label class="form-label" for="accountStatus">{{ 'STATUS' | translate }}</label>
+            <select id="accountStatus" class="form-control" formControlName="accountStatus" (change)="onStatusChange()">
+                <option [value]="1">{{ 'DISABLED' | translate }}</option>
+                <option [value]="2">{{ 'APPROVED' | translate }}</option>
+                <option [value]="3">{{ 'BLOCKED' | translate }}</option>
+            </select>
+            <small
+                *ngIf="studentForm.get('accountStatus').hasError('required') && studentForm.get('accountStatus').touched"
+                class="form-text text-danger">
+                {{ 'REQUIRED_FIELD' | translate }}
+            </small>
+        </div>
+
+
+
+
+        <!-- Upload File -->
+        <div class="form-group col-md-6 col-12">
+            <fieldset class="form-group">
+                <label for="file-upload-single">{{ 'SELECT_IMAGE' | translate }}</label>
+                <div class="custom-file">
+                    <input type="file" accept="image/*" class="custom-file-input" (change)="onFileSelected($event)"
+                        id="file-upload-single" />
+                    <label class="custom-file-label">{{ 'CHOOSE_FILE' | translate }}</label>
+                </div>
+            </fieldset>
+            <div *ngIf="selectedFile">
+                <img [src]="selectedFile || 'image'" alt="{{ 'IMAGE' | translate }}"
+                    style="width: 200px; height: 200px;" />
+                <button type="button" class="btn btn-danger btn-sm round m-1" rippleEffect (click)="deleteImage()">
+                    <i class="feather icon-x"></i>
+                </button>
+            </div>
+            <small *ngIf="studentForm.get('image').hasError('required') && !selectedFile" class="form-text text-danger">
+                {{ 'REQUIRED_FIELD' | translate }}
+            </small>
+        </div>
+
+        <!-- Actions -->
+        <div class=" col-12 ">
+            <button type="submit" rippleEffect class=" btn btn-primary mr-1 " (click)="onSubmit()">
+                {{ 'SUBMIT' | translate }}
+            </button>
+            <button type="reset" rippleEffect class="btn btn-outline-secondary" (click)="back()">
+                {{ 'CANCEL' | translate }}
+            </button>
+        </div>
+    </div>
+</form>

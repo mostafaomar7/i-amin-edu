@@ -1,0 +1,36 @@
+<div class="content-wrapper container-xxl p-0">
+  <div class="content-body">
+    <section class="subject-preview-wrapper">
+      <div class="row subject-preview">
+        <!-- Invoice -->
+        <div class="col-xl-12 col-md-8 col-12 printRef">
+          <div class="card subject-preview-card">
+            <div class="card-body subject-padding pb-0">
+              <div class="mt-md-0 mt-2">
+                <h4 class="subject-title">
+                  Subject
+                  <hr class="subject-spacing" />
+
+                  <span class="subject-number">#{{ apiData.id }}</span>
+                </h4>
+                <div class="subject-date-wrapper">
+                  <p class="subject-date-title">Subject English Name:</p>
+                  <p class="subject-date">{{apiData }}</p>
+                </div>
+                <div class="subject-date-wrapper">
+                  <p class="subject-date-title">Subject Arabic Name:</p>
+                  <p class="subject-date">{{apiData }}</p>
+                </div>
+                <div class="subject-date-wrapper">
+                  <p class="subject-date-title">Educational Stage:</p>
+                  <p class="subject-date">{{ apiData.dueDate }}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+</div>

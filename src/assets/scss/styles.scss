@@ -1,0 +1,37 @@
+/*================================================================================
+	Item Name: Vuexy - Vuejs, HTML & Laravel Admin Dashboard Template
+	Author: PIXINVENT
+	Author URL: http://www.themeforest.net/user/pixinvent
+================================================================================
+
+NOTE:
+------
+PLACE HERE YOUR OWN SCSS CODES AND IF NEEDED, OVERRIDE THE STYLES FROM THE OTHER STYLESHEETS.
+WE WILL RELEASE FUTURE UPDATES SO IN ORDER TO NOT OVERWRITE YOUR STYLES IT'S BETTER LIKE THIS.  */
+app-root{
+	&:dir(rtl){
+		&.menu-expanded .header-navbar .navbar-container.content{margin-inline-start: 160px;}
+	}
+}
+.root{
+	&:dir(rtl){
+		.main-menu.menu-light .navigation > li > a{margin: 0;}
+		.main-menu .navbar-header {
+			padding: 0.35rem 1.64rem  0.3rem  1rem;
+		}
+		.main-menu.menu-light .navigation .navigation-header{
+		margin: calc(2rem + 0.286rem)  2.2rem 0.8rem 0
+		}
+		.ngx-datatable.bootstrap .datatable-footer .datatable-pager .datatable-icon-left,
+		 .ngx-datatable.bootstrap .datatable-footer .datatable-pager .datatable-icon-skip, .ngx-datatable.bootstrap .datatable-footer .datatable-pager .datatable-icon-right, .ngx-datatable.bootstrap .datatable-footer .datatable-pager .datatable-icon-prev
+		{
+			transform: rotate(180deg);
+			display: inline-flex;
+		}
+		.ngx-datatable.bootstrap .datatable-footer .datatable-pager{
+			display: flex;
+			justify-content: end;
+		}
+	}
+		
+}
