@@ -7,7 +7,9 @@ export const environment = {
     hmr: false,
     // apiUrl: 'https://www.iamin-edu.com/stage/api/v1', //staging
     // apiUrl: 'https://www.iamin-edu.com/develop/api/v1' //dev
-    apiUrl: 'http://localhost:4040/api/v1',
+    // apiUrl: 'http://localhost:4040/api/v1',
+    apiUrl: 'https://test.iamin-edu.com/api/v1',
+
 };
 
 /*

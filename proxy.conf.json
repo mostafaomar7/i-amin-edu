@@ -1,6 +1,8 @@
 {
-    "/api": {
-        "target": "https://api.vimeo.com/me/videos",
-        "secure": true
-    }
+  "/api": {
+    "target": "http://test.iamin-edu.com",
+    "secure": false,
+    "changeOrigin": true,
+    "logLevel": "debug"
+  }
 }

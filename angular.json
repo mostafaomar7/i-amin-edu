@@ -57,7 +57,10 @@
                             "./node_modules/@fullcalendar/timegrid/main.css",
                             "./node_modules/@fullcalendar/list/main.css",
                             "./node_modules/bootstrap-v4-rtl/dist/css/bootstrap-rtl.min.css",
-                            "node_modules/line-awesome/dist/line-awesome/css/line-awesome.min.css"
+                            "node_modules/line-awesome/dist/line-awesome/css/line-awesome.min.css",
+                              "node_modules/@swimlane/ngx-datatable/index.css",
+                            "node_modules/@swimlane/ngx-datatable/themes/bootstrap.scss",
+                            "node_modules/@swimlane/ngx-datatable/assets/icons.css"
                         ],
                         "stylePreprocessorOptions": {
                             "includePaths": ["node_modules", "src/assets/"]
@@ -109,20 +112,22 @@
                     "defaultConfiguration": ""
                 },
                 "serve": {
-                    "builder": "@angular-devkit/build-angular:dev-server",
-                    "options": {
-                        "browserTarget": "vuexy:build"
-                    },
-                    "configurations": {
-                        "production": {
-                            "browserTarget": "vuexy:build:production"
-                        },
-                        "hmr": {
-                            "hmr": true,
-                            "browserTarget": "vuexy:build:hmr"
-                        }
-                    }
+                "builder": "@angular-devkit/build-angular:dev-server",
+                "options": {
+                    "browserTarget": "vuexy:build",
+                    "proxyConfig": "proxy.conf.json"
                 },
+                "configurations": {
+                    "production": {
+                    "browserTarget": "vuexy:build:production"
+                    },
+                    "hmr": {
+                    "hmr": true,
+                    "browserTarget": "vuexy:build:hmr"
+                    }
+                }
+                }
+,
                 "extract-i18n": {
                     "builder": "@angular-devkit/build-angular:extract-i18n",
                     "options": {

@@ -1,101 +1,76 @@
-<!-- Screen Header -->
 <div class="card">
-    <h5 class="card-header">{{ "ADD_CLASS" | translate }}</h5>
+  <h5 class="card-header">{{ "ADD_CLASS" | translate }}</h5>
 </div>
 
-<div *ngIf="isLoading" class="spinner-grow" role="status">
+<div *ngIf="isLoading && uploadProgress !== 'uploading'" class="d-flex justify-content-center my-4">
+  <div class="spinner-grow" role="status">
     <span class="sr-only">{{ "LOADING" | translate }}</span>
+  </div>
 </div>
 
-<!-- Add Class Form -->
-<form (ngSubmit)="onSubmit()" *ngIf="!isLoading" [formGroup]="newItemForm" class="card p-4">
-    <div class="row">
-
-        <!-- Class Name -->
-        <div class="form-group col-md-6 col-12">
-            <label for="nameEn">{{ "CLASS_NAME" | translate }}</label>
-            <input class="form-control" formControlName="nameEn" id="name" required type="text"/>
-            <small *ngIf="newItemForm.get('nameEn').hasError('required') && newItemForm.get('nameEn').touched"
-                   class="form-text text-danger">
-                {{ "REQUIRED_FIELD" | translate }}
-            </small>
-        </div>
-
-        <!-- Class Duration -->
-        <div class="form-group col-md-6 col-12">
-            <label for="isActive">{{ "DURATION" | translate }}</label>
-            <input class="form-control" formControlName="duration" id="duration" required type="number"/>
-            <small *ngIf="newItemForm.get('duration').hasError('required') && newItemForm.get('duration').touched"
-                   class="form-text text-danger">
-                {{ "REQUIRED_FIELD" | translate }}
-            </small>
-        </div>
-
-        <!-- Upload File -->
-        <div class="form-group col-md-6 col-12">
-            <fieldset class="form-group">
-                <label for="file-upload-single">{{ 'SELECT_VIDEO' | translate }}</label>
-                <div class="custom-file">
-                    <input #videoFileInput (change)="onFileSelected($event)" accept="video/*" class="custom-file-input"
-                           id="file-upload-single" type="file"/>
-                    <label class="custom-file-label">
-                        {{ selectedFileName || ('CHOOSE_FILE' | translate) }}
-                    </label>
-
-                </div>
-            </fieldset>
-            <h4 *ngIf="uploadProgress === 'preparing'">{{ 'PREPARE_VIDEO' | translate }}</h4>
-            <div *ngIf="uploadProgress === 'uploading'" class="progress-wrapper">
-                <ngb-progressbar
-                        [animated]="true"
-                        [height]="'50'"
-                        [showValue]="true"
-                        [striped]="true"
-                        [value]="uploadProgressValue"
-                        type="primary"
-                ></ngb-progressbar>
-            </div>
-            <div *ngIf="videoURL && uploadProgress === 'complete'">
-                <video *ngIf="videoPreviewUrl && uploadProgress !== 'uploading'" [src]="videoPreviewUrl" controls style="max-width: 100%; height: 400px;"></video>
-                <button (click)="deleteVideo()" class="btn btn-danger btn-sm round m-1" rippleEffect type="button">
-                    <i class="feather icon-x"></i>
-                </button>
-            </div>
-            <small *ngIf="newItemForm.get('mediaUrl').hasError('required') && !selectedFile"
-                   class="form-text text-danger">
-                {{ 'REQUIRED_FIELD' | translate }}
-            </small>
-        </div>
-
-        <!-- Class Status -->
-        <div class="form-group col-md-6 col-12">
-            <label for="classStatus">{{ "CLASS_STATUS" | translate }}</label>
-            <div class="d-flex">
-                <div class="custom-control custom-radio m-4">
-                    <input [checked]="classStatus == 1" [value]="1" class="custom-control-input layout-name"
-                           formControlName="classStatus" id="active" type="radio"/>
-                    <label class="custom-control-label" for="active">{{ "FREE" | translate }}</label>
-                </div>
-                <div class="custom-control custom-radio m-4">
-                    <input [checked]="classStatus == 2" [value]="2" class="custom-control-input layout-name"
-                           formControlName="classStatus" id="notActive" type="radio"/>
-                    <label class="custom-control-label" for="notActive">{{ "LOCKED" | translate }}</label>
-                </div>
-            </div>
-        </div>
+<form (ngSubmit)="onSubmit()" [formGroup]="newItemForm" class="card p-4">
+  <div class="row">
+    <div class="form-group col-md-6 col-12">
+      <label for="nameEn">{{ "CLASS_NAME" | translate }}</label>
+      <input class="form-control" formControlName="nameEn" id="name" required type="text" />
+      <small *ngIf="newItemForm.get('nameEn').hasError('required') && newItemForm.get('nameEn').touched" class="form-text text-danger">
+        {{ "REQUIRED_FIELD" | translate }}
+      </small>
     </div>
-</form>
 
-<!-- Actions -->
-<div class="mb-4">
-    <button (click)="onSubmit()" [disabled]="uploadProgress === 'uploading' || uploadProgress === 'preparing'"
-            class=" btn btn-primary col-3 mr-2"
-            rippleEffect type="submit">
-        {{ 'SUBMIT' | translate }}
+    <div class="form-group col-md-6 col-12">
+      <label for="duration">{{ "DURATION" | translate }}</label>
+      <input class="form-control" formControlName="duration" id="duration" required type="number" />
+      <small *ngIf="newItemForm.get('duration').hasError('required') && newItemForm.get('duration').touched" class="form-text text-danger">
+        {{ "REQUIRED_FIELD" | translate }}
+      </small>
+    </div>
+
+    <div *ngIf="!currentItem" class="form-group col-md-6 col-12">
+      <fieldset class="form-group">
+        <label for="file-upload-single">{{ 'SELECT_VIDEO' | translate }}</label>
+        <div class="custom-file">
+          <input #videoFileInput (change)="onFileSelected($event)" accept="video/*" class="custom-file-input" id="file-upload-single" type="file" />
+          <label class="custom-file-label">
+            {{ selectedFileName || ('CHOOSE_FILE' | translate) }}
+          </label>
+        </div>
+      </fieldset>
+
+      <h4 *ngIf="uploadProgress === 'preparing'">{{ 'PREPARE_VIDEO' | translate }}</h4>
+      <div *ngIf="uploadProgress === 'uploading'" class="progress-wrapper mt-2">
+        <ngb-progressbar [animated]="true" [height]="'20px'" [showValue]="true" [striped]="true" [value]="uploadProgressValue" type="primary"></ngb-progressbar>
+      </div>
+      
+      <div *ngIf="videoPreviewUrl && uploadProgress !== 'uploading'" class="mt-2">
+        <video [src]="videoPreviewUrl" controls style="max-width: 100%; border-radius: 5px;"></video>
+        <button (click)="deleteVideo()" class="btn btn-danger btn-sm round m-1" rippleEffect type="button">
+          <i class="feather icon-x"></i>
+        </button>
+      </div>
+    </div>
+
+    <div class="form-group col-md-6 col-12">
+      <label for="classStatus">{{ "CLASS_STATUS" | translate }}</label>
+      <div class="d-flex">
+        <div class="custom-control custom-radio my-1">
+          <input [value]="1" class="custom-control-input" formControlName="classStatus" id="active" type="radio" />
+          <label class="custom-control-label" for="active">{{ "FREE" | translate }}</label>
+        </div>
+        <div class="custom-control custom-radio my-1 mx-2">
+          <input [value]="2" class="custom-control-input" formControlName="classStatus" id="notActive" type="radio" />
+          <label class="custom-control-label" for="notActive">{{ "LOCKED" | translate }}</label>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="mt-4">
+    <button [disabled]="isLoading || uploadProgress === 'uploading'" class="btn btn-primary mr-2" rippleEffect type="submit">
+      {{ 'SUBMIT' | translate }}
     </button>
-    <button (click)="back()" [disabled]="uploadProgress === 'uploading' || uploadProgress === 'preparing'"
-            class="btn btn-outline-secondary col-3"
-            rippleEffect type="reset">
-        {{ 'CANCEL' | translate }}
+    <button (click)="back()" [disabled]="isLoading || uploadProgress === 'uploading'" class="btn btn-outline-secondary" rippleEffect type="button">
+      {{ 'CANCEL' | translate }}
     </button>
-</div>
+  </div>
+</form>

@@ -11,8 +11,8 @@ export abstract class ApiService {
     protected token: string;
 
     constructor(
-        private http: HttpClient,
-        private _snackBar: ToastrService,
+        protected http: HttpClient,
+        protected _snackBar: ToastrService,
     ) {
     }
 

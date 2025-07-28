@@ -196,6 +196,15 @@ export const instructorMenu: CoreMenu[] = [
         type: 'item',
         role: ['organization'],
         url: 'apps/support/list/new',
+    },
+    {
+        id: 'Wallet Transaction',
+        title: 'Wallet Transaction',
+        translate: 'MENU.APP.Wallet',
+        icon: 'credit-card',
+        type: 'item',
+        role: ['organization'],
+        url: 'apps/transaction-history/wallet',
     }
 ];
 

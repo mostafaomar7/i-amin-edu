@@ -83,32 +83,32 @@ export class CourseListService extends ApiService {
     return this.postMultiDataResponse(`vimeo`, formData);
   }
 
-  async uploadVideoApiVideo(file: File, courseId: number, classType: number): Promise<string | null> {
-    try {
-        const tokenResponse = await this.getApiVideoUploadToken<any>();
-        if (!tokenResponse.status) throw new Error(tokenResponse.message);
+//   async uploadVideoApiVideo(file: File, courseId: number, classType: number): Promise<string | null> {
+//     try {
+//         const tokenResponse = await this.getApiVideoUploadToken<any>();
+//         if (!tokenResponse.status) throw new Error(tokenResponse.message);
 
-        const uploadUrl = tokenResponse.innerData.uploadUrl;
-        const uploadResponse = await this.uploadToApiVideo<any>(uploadUrl, file);
-        if (!uploadResponse.status) throw new Error(uploadResponse.message);
+//         const uploadUrl = tokenResponse.innerData.uploadUrl;
+//         const uploadResponse = await this.uploadToApiVideo<any>(uploadUrl, file);
+//         if (!uploadResponse.status) throw new Error(uploadResponse.message);
 
-        const videoId = uploadResponse.innerData.videoId;
+//         const videoId = uploadResponse.innerData.videoId;
 
-        const meta = {
-            videoId,
-            title: file.name,
-            courseId,
-            classType,
-        };
+//         const meta = {
+//             videoId,
+//             title: file.name,
+//             courseId,
+//             classType,
+//         };
 
-        const saveResponse = await this.saveApiVideoMetadata<any>(meta);
-        if (!saveResponse.status) throw new Error(saveResponse.message);
+//         const saveResponse = await this.saveApiVideoMetadata<any>(meta);
+//         if (!saveResponse.status) throw new Error(saveResponse.message);
 
-        return videoId;
-    } catch (err) {
-        this._toastrService.error(err.message || 'Video upload failed');
-        return null;
-    }
-}
+//         return videoId;
+//     } catch (err) {
+//         this._toastrService.error(err.message || 'Video upload failed');
+//         return null;
+//     }
+// }
 
 }

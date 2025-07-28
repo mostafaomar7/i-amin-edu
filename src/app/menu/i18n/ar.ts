@@ -27,7 +27,8 @@ export const locale = {
                 NOTIFICATIONS: 'قائمة الإشعارات',
                 TERMS_AND_CONDITIONS: 'الشروط والأحكام',
                 HELP_AND_SUPPORT: 'المساعدة والدعم',
-                SETTINGS: 'الإعدادات'
+                SETTINGS: 'الإعدادات',
+                Wallet : "معاملة المحفظة"
             },
             OTHERS: {
                 SUPPORT: 'الدعم والمساعدة'

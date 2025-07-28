@@ -1,0 +1,212 @@
+<div class="wallet-cards" *ngIf="stats">
+  <div class="card">
+    <h4>العمليات الناجحة</h4>
+    <p>{{ stats.successfulCount }}</p>
+  </div>
+  <div class="card">
+    <h4>العمليات الفاشلة</h4>
+    <p>{{ stats.failedCount }}</p>
+  </div>
+  <div class="card">
+    <h4>قيمة الكورسات</h4>
+    <p>{{ stats.coursesAmount }} EGP</p>
+  </div>
+  <div class="card">
+    <h4>قيمة الجلسات</h4>
+    <p>{{ stats.sessionsAmount }} EGP</p>
+  </div>
+  <div class="card total">
+    <h4>الإجمالي</h4>
+    <p>{{ stats.totalAmount.toFixed(2) }} EGP</p>
+  </div>
+</div>
+
+<!-- Loading for Course Transactions -->
+<div *ngIf="isCourseLoading" class="spinner-grow" role="status">
+  <span class="sr-only">Loading...</span>
+</div>
+
+<div *ngIf="!isCourseLoading">
+  <div class="d-flex justify-content-between mb-2">
+    <div>
+      <label>
+        Show
+        <select [(ngModel)]="courseSelectedLimit" (change)="onCourseLimitChange()">
+          <option [value]="10">10</option>
+          <option [value]="25">25</option>
+          <option [value]="50">50</option>
+        </select>
+        entries
+      </label>
+    </div>
+    <div>
+      <input
+  type="search"
+  placeholder="Search..."
+  [(ngModel)]="searchCourse"
+  (ngModelChange)="onCourseSearchChange()"
+  style="outline: none; border: 1px solid #f1f1f1; padding: 5px;"
+/>
+
+    </div>
+  </div>
+
+  <h3 style="text-align: center; margin-bottom: 10px;">course’s transaction wallet</h3>
+
+  <ngx-datatable
+    class="bootstrap core-bootstrap"
+    [rows]="rows"
+    [columnMode]="ColumnMode.force"
+    [headerHeight]="50"
+    [footerHeight]="50"
+    [limit]="courseSelectedLimit"
+    [count]="courseTotal"
+    [offset]="courseCurrentPage - 1"
+    [rowHeight]="50"
+    (page)="onCoursePageChange($event)"
+  >
+    <ngx-datatable-column name="#" [width]="40">
+      <ng-template let-rowIndex="rowIndex" ngx-datatable-cell-template>
+        {{ rowIndex + 1 + (courseCurrentPage - 1) * courseSelectedLimit }}
+      </ng-template>
+    </ngx-datatable-column>
+
+    <ngx-datatable-column name="Image">
+      <ng-template let-row="row" ngx-datatable-cell-template>
+        <img [src]="row.studentcourse?.course?.coverImage" alt="" style="width: 50px; height: auto;" />
+      </ng-template>
+    </ngx-datatable-column>
+
+    <ngx-datatable-column name="Course Name">
+      <ng-template let-row="row" ngx-datatable-cell-template>
+        {{ row.studentcourse?.course?.nameEn }}
+      </ng-template>
+    </ngx-datatable-column>
+
+    <ngx-datatable-column name="Student Name">
+      <ng-template let-row="row" ngx-datatable-cell-template>
+        {{ row.studentcourse?.student?.user?.firstName }} {{ row.studentcourse?.student?.user?.lastName }}
+      </ng-template>
+    </ngx-datatable-column>
+
+    <ngx-datatable-column name="Amount" prop="amount"></ngx-datatable-column>
+
+    <ngx-datatable-column name="Status">
+      <ng-template let-row="row" ngx-datatable-cell-template>
+        {{ row.transactinStatus === 2 ? 'ناجحة' : 'فاشلة' }}
+      </ng-template>
+    </ngx-datatable-column>
+
+    <ngx-datatable-column name="Created At">
+      <ng-template let-row="row" ngx-datatable-cell-template>
+        {{ row.createdAt | date: 'medium' }}
+      </ng-template>
+    </ngx-datatable-column>
+  </ngx-datatable>
+</div>
+
+<!-- Loading for Session Bookings -->
+<div *ngIf="isSessionLoading" class="spinner-grow" role="status" style="margin-top: 40px;">
+  <span class="sr-only">Loading...</span>
+</div>
+
+<div *ngIf="!isSessionLoading" style="margin-top: 40px;">
+  <div class="d-flex justify-content-between mb-2">
+    <div>
+      <label>
+        Show
+        <select [(ngModel)]="sessionSelectedLimit" (change)="onSessionLimitChange()">
+          <option [value]="10">10</option>
+          <option [value]="25">25</option>
+          <option [value]="50">50</option>
+        </select>
+        entries
+      </label>
+    </div>
+    <div>
+      <input
+  type="text"
+  placeholder="Search student name..."
+  [(ngModel)]="searchSession"
+  (ngModelChange)="onSessionSearchChange()"
+  style="padding: 5px; border: 1px solid #ccc;"
+/>
+
+    </div>
+  </div>
+
+  <h3 style="text-align: center;">Session Booking Wallet</h3>
+
+  <ngx-datatable
+    class="bootstrap core-bootstrap"
+    [rows]="sessionRows"
+    [columnMode]="ColumnMode.force"
+    [headerHeight]="50"
+    [footerHeight]="50"
+    [limit]="sessionSelectedLimit"
+    [count]="sessionTotal"
+    [offset]="sessionCurrentPage - 1"
+    [rowHeight]="50"
+    (page)="onSessionPageChange($event)"
+  >
+    <ngx-datatable-column name="#">
+      <ng-template let-rowIndex="rowIndex" ngx-datatable-cell-template>
+        {{ rowIndex + 1 + (sessionCurrentPage - 1) * sessionSelectedLimit }}
+      </ng-template>
+    </ngx-datatable-column>
+
+    <ngx-datatable-column name="Student Name">
+      <ng-template let-row="row" ngx-datatable-cell-template>
+        {{ row.studentName }}
+      </ng-template>
+    </ngx-datatable-column>
+
+    <ngx-datatable-column name="Consulting Type">
+      <ng-template let-row="row" ngx-datatable-cell-template>
+        {{ row.consultingType }}
+      </ng-template>
+    </ngx-datatable-column>
+
+    <ngx-datatable-column name="Date & Time">
+      <ng-template let-row="row" ngx-datatable-cell-template>
+        {{ row.dateTime | date: 'medium' }}
+      </ng-template>
+    </ngx-datatable-column>
+
+    <ngx-datatable-column name="Consultation Title">
+      <ng-template let-row="row" ngx-datatable-cell-template>
+        {{ row.title }}
+      </ng-template>
+    </ngx-datatable-column>
+
+    <ngx-datatable-column name="Consultation Details">
+      <ng-template let-row="row" ngx-datatable-cell-template>
+        {{ row.details }}
+      </ng-template>
+    </ngx-datatable-column>
+
+    <ngx-datatable-column name="Amount (After Discount)">
+      <ng-template let-row="row" ngx-datatable-cell-template>
+        {{ row.amount }} EGP
+      </ng-template>
+    </ngx-datatable-column>
+
+    <ngx-datatable-column name="SDK Link">
+      <ng-template let-row="row" ngx-datatable-cell-template>
+        <a [href]="'https://zegocloud.com/sdk/' + row.roomId" target="_blank">{{ row.roomId }}</a>
+      </ng-template>
+    </ngx-datatable-column>
+
+    <ngx-datatable-column name="Transaction Status">
+      <ng-template let-row="row" ngx-datatable-cell-template>
+        {{ row.transactionStatus }}
+      </ng-template>
+    </ngx-datatable-column>
+
+    <ngx-datatable-column name="Created At">
+      <ng-template let-row="row" ngx-datatable-cell-template>
+        {{ row.createdAt | date: 'medium' }}
+      </ng-template>
+    </ngx-datatable-column>
+  </ngx-datatable>
+</div>

@@ -27,7 +27,8 @@ export const locale = {
                 NOTIFICATIONS: 'Notification List',
                 TERMS_AND_CONDITIONS: 'Terms and Conditions',
                 HELP_AND_SUPPORT: 'Help and Support',
-                SETTINGS: 'Settings'
+                SETTINGS: 'Settings',
+                Wallet : "Wallet Transaction"
             },
             OTHERS: {
                 SUPPORT: 'Support & Help'

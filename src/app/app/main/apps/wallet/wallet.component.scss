@@ -1,0 +1,99 @@
+@import '@core/scss/angular/libs/datatables.component.scss';
+@import 'G:/Valu/01/iam-in-angular/iam-in-angular-develop/src/@core/scss/angular/libs/datatables.component.scss';
+// @import '@core/scss/base/pages/app-subject.scss';
+@import '@core/scss/angular/libs/select.component.scss';
+@import '~@swimlane/ngx-datatable/index.css';
+@import '~@swimlane/ngx-datatable/themes/bootstrap.scss';
+@import '~@swimlane/ngx-datatable/assets/icons.css';
+@import '@core/scss/base/colors';
+@import '@core/scss/base/components/include'; // Components includes
+
+.wallet-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(225px, 1fr));
+  gap: 1.5rem;
+  padding: 2rem;
+
+  .card {
+    background-color: #ffffff;
+    border-radius: 16px;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+    padding: 1.5rem;
+    text-align: center;
+    transition: all 0.3s ease;
+    border: 1px solid #f0f0f0;
+
+    h4 {
+      margin-bottom: 0.75rem;
+      font-size: 1rem;
+      font-weight: 600;
+      color: #444;
+    }
+
+    p {
+      font-size: 1.6rem;
+      color: #007bff;
+      font-weight: bold;
+      margin: 0;
+    }
+
+    &:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 20px rgba(0, 123, 255, 0.15);
+    }
+
+    &.total {
+      background-color: #007bff;
+      color: #fff;
+      grid-column: 1 / -1; // يأخذ صف لوحده
+      justify-self: center;
+      max-width: 280px;
+
+      h4, p {
+        color: #fff;
+      }
+    }
+  }
+}
+.table-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  padding: 12px 16px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
+
+.select-label select {
+  padding: 6px 10px;
+  font-size: 14px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  outline: none;
+  background-color: #fff;
+}
+
+.select-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  color: #333;
+}
+
+.search-input {
+  padding: 6px 12px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+  outline: none;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.search-input:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 4px rgba(0, 123, 255, 0.3);
+}
+
