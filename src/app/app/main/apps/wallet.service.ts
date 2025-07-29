@@ -20,26 +20,21 @@ export class WalletService extends ApiService {
   }
 
   async getCoursePurchases(
-    page: number = 1,
-    limit: number = 10,
-    search: string = '',
-    studentLName: string = '',
-    order: string = ''
-  ): Promise<ApiResult<any>> {
-    let route = `${this.baseRoute}/course-purchases?page=${page}&limit=${limit}`;
+  page: number = 1,
+  limit: number = 10,
+  studentFName: string = '',
+  studentLName: string = '',
+  order: string = ''
+): Promise<ApiResult<any>> {
+  let route = `${this.baseRoute}/course-purchases?page=${page}&limit=${limit}`;
 
-    if (search) {
-      route += `&search=${encodeURIComponent(search)}`;
-    }
-    if (studentLName) {
-      route += `&studentLName=${encodeURIComponent(studentLName)}`;
-    }
-    if (order) {
-      route += `&order=${encodeURIComponent(order)}`;
-    }
+  if (studentFName) route += `&studentFName=${encodeURIComponent(studentFName)}`;
+  if (studentLName) route += `&studentLName=${encodeURIComponent(studentLName)}`;
+  if (order) route += `&order=${encodeURIComponent(order)}`;
 
-    return this.getResponse(route);
-  }
+  return this.getResponse(route);
+}
+
   async getSessionBookings(
   page: number = 1,
   limit: number = 10,
@@ -57,3 +52,4 @@ export class WalletService extends ApiService {
 }
 
 }
+export type Locale = 'en' | 'ar';

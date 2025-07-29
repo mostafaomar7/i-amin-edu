@@ -1,22 +1,24 @@
+<!-- wallet.component.html -->
+
 <div class="wallet-cards" *ngIf="stats">
   <div class="card">
-    <h4>العمليات الناجحة</h4>
+    <h4>{{ 'WALLET.SUCCESSFUL_TRANSACTIONS' | translate }}</h4>
     <p>{{ stats.successfulCount }}</p>
   </div>
   <div class="card">
-    <h4>العمليات الفاشلة</h4>
+    <h4>{{ 'WALLET.FAILED_TRANSACTIONS' | translate }}</h4>
     <p>{{ stats.failedCount }}</p>
   </div>
   <div class="card">
-    <h4>قيمة الكورسات</h4>
+    <h4>{{ 'WALLET.COURSES_AMOUNT' | translate }}</h4>
     <p>{{ stats.coursesAmount }} EGP</p>
   </div>
   <div class="card">
-    <h4>قيمة الجلسات</h4>
+    <h4>{{ 'WALLET.SESSIONS_AMOUNT' | translate }}</h4>
     <p>{{ stats.sessionsAmount }} EGP</p>
   </div>
   <div class="card total">
-    <h4>الإجمالي</h4>
+    <h4>{{ 'WALLET.TOTAL' | translate }}</h4>
     <p>{{ stats.totalAmount.toFixed(2) }} EGP</p>
   </div>
 </div>
@@ -30,28 +32,29 @@
   <div class="d-flex justify-content-between mb-2">
     <div>
       <label>
-        Show
+        {{ 'WALLET.SHOW' | translate }}
         <select [(ngModel)]="courseSelectedLimit" (change)="onCourseLimitChange()">
           <option [value]="10">10</option>
           <option [value]="25">25</option>
           <option [value]="50">50</option>
         </select>
-        entries
+        {{ 'WALLET.ENTRIES' | translate }}
       </label>
     </div>
     <div>
       <input
-  type="search"
-  placeholder="Search..."
-  [(ngModel)]="searchCourse"
-  (ngModelChange)="onCourseSearchChange()"
-  style="outline: none; border: 1px solid #f1f1f1; padding: 5px;"
-/>
-
+        type="search"
+        [placeholder]="'WALLET.SEARCH' | translate"
+        [(ngModel)]="searchCourse"
+        (ngModelChange)="onCourseSearchChange()"
+        style="outline: none; border: 1px solid #f1f1f1; padding: 5px;"
+      />
     </div>
   </div>
 
-  <h3 style="text-align: center; margin-bottom: 10px;">course’s transaction wallet</h3>
+  <h3 style="text-align: left; margin-bottom: 10px;">
+    {{ 'WALLET.COURSE_TRANSACTION_WALLET' | translate }}
+  </h3>
 
   <ngx-datatable
     class="bootstrap core-bootstrap"
@@ -65,39 +68,39 @@
     [rowHeight]="50"
     (page)="onCoursePageChange($event)"
   >
-    <ngx-datatable-column name="#" [width]="40">
+    <ngx-datatable-column [name]="'#'" [width]="40">
       <ng-template let-rowIndex="rowIndex" ngx-datatable-cell-template>
         {{ rowIndex + 1 + (courseCurrentPage - 1) * courseSelectedLimit }}
       </ng-template>
     </ngx-datatable-column>
 
-    <ngx-datatable-column name="Image">
+    <ngx-datatable-column [name]="'WALLET.IMAGE' | translate">
       <ng-template let-row="row" ngx-datatable-cell-template>
         <img [src]="row.studentcourse?.course?.coverImage" alt="" style="width: 50px; height: auto;" />
       </ng-template>
     </ngx-datatable-column>
 
-    <ngx-datatable-column name="Course Name">
+    <ngx-datatable-column [name]="'WALLET.COURSE_NAME' | translate">
       <ng-template let-row="row" ngx-datatable-cell-template>
         {{ row.studentcourse?.course?.nameEn }}
       </ng-template>
     </ngx-datatable-column>
 
-    <ngx-datatable-column name="Student Name">
+    <ngx-datatable-column [name]="'WALLET.STUDENT_NAME' | translate">
       <ng-template let-row="row" ngx-datatable-cell-template>
         {{ row.studentcourse?.student?.user?.firstName }} {{ row.studentcourse?.student?.user?.lastName }}
       </ng-template>
     </ngx-datatable-column>
 
-    <ngx-datatable-column name="Amount" prop="amount"></ngx-datatable-column>
+    <ngx-datatable-column [name]="'WALLET.AMOUNT' | translate" prop="amount"></ngx-datatable-column>
 
-    <ngx-datatable-column name="Status">
+    <ngx-datatable-column [name]="'WALLET.STATUS' | translate">
       <ng-template let-row="row" ngx-datatable-cell-template>
-        {{ row.transactinStatus === 2 ? 'ناجحة' : 'فاشلة' }}
+        {{ row.transactinStatus === 2 ? ('WALLET.SUCCESS' | translate) : ('WALLET.FAILED' | translate) }}
       </ng-template>
     </ngx-datatable-column>
 
-    <ngx-datatable-column name="Created At">
+    <ngx-datatable-column [name]="'WALLET.CREATED_AT' | translate">
       <ng-template let-row="row" ngx-datatable-cell-template>
         {{ row.createdAt | date: 'medium' }}
       </ng-template>
@@ -114,28 +117,29 @@
   <div class="d-flex justify-content-between mb-2">
     <div>
       <label>
-        Show
+        {{ 'WALLET.SHOW' | translate }}
         <select [(ngModel)]="sessionSelectedLimit" (change)="onSessionLimitChange()">
           <option [value]="10">10</option>
           <option [value]="25">25</option>
           <option [value]="50">50</option>
         </select>
-        entries
+        {{ 'WALLET.ENTRIES' | translate }}
       </label>
     </div>
     <div>
       <input
-  type="text"
-  placeholder="Search student name..."
-  [(ngModel)]="searchSession"
-  (ngModelChange)="onSessionSearchChange()"
-  style="padding: 5px; border: 1px solid #ccc;"
-/>
-
+        type="text"
+        [placeholder]="'WALLET.SEARCH_STUDENT' | translate"
+        [(ngModel)]="searchSession"
+        (ngModelChange)="onSessionSearchChange()"
+        style="padding: 5px; border: 1px solid #ccc;"
+      />
     </div>
   </div>
 
-  <h3 style="text-align: center;">Session Booking Wallet</h3>
+  <h3 style="text-align: left;">
+    {{ 'WALLET.SESSION_BOOKING_WALLET' | translate }}
+  </h3>
 
   <ngx-datatable
     class="bootstrap core-bootstrap"
@@ -149,61 +153,61 @@
     [rowHeight]="50"
     (page)="onSessionPageChange($event)"
   >
-    <ngx-datatable-column name="#">
+    <ngx-datatable-column [name]="'#'">
       <ng-template let-rowIndex="rowIndex" ngx-datatable-cell-template>
         {{ rowIndex + 1 + (sessionCurrentPage - 1) * sessionSelectedLimit }}
       </ng-template>
     </ngx-datatable-column>
 
-    <ngx-datatable-column name="Student Name">
+    <ngx-datatable-column [name]="'WALLET.STUDENT_NAME' | translate">
       <ng-template let-row="row" ngx-datatable-cell-template>
         {{ row.studentName }}
       </ng-template>
     </ngx-datatable-column>
 
-    <ngx-datatable-column name="Consulting Type">
+    <ngx-datatable-column [name]="'WALLET.CONSULTING_TYPE' | translate">
       <ng-template let-row="row" ngx-datatable-cell-template>
         {{ row.consultingType }}
       </ng-template>
     </ngx-datatable-column>
 
-    <ngx-datatable-column name="Date & Time">
+    <ngx-datatable-column [name]="'WALLET.DATE_TIME' | translate">
       <ng-template let-row="row" ngx-datatable-cell-template>
         {{ row.dateTime | date: 'medium' }}
       </ng-template>
     </ngx-datatable-column>
 
-    <ngx-datatable-column name="Consultation Title">
+    <ngx-datatable-column [name]="'WALLET.CONSULTATION_TITLE' | translate">
       <ng-template let-row="row" ngx-datatable-cell-template>
         {{ row.title }}
       </ng-template>
     </ngx-datatable-column>
 
-    <ngx-datatable-column name="Consultation Details">
+    <ngx-datatable-column [name]="'WALLET.CONSULTATION_DETAILS' | translate">
       <ng-template let-row="row" ngx-datatable-cell-template>
         {{ row.details }}
       </ng-template>
     </ngx-datatable-column>
 
-    <ngx-datatable-column name="Amount (After Discount)">
+    <ngx-datatable-column [name]="'WALLET.AMOUNT_AFTER_DISCOUNT' | translate">
       <ng-template let-row="row" ngx-datatable-cell-template>
         {{ row.amount }} EGP
       </ng-template>
     </ngx-datatable-column>
 
-    <ngx-datatable-column name="SDK Link">
+    <ngx-datatable-column [name]="'WALLET.SDK_LINK' | translate">
       <ng-template let-row="row" ngx-datatable-cell-template>
         <a [href]="'https://zegocloud.com/sdk/' + row.roomId" target="_blank">{{ row.roomId }}</a>
       </ng-template>
     </ngx-datatable-column>
 
-    <ngx-datatable-column name="Transaction Status">
+    <ngx-datatable-column [name]="'WALLET.TRANSACTION_STATUS' | translate">
       <ng-template let-row="row" ngx-datatable-cell-template>
         {{ row.transactionStatus }}
       </ng-template>
     </ngx-datatable-column>
 
-    <ngx-datatable-column name="Created At">
+    <ngx-datatable-column [name]="'WALLET.CREATED_AT' | translate">
       <ng-template let-row="row" ngx-datatable-cell-template>
         {{ row.createdAt | date: 'medium' }}
       </ng-template>

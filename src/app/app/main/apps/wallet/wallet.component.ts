@@ -3,6 +3,11 @@ import { WalletService } from '../wallet.service';
 import { ColumnMode, DatatableComponent } from '@swimlane/ngx-datatable';
 import { Subject } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
+import { locale as english } from '../wallet/en';
+import { locale as arabic } from '../wallet/ar';
+
+import { CoreTranslationService } from '@core/services/translation.service';
+
 
 @Component({
   selector: 'app-wallet',
@@ -11,7 +16,9 @@ import { debounceTime } from 'rxjs/operators';
 })
 export class WalletComponent implements OnInit {
   stats: any = null;
-
+  lang: 'en' | 'ar' = 'ar'; // لغة افتراضية ممكن تغيرها
+  
+  translations: any;
   // Course Transactions
   rows = [];
   searchCourse = '';
@@ -36,7 +43,9 @@ export class WalletComponent implements OnInit {
 
   @ViewChild(DatatableComponent) table: DatatableComponent;
 
-  constructor(private walletService: WalletService) {}
+  constructor(private walletService: WalletService , private _coreTranslationService: CoreTranslationService) {
+      this._coreTranslationService.translate(english, arabic);
+  }
 
   ngOnInit(): void {
     this.loadStats();
@@ -69,10 +78,13 @@ export class WalletComponent implements OnInit {
   this.isCourseLoading = true;
   try {
     console.log('Search value:', this.searchCourse);
+    const [firstName, lastName] = this.searchCourse.trim().toLowerCase().split(' ');
+
     const res = await this.walletService.getCoursePurchases(
       this.courseCurrentPage,
       this.courseSelectedLimit,
-      this.searchCourse.trim()
+      firstName || '',
+      lastName || ''
     );
     console.log('Transactions response:', res);
     if (res.status) {
@@ -108,12 +120,16 @@ export class WalletComponent implements OnInit {
   async loadSessionBookings() {
     this.isSessionLoading = true;
     try {
+      
+      const [firstName, lastName] = this.searchSession.trim().toLowerCase().split(' ');
+
       const res = await this.walletService.getSessionBookings(
         this.sessionCurrentPage,
         this.sessionSelectedLimit,
-        this.searchSession.trim(),
-        this.searchSession.trim()
+        firstName || '',
+        lastName || ''
       );
+
       console.log('session response:', res);
       console.log('Search session keyword:', this.searchSession);
       if (res.status) {

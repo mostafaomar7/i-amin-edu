@@ -136,21 +136,22 @@
     </div>
 
     <!-- Course Status -->
-    <div class="form-group col-md-6 col-12">
-      <label for="isActive">{{ "status" | translate }}</label>
-      <div class="d-flex">
-        <div class="custom-control custom-radio m-4">
-          <input type="radio" id="active" formControlName="isActive" class="custom-control-input layout-name"
-            [value]="true" [checked]="isActive" />
-          <label class="custom-control-label" for="active">{{ "is_active" | translate }}</label>
-        </div>
-        <div class="custom-control custom-radio m-4">
-          <input type="radio" id="notActive" formControlName="isActive" class="custom-control-input layout-name"
-            [value]="false" [checked]="!isActive" />
-          <label class="custom-control-label" for="notActive">{{ "not_active" | translate }}</label>
-        </div>
-      </div>
+<div class="form-group col-md-6 col-12" *ngIf="userType !== 3">
+  <label for="isActive">{{ "status" | translate }}</label>
+  <div class="d-flex">
+    <div class="custom-control custom-radio m-4">
+      <input type="radio" id="active" formControlName="isActive" class="custom-control-input layout-name"
+        [value]="true" />
+      <label class="custom-control-label" for="active">{{ "is_active" | translate }}</label>
     </div>
+    <div class="custom-control custom-radio m-4">
+      <input type="radio" id="notActive" formControlName="isActive" class="custom-control-input layout-name"
+        [value]="false" />
+      <label class="custom-control-label" for="notActive">{{ "not_active" | translate }}</label>
+    </div>
+  </div>
+</div>
+
   </div>
 </form>
 

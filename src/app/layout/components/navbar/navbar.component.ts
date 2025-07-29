@@ -14,6 +14,9 @@ import { CoreMediaService } from '@core/services/media.service';
 import { User } from 'app/auth/models';
 import { Router } from '@angular/router';
 import { UserLoginData } from '../../../main/pages/authentication/interfaces/user-login';
+import { HttpClient } from '@angular/common/http';
+import { NotificationsApiService } from './notifications-api.service';
+
 
 @Component({
     selector: 'app-navbar',
@@ -44,6 +47,14 @@ export class NavbarComponent implements OnInit, OnDestroy {
     // Private
     private _unsubscribeAll: Subject<any>;
 
+    public notifications: any[] = [];
+public unreadCount = 0;
+public showNotifications = false;
+
+isLast(noti: any): boolean {
+  return this.notifications[this.notifications.length - 1] === noti;
+}
+   
 
     constructor(
         private _router: Router,
@@ -52,7 +63,9 @@ export class NavbarComponent implements OnInit, OnDestroy {
         private _coreMediaService: CoreMediaService,
         private _coreSidebarService: CoreSidebarService,
         private _mediaObserver: MediaObserver,
-        public _translateService: TranslateService
+        public _translateService: TranslateService,
+        private _http: HttpClient,
+        private _notificationsService: NotificationsApiService
     ) {
         // this._authenticationService.currentUser.subscribe(x => (this.currentUser = x));
 
@@ -100,6 +113,36 @@ export class NavbarComponent implements OnInit, OnDestroy {
     toggleSidebar(key): void {
         this._coreSidebarService.getSidebarRegistry(key).toggleOpen();
     }
+     toggleNotifications() {
+  this.showNotifications = !this.showNotifications;
+  if (this.showNotifications) {
+    this.fetchNotifications();
+  }
+}
+
+fetchNotifications() {
+  this._notificationsService.getAllNotifications()
+    .pipe(takeUntil(this._unsubscribeAll))
+    .subscribe((res: any) => {
+      if (res?.status && res?.innerData?.notifications) {
+        console.log('Notification Response:', res);
+        // هنا بنجيب المصفوفة من innerData.notifications بدل res.data
+        this.notifications = res.innerData.notifications.sort(
+          (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+        );
+        this.unreadCount = this.notifications.filter(n => !n.isRead).length;
+      } else {
+        this.notifications = [];
+        this.unreadCount = 0;
+      }
+    }, error => {
+      console.error('Notification fetch failed', error);
+      this.notifications = [];
+      this.unreadCount = 0;
+    });
+}
+
+
 
     /**
      * Set the language
@@ -199,6 +242,8 @@ export class NavbarComponent implements OnInit, OnDestroy {
         this.selectedLanguage = _.find(this.languageOptions, {
             id: this._translateService.currentLang
         });
+
+        this.fetchNotifications();
 
     }
 

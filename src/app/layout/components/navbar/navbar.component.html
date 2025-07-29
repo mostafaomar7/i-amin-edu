@@ -34,8 +34,35 @@
         </li>
         <!--/ Toggle skin -->
     </div>
-
+    
     <ul class="nav navbar-nav align-items-center ml-auto">
+        <li *ngIf="userData?.userType === 3" class="nav-item dropdown" ngbDropdown>
+  <a class="nav-link" id="dropdownNotification" ngbDropdownToggle (click)="fetchNotifications()">
+    <span class="ficon" data-feather="bell"></span>
+    <span *ngIf="unreadCount >= 0" class="badge badge-pill badge-danger badge-up mx-1">
+        {{ unreadCount }}
+    </span>
+    
+  </a>
+
+  <div class="dropdown-menu dropdown-menu-right" ngbDropdownMenu>
+    <h6 class="dropdown-header">Notifications</h6>
+
+    <div *ngIf="notifications.length === 0" class="dropdown-item text-muted">
+      No notifications
+    </div>
+
+    <a *ngFor="let noti of notifications" class="dropdown-item">
+      <small class="font-weight-bold">{{ noti.titleAr || noti.title }}</small><br />
+      <small class="text-muted">{{ noti.createdAt | date:'short' }}</small><br />
+      <small class="text-muted">{{ noti.bodyAr || noti.body }}</small>
+    </a>
+  </div>
+</li>
+
+
+
+
         <!-- ? Language selection | Uncomment if needed-->
         <li class="nav-item dropdown dropdown-language" ngbDropdown>
             <a class="nav-link dropdown-toggle" id="dropdown-flag" ngbDropdownToggle>
@@ -50,6 +77,10 @@
             </div>
         </li>
         <!--/ Language selection -->
+        <!-- Notifications -->
+
+
+
 
         <!-- User Dropdown -->
         <li class="nav-item dropdown-user" ngbDropdown>

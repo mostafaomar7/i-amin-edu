@@ -86,6 +86,11 @@ export class NewCourseComponent implements OnInit {
     });
     if (this.userType === 3) {
       this.courseForm.get('teacherId').setValue(this.instructorId);
+      this.courseForm.get('isActive').setValue(false); // إجبار الحالة على not active
+    }
+
+    if (this.userType === 3) {
+      this.courseForm.get('teacherId').setValue(this.instructorId);
     }
     this._coreConfigService.config.subscribe(config => {
       this.locale = config.app.appLanguage;
@@ -189,66 +194,52 @@ export class NewCourseComponent implements OnInit {
  */
 
 async saveItem() {
-  const userData = JSON.parse(localStorage.getItem('userData'));
-  const isInstructor = userData?.userType === 3;
+  const formData = { ...this.courseForm.value };
 
-  if (!isInstructor) {
-    const centerId = userData?.id || null;
-    if (!centerId) {
-      console.error("centerId غير موجود في userData");
-      this.ConfirmColorOpen("centerId غير متوفر في بيانات المستخدم", false);
-      return;
-    }
-    this.courseForm.get('centerId').setValue(centerId);
-  } else {
-    this.courseForm.get('centerId').setValue(null);
+  // احذف centerId لو فاضي أو null
+  if (!formData.centerId) {
+    delete formData.centerId;
   }
 
-  console.log('Sending course data:', this.courseForm.value);
+  console.log('Sending course data:', formData);
 
-  await this._courseListService.addItem(this.courseForm.value).then(response => {
-    console.log('Add course response:', response);
+  this.isLoading = true;
+  await this._courseListService.addItem(formData).then(response => {
     this.isLoading = false;
     if (response.status) {
       this.back();
     } else {
       this.ConfirmColorOpen(response.message, false);
     }
-  }).catch(err => {
+  }).catch(error => {
     this.isLoading = false;
-    console.error('Add course error:', err);
-    this.ConfirmColorOpen('حدث خطأ في إضافة الكورس', false);
+    console.error('Add course error:', error);
+    this.ConfirmColorOpen('حدث خطأ أثناء الإضافة', false);
   });
 }
-
 
 async updateItem() {
-  const userData = JSON.parse(localStorage.getItem('userData'));
-  const isInstructor = userData?.userType === 3;
+  const formData = { ...this.courseForm.value };
 
-  if (!isInstructor) {
-    const centerId = userData?.id || null;
-    if (!centerId) {
-      console.error("centerId غير موجود في userData");
-      this.ConfirmColorOpen("centerId غير متوفر في بيانات المستخدم", false);
-      return;
-    }
-    this.courseForm.get('centerId').setValue(centerId);
-  } else {
-    this.courseForm.get('centerId').setValue(null);
+  // احذف centerId لو فاضي أو null
+  if (!formData.centerId) {
+    delete formData.centerId;
   }
 
-  await this._courseListService.updateItem(this.courseForm.value).then(response => {
+  this.isLoading = true;
+  await this._courseListService.updateItem(formData).then(response => {
     this.isLoading = false;
     if (response.status) {
       this.back();
     } else {
       this.ConfirmColorOpen(response.message, false);
     }
+  }).catch(error => {
+    this.isLoading = false;
+    console.error('Update course error:', error);
+    this.ConfirmColorOpen('حدث خطأ أثناء التعديل', false);
   });
 }
-
-
 
 
   async getSubjects() {
