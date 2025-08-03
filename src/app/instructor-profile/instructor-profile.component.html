@@ -1,0 +1,20 @@
+<div *ngIf="profileData">
+  <div class="profile-card">
+    <img *ngIf="profileData.user.image" [src]="profileData.user.image" alt="Profile Picture" />
+    <h2>{{ profileData.user.firstName }} {{ profileData.user.lastName }}</h2>
+    <p><strong>Email:</strong> {{ profileData.user.email }}</p>
+    <p><strong>Phone:</strong> {{ profileData.user.phone }}</p>
+    <p><strong>Experience:</strong> {{ profileData.experienceEn }}</p>
+    <p><strong>Join Date:</strong> {{ profileData.createdAt | date: 'mediumDate' }}</p>
+    <p><strong>Wallet Balance:</strong> {{ profileData.user.walletBalance }} EGP</p>
+    <p><strong>Country:</strong>
+  {{
+    profileData.user.countryId === 1 ? 'Egyptian' :
+    profileData.user.countryId === 2 ? 'Saudi' :
+    'Unknown'
+  }}
+</p>
+<a routerLink="/update-profile"><button class="btn btn-info  fs-5 py-2 fw-bold ">Update</button></a>
+<a routerLink="/update-password"><button class="btn btn-info  fs-5 py-2 fw-bold ">Update Password</button></a>
+  </div>
+</div>

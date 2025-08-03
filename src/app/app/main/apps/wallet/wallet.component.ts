@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { WalletService } from '../wallet.service';
 import { ColumnMode, DatatableComponent } from '@swimlane/ngx-datatable';
 import { Subject } from 'rxjs';
@@ -13,6 +13,7 @@ import { CoreTranslationService } from '@core/services/translation.service';
   selector: 'app-wallet',
   templateUrl: './wallet.component.html',
   styleUrls: ['./wallet.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class WalletComponent implements OnInit {
   stats: any = null;

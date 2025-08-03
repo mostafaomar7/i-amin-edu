@@ -23,7 +23,7 @@ export const locale = {
     "STUDENT_NAME": "Student Name",
     "AMOUNT": "Amount",
     "STATUS": "Status",
-    "CONSULTING_TYPE": "Consulting Type",
+    "CONSULTING_TYPE": "Consulting",
     "DATE_TIME": "Date & Time",
     "CONSULTATION_TITLE": "Consultation Title",
     "CONSULTATION_DETAILS": "Consultation Details",

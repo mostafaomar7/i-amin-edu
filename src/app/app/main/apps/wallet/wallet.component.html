@@ -173,21 +173,28 @@
 
     <ngx-datatable-column [name]="'WALLET.DATE_TIME' | translate">
       <ng-template let-row="row" ngx-datatable-cell-template>
-        {{ row.dateTime | date: 'medium' }}
-      </ng-template>
+            <span [title]="row.dateTime | date: 'medium'">
+              {{ ( row.dateTime | date: 'medium' )?.length > 10 ? (( row.dateTime | date: 'medium' ).slice(0, 10) + '...') : ( row.dateTime | date: 'medium' ) }}
+            </span>
+        </ng-template>
     </ngx-datatable-column>
 
     <ngx-datatable-column [name]="'WALLET.CONSULTATION_TITLE' | translate">
-      <ng-template let-row="row" ngx-datatable-cell-template>
-        {{ row.title }}
-      </ng-template>
+          <ng-template let-row="row" ngx-datatable-cell-template>
+            <span [title]="row.title">
+              {{ row.title?.length > 10 ? (row.title.slice(0, 10) + '...') : row.title }}
+            </span>
+          </ng-template>
     </ngx-datatable-column>
 
     <ngx-datatable-column [name]="'WALLET.CONSULTATION_DETAILS' | translate">
       <ng-template let-row="row" ngx-datatable-cell-template>
-        {{ row.details }}
+        <span [title]="row.details">
+          {{ row.details?.length > 10 ? (row.details.slice(0, 10) + '...') : row.details }}
+        </span>
       </ng-template>
-    </ngx-datatable-column>
+</ngx-datatable-column>
+
 
     <ngx-datatable-column [name]="'WALLET.AMOUNT_AFTER_DISCOUNT' | translate">
       <ng-template let-row="row" ngx-datatable-cell-template>
@@ -207,10 +214,6 @@
       </ng-template>
     </ngx-datatable-column>
 
-    <ngx-datatable-column [name]="'WALLET.CREATED_AT' | translate">
-      <ng-template let-row="row" ngx-datatable-cell-template>
-        {{ row.createdAt | date: 'medium' }}
-      </ng-template>
-    </ngx-datatable-column>
+
   </ngx-datatable>
 </div>

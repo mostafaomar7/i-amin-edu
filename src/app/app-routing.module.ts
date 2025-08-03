@@ -2,6 +2,9 @@ import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {HomeComponent} from './main/home/home.component';
 import {AuthGuard} from './auth/helpers';
+import { InstructorProfileComponent } from './instructor-profile/instructor-profile.component';
+import { UpdateProfileComponent } from './instructor-profile/update-profile/update-profile.component';
+import { UpdatePasswordComponent } from './instructor-profile/update-profile/update-password/update-password.component';
 
 const routes: Routes = [
     {
@@ -29,6 +32,18 @@ const routes: Routes = [
     {
         path: 'users',
         loadChildren: () => import('./main/users/users.module').then(m => m.UsersModule)
+    },
+    {
+        path: 'dashboard/profile',
+        component: InstructorProfileComponent // Ensure you have a HomeComponent
+    },
+    {
+        path: 'update-profile',
+        component: UpdateProfileComponent // Ensure you have a HomeComponent
+    },
+    {
+        path: 'update-password',
+        component: UpdatePasswordComponent // Ensure you have a HomeComponent
     },
     {
         path: '**',

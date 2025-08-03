@@ -32,7 +32,10 @@ export class InstructorRegisterComponent implements OnInit {
 
   educationalGates: any;
   subjects: any;
-
+  countries = [
+  { id: 1, name: 'مصر', flag: '🇪🇬' },
+  { id: 2, name: 'السعودية', flag: '🇸🇦' }
+];
 
   /**
    * Constructor
@@ -89,6 +92,8 @@ export class InstructorRegisterComponent implements OnInit {
       this.viewForm.markAllAsTouched();
       return;
     }
+      console.log('Form Values:', this.viewForm.value);
+
     this.loading = true;
     this._authenticationService.requestRegisterInstructor(this.viewForm.value).then((response) => {
       this.loading = false;
@@ -146,17 +151,19 @@ export class InstructorRegisterComponent implements OnInit {
   ngOnInit(): void {
 
     this.viewForm = this._formBuilder.group({
-      firstName: ['', [Validators.required]],
-      lastName: ['', [Validators.required]],
-      email: ['', [Validators.required]],
-      password: [''],
-      phone: ['', [Validators.required]],
-      subjectId: ['', [Validators.required]],
-      educationalPortalId: ['', [Validators.required]],
-      experienceEn: ['', [Validators.required]],
-      experienceAr: ['', [Validators.required]],
-      userType: 3
-    });
+  firstName: ['', [Validators.required]],
+  lastName: ['', [Validators.required]],
+  email: ['', [Validators.required]],
+  password: [''],
+  phone: ['', [Validators.required]],
+  subjectId: ['', [Validators.required]],
+  educationalPortalId: ['', [Validators.required]],
+  experienceEn: ['', [Validators.required]],
+  experienceAr: ['', [Validators.required]],
+  userType: 3,
+  countryId: [1, [Validators.required]]  // <-- هنا الإضافة
+});
+
 
     // get return url from route parameters or default to '/'
     this.returnUrl = this._route.snapshot.queryParams['returnUrl'] || '/pages/auth/login';

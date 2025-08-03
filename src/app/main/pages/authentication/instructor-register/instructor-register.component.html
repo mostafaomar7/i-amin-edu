@@ -64,6 +64,21 @@
                                 {{ 'REQUIRED_FIELD' | translate }}
                             </small>
                         </div>
+                        <!-- Country -->
+                         <!-- Country Select -->
+                        <div class="form-group col-md-6 col-12">
+                        <label class="form-label" for="countryId">Nationality</label>
+                        <select id="countryId" class="form-control" formControlName="countryId">
+                            <option *ngFor="let country of countries" [value]="country.id">
+                            {{ country.flag }} {{ country.name }}
+                            </option>
+                        </select>
+                        <small
+                            *ngIf="viewForm.get('countryId').hasError('required') && viewForm.get('countryId').touched"
+                            class="form-text text-danger">
+                            {{ 'REQUIRED_FIELD' | translate }}
+                        </small>
+                        </div>
 
                         <!-- Educational Gate -->
                         <div class="form-group col-md-6 col-12">

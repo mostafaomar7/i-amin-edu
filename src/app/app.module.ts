@@ -21,9 +21,12 @@ import { WalletComponent } from './app/main/apps/wallet/wallet.component';
 
 // **استيراد NgxDatatableModule هنا**
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
+import { InstructorProfileComponent } from './instructor-profile/instructor-profile.component';
+import { UpdateProfileComponent } from './instructor-profile/update-profile/update-profile.component';
+import { UpdatePasswordComponent } from './instructor-profile/update-profile/update-password/update-password.component';
 
 @NgModule({
-    declarations: [AppComponent, WalletComponent],
+    declarations: [AppComponent, WalletComponent, InstructorProfileComponent, UpdateProfileComponent, UpdatePasswordComponent],
     imports: [
         BrowserModule,
         BrowserAnimationsModule,
