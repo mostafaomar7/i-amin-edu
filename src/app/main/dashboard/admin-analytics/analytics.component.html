@@ -1,3 +1,55 @@
+<!-- analytics.component.html -->
+
+<div class="dashboard-statistics">
+
+  <h3>Dashboard Statistics</h3>
+
+  <div class="stats-grid">
+
+    <div class="stat-card">
+      <h4>Total Courses</h4>
+      <p>{{ data?.totalCourses ?? 'N/A' }}</p>
+    </div>
+
+    <div class="stat-card">
+      <h4>Total Consultations</h4>
+      <p>{{ data?.totalConsultations ?? 'N/A' }}</p>
+    </div>
+
+    <div class="stat-card">
+      <h4>Total Consultations Amount</h4>
+      <p>{{ data?.totalConsultationsAmount | currency:'USD':'symbol':'1.2-2' }}</p>
+    </div>
+
+    <div class="stat-card">
+      <h4>Total Organizations</h4>
+      <p>{{ data?.totalOrganizations ?? 'N/A' }}</p>
+    </div>
+
+    <div class="stat-card">
+      <h4>Total Instructors</h4>
+      <p>{{ data?.totalInstructors ?? 'N/A' }}</p>
+    </div>
+
+    <div class="stat-card">
+      <h4>Total Enrollments</h4>
+      <p>{{ data?.totalEnrollments ?? 'N/A' }}</p>
+    </div>
+
+    <div class="stat-card">
+      <h4>Total Enrollments Amount</h4>
+      <p>{{ data?.totalEnrollmentsAmount | currency:'USD':'symbol':'1.2-2' }}</p>
+    </div>
+
+    <div class="stat-card">
+      <h4>Total Wallet Balance</h4>
+      <p>{{ data?.totalWalletBalance | currency:'USD':'symbol':'1.2-2' }}</p>
+    </div>
+
+  </div>
+
+</div>
+
 <div class="content-wrapper container-xxl p-0">
     <div class="content-body">
         <!-- Card Advance -->

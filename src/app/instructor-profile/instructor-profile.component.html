@@ -1,20 +1,96 @@
 <div *ngIf="profileData">
   <div class="profile-card">
-    <img *ngIf="profileData.user.image" [src]="profileData.user.image" alt="Profile Picture" />
+    <img *ngIf="profileData.user.image" [src]="profileData.user.image" alt="{{ 'PROFILE.PICTURE_ALT' | translate }}" />
     <h2>{{ profileData.user.firstName }} {{ profileData.user.lastName }}</h2>
-    <p><strong>Email:</strong> {{ profileData.user.email }}</p>
-    <p><strong>Phone:</strong> {{ profileData.user.phone }}</p>
-    <p><strong>Experience:</strong> {{ profileData.experienceEn }}</p>
-    <p><strong>Join Date:</strong> {{ profileData.createdAt | date: 'mediumDate' }}</p>
-    <p><strong>Wallet Balance:</strong> {{ profileData.user.walletBalance }} EGP</p>
-    <p><strong>Country:</strong>
-  {{
-    profileData.user.countryId === 1 ? 'Egyptian' :
-    profileData.user.countryId === 2 ? 'Saudi' :
-    'Unknown'
-  }}
-</p>
-<a routerLink="/update-profile"><button class="btn btn-info  fs-5 py-2 fw-bold ">Update</button></a>
-<a routerLink="/update-password"><button class="btn btn-info  fs-5 py-2 fw-bold ">Update Password</button></a>
+    <p><strong>{{ 'PROFILE.EMAIL' | translate }}:</strong> {{ profileData.user.email }}</p>
+    <p><strong>{{ 'PROFILE.PHONE' | translate }}:</strong> {{ profileData.user.phone }}</p>
+    <p><strong>{{ 'PROFILE.EXPERIENCE' | translate }}:</strong> {{ profileData.experienceEn }}</p>
+    <p><strong>{{ 'PROFILE.JOIN_DATE' | translate }}:</strong> {{ profileData.createdAt | date: 'mediumDate' }}</p>
+    <p><strong>{{ 'PROFILE.WALLET_BALANCE' | translate }}:</strong> {{ profileData.user.walletBalance }} EGP</p>
+    <p><strong>{{ 'PROFILE.COUNTRY' | translate }}:</strong>
+      {{
+        profileData.user.countryId === 1 ? ('PROFILE.COUNTRY_EGYPTIAN' | translate) :
+        profileData.user.countryId === 2 ? ('PROFILE.COUNTRY_SAUDI' | translate) :
+        ('PROFILE.COUNTRY_UNKNOWN' | translate)
+      }}
+    </p>
+    <a routerLink="/update-profile"><button class="btn btn-info  fs-5 py-2 fw-bold ">{{ 'PROFILE.UPDATE' | translate }}</button></a>
+    <a routerLink="/update-password"><button class="btn btn-info  fs-5 py-2 fw-bold ">{{ 'PROFILE.UPDATE_PASSWORD' | translate }}</button></a>
   </div>
 </div>
+
+<div class="card mt-4">
+  <div class="card-header">
+    <h5 class="mb-0">{{ 'PROFILE.ADD_BANK_ACCOUNT' | translate }}</h5>
+  </div>
+  <div class="card-body">
+    <form (ngSubmit)="submitBankAccount()" #bankForm="ngForm">
+      <div class="mb-3">
+        <label for="accountNumber" class="form-label">{{ 'PROFILE.BANK_ACCOUNT_NUMBER' | translate }}</label>
+        <input type="text" id="accountNumber" class="form-control" [(ngModel)]="bankAccountData.bankAccountNumber" name="accountNumber" required>
+      </div>
+
+      <div class="mb-3">
+        <label for="accountName" class="form-label">{{ 'PROFILE.BANK_ACCOUNT_NAME' | translate }}</label>
+        <input type="text" id="accountName" class="form-control" [(ngModel)]="bankAccountData.bankAccountName" name="accountName" required>
+      </div>
+
+      <div class="mb-3">
+        <label for="bankName" class="form-label">{{ 'PROFILE.BANK_NAME' | translate }}</label>
+        <input type="text" id="bankName" class="form-control" [(ngModel)]="bankAccountData.bankName" name="bankName" required>
+      </div>
+
+      <div class="mb-3">
+        <label for="bankCode" class="form-label">{{ 'PROFILE.BANK_CODE' | translate }}</label>
+        <input type="text" id="bankCode" class="form-control" [(ngModel)]="bankAccountData.bankCode" name="bankCode" required>
+      </div>
+
+      <button type="submit" class="btn btn-primary" [disabled]="bankForm.invalid">{{ 'PROFILE.SAVE_ACCOUNT' | translate }}</button>
+    </form>
+
+    <div *ngIf="showToast" class="custom-toast" [ngClass]="toastType">
+      {{ toastMessage }}
+    </div>
+  </div>
+</div>
+<ngx-datatable
+  class="material"
+  [rows]="bankAccounts"
+  [columnMode]="'force'"
+  [headerHeight]="50"
+  [footerHeight]="50"
+  [rowHeight]="'auto'">
+
+  <ngx-datatable-column [name]="'id' | translate" prop="id"></ngx-datatable-column>
+  <ngx-datatable-column [name]="'accountNumber' | translate" prop="bankAccountNumber"></ngx-datatable-column>
+  <ngx-datatable-column [name]="'accountHolderName' | translate" prop="bankAccountName"></ngx-datatable-column>
+  <ngx-datatable-column [name]="'bankName' | translate" prop="bankName"></ngx-datatable-column>
+  <ngx-datatable-column [name]="'bankCode' | translate" prop="bankCode"></ngx-datatable-column>
+  <ngx-datatable-column [name]="'createdAt' | translate" prop="createdAt"></ngx-datatable-column>
+  <ngx-datatable-column [name]="'updatedAt' | translate" prop="updatedAt"></ngx-datatable-column>
+
+  <ngx-datatable-column
+    [name]="'actions' | translate"
+    [width]="100"
+    [sortable]="false"
+    [canAutoResize]="false"
+    [draggable]="false"
+    [resizeable]="false">
+    <ng-template let-row="row" ngx-datatable-cell-template>
+      <button (click)="deleteBankAccount(row.id)" class="btn btn-danger btn-sm">
+        {{ 'delete' | translate }}
+      </button>
+    </ng-template>
+  </ngx-datatable-column>
+</ngx-datatable>
+
+
+<ng-template #actionsTemplate let-row="row">
+  <button (click)="deleteBankAccount(row.id)" class="btn btn-danger btn-sm">
+    {{ 'delete' | translate }}
+  </button>
+</ng-template>
+
+
+
+

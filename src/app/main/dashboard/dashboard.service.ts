@@ -56,4 +56,9 @@ export class DashboardService extends ApiService {
   getOrgTotalStudents(centerId: number): Promise<ApiResult<any>> {
     return this.getResponse(`${this.routeEndPoint}/org-student-statistics?centerId=${centerId}`)
   }
+
+  getDashboardStatistics(): Promise<ApiResult<any>> {
+  return this.getResponse(`${this.routeEndPoint}/statistics`);
+}
+
 }

@@ -26,3 +26,27 @@
     font-weight: bold;
   }
 }
+.custom-toast {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  color: #fff;
+  padding: 12px 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.2);
+  z-index: 9999;
+  transition: opacity 0.3s ease-in-out;
+  opacity: 0.95;
+  font-weight: 500;
+}
+
+/* Success (green) */
+.custom-toast.success {
+  background-color: #28a745;
+}
+
+/* Error (red) */
+.custom-toast.error {
+  background-color: #dc3545;
+}
+

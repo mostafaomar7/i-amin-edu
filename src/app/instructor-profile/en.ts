@@ -1,0 +1,32 @@
+// en.ts
+export const en = {
+  PROFILE: {
+    EMAIL: "Email",
+    PHONE: "Phone",
+    EXPERIENCE: "Experience",
+    JOIN_DATE: "Join Date",
+    WALLET_BALANCE: "Wallet Balance",
+    COUNTRY: "Country",
+    COUNTRY_EGYPTIAN: "Egyptian",
+    COUNTRY_SAUDI: "Saudi",
+    COUNTRY_UNKNOWN: "Unknown",
+    UPDATE: "Update",
+    UPDATE_PASSWORD: "Update Password",
+    ADD_BANK_ACCOUNT: "Add Bank Account",
+    BANK_ACCOUNT_NUMBER: "Bank Account Number",
+    BANK_ACCOUNT_NAME: "Account Holder Name",
+    BANK_NAME: "Bank Name",
+    BANK_CODE: "Bank Code",
+    SAVE_ACCOUNT: "Save Account",
+    TOAST_SUCCESS: "Bank account added successfully",
+    TOAST_ERROR: "Error adding bank account",
+      accountNumber: 'Account Number',
+  accountHolderName: 'Account Holder Name',
+  bankName: 'Bank Name',
+  bankCode: 'Bank Code',
+  createdAt: 'Created At',
+  updatedAt: 'Updated At',
+  actions: 'Actions',
+  delete: 'Delete'
+  }
+};

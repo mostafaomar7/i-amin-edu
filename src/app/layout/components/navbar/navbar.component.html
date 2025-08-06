@@ -90,10 +90,14 @@
                     <span class="user-name font-weight-bolder">{{ userData?.firstName + ' ' + userData?.lastName
                         }}</span><span class="user-status">{{ userData?.userType | userType }}</span>
                 </div>
-                <app-image-display [class]="'avatar-status-online'"
-                    [defaultSrc]="'assets/images/default-user-image.png'" [height]="'40px'" [src]="userData?.image"
+                <app-image-display
+                    [class]="'avatar-status-online'"
+                    [defaultSrc]="'assets/images/default-user-image.png'"
+                    [height]="'40px'"
+                    [src]="userData?.image"
                     [width]="'40px'">
                 </app-image-display>
+
                 <!--                <span class="avatar">-->
                 <!--                    <img alt="avatar" class="round"-->
                 <!--                         height="40"-->

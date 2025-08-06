@@ -1,5 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import { ProfileService } from './profile.service'; // تأكد من الباث حسب البنية
+import { Component, OnInit, ViewChild, TemplateRef } from '@angular/core';
+import { ProfileService } from './profile.service';
+import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
+import { ar } from './ar';
+import { en } from './en';
+
 @Component({
   selector: 'app-instructor-profile',
   templateUrl: './instructor-profile.component.html',
@@ -7,11 +11,77 @@ import { ProfileService } from './profile.service'; // تأكد من الباث 
 })
 export class InstructorProfileComponent implements OnInit {
 
-  profileData: any;
+  @ViewChild('actionsTemplate', { static: true }) actionsTemplate!: TemplateRef<any>;
 
-  constructor(private profileService: ProfileService) { }
+  profileData: any[] = [];
+  bankAccounts: any[] = [];
+
+  columns: any[] = [];
+
+  bankAccountData = {
+    bankAccountNumber: '',
+    bankAccountName: '',
+    bankName: '',
+    bankCode: ''
+  };
+
+  toastMessage: string = '';
+  toastType: 'success' | 'error' = 'success';
+  showToast: boolean = false;
+
+  constructor(
+    private profileService: ProfileService,
+    private translate: TranslateService
+  ) {
+    this.translate.setTranslation('en', en, true);
+    this.translate.setTranslation('ar', ar, true);
+    this.translate.setDefaultLang('en');
+    this.translate.use('ar'); // أو 'en' حسب اللغة الحالية
+  }
 
   ngOnInit(): void {
+    this.loadProfileData();
+    this.loadBankAccounts();
+    this.loadTranslatedColumns();
+    this.translate.onLangChange.subscribe((event: LangChangeEvent) => {
+    this.loadTranslatedColumns();
+  });
+  }
+
+  loadTranslatedColumns(): void {
+  this.translate.get([
+    'id',
+    'accountNumber',
+    'accountHolderName',
+    'bankName',
+    'bankCode',
+    'createdAt',
+    // 'updatedAt',
+    'actions'
+  ]).subscribe(trans => {
+    this.columns = [
+      { prop: 'id', name: trans['id'] },
+      { prop: 'bankAccountNumber', name: trans['accountNumber'] },
+      { prop: 'bankAccountName', name: trans['accountHolderName'] },
+      { prop: 'bankName', name: trans['bankName'] },
+      { prop: 'bankCode', name: trans['bankCode'] },
+      { prop: 'createdAt', name: trans['createdAt'] },
+      // { prop: 'updatedAt', name: trans['updatedAt'] },
+      {
+        name: trans['actions'],
+        prop: 'actions',
+        sortable: false,
+        canAutoResize: false,
+        draggable: false,
+        resizeable: false,
+        cellTemplate: this.actionsTemplate
+      }
+    ];
+  });
+}
+
+
+  loadProfileData() {
     this.profileService.getInstructorProfile().subscribe({
       next: (res) => {
         if (res.status) {
@@ -24,4 +94,53 @@ export class InstructorProfileComponent implements OnInit {
     });
   }
 
+  showCustomToast(message: string, type: 'success' | 'error') {
+    this.toastMessage = message;
+    this.toastType = type;
+    this.showToast = true;
+    setTimeout(() => {
+      this.showToast = false;
+    }, 5000);
+  }
+
+  submitBankAccount(): void {
+    this.profileService.addBankAccount(this.bankAccountData).subscribe({
+      next: () => {
+        const message = this.translate.instant('PROFILE.TOAST_SUCCESS');
+        this.showCustomToast('✅ ' + message, 'success');
+        this.loadProfileData(); // reload data after adding
+      },
+      error: () => {
+        const message = this.translate.instant('PROFILE.TOAST_ERROR');
+        this.showCustomToast('❌ ' + message, 'error');
+      }
+    });
+  }
+
+  deleteBankAccount(id: number) {
+    this.profileService.deleteBankAccount(id).subscribe({
+      next: () => {
+        const msg = this.translate.instant('PROFILE.DELETE_SUCCESS');
+        this.showCustomToast(msg, 'success');
+        this.loadBankAccounts();
+      },
+      error: () => {
+        const msg = this.translate.instant('PROFILE.DELETE_ERROR');
+        this.showCustomToast(msg, 'error');
+      }
+    });
+  }
+
+  loadBankAccounts() {
+    this.profileService.getBankAccounts().subscribe({
+      next: (res) => {
+        if (res.status) {
+          this.bankAccounts = res.innerData;
+        }
+      },
+      error: (err) => {
+        console.error('Failed to fetch bank accounts', err);
+      }
+    });
+  }
 }
