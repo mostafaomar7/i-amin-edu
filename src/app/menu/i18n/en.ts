@@ -28,7 +28,9 @@ export const locale = {
                 TERMS_AND_CONDITIONS: 'Terms and Conditions',
                 HELP_AND_SUPPORT: 'Help and Support',
                 SETTINGS: 'Settings',
-                Wallet : "Wallet Transaction"
+                Wallet : "Wallet Transaction",
+                Live : "Live Sessions",
+
             },
             OTHERS: {
                 SUPPORT: 'Support & Help'

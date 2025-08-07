@@ -1,0 +1,24 @@
+<form [formGroup]="sessionForm" (ngSubmit)="submitForm()">
+  <label>عنوان الجلسة:</label>
+  <input type="text" formControlName="sessionTitle"><br>
+
+  <label>وصف الجلسة:</label>
+  <textarea formControlName="sessionDescription"></textarea><br>
+
+  <label>تاريخ ووقت الجلسة:</label>
+  <input type="datetime-local" formControlName="slotDateAndTime"><br>
+
+  <label>عدد المقاعد:</label>
+  <input type="number" formControlName="numberOfSeats"><br>
+
+  <label>سعر الجلسة:</label>
+  <input type="number" formControlName="sessionPrice"><br>
+
+  <label>نوع الجلسة:</label>
+  <select formControlName="sessionType">
+    <option value="solo">Solo</option>
+    <option value="group">Group</option>
+  </select><br>
+
+  <button type="submit">إنشاء الجلسة</button>
+</form>

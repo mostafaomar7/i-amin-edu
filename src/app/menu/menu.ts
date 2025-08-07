@@ -205,6 +205,15 @@ export const instructorMenu: CoreMenu[] = [
         type: 'item',
         role: ['organization'],
         url: 'apps/transaction-history/wallet',
+    },
+    {
+        id: 'Live Sessions',
+        title: 'Live Sessions',
+        translate: 'MENU.APP.Live',
+        icon: 'circle',
+        type: 'item',
+        role: ['organization'],
+        url: 'livesession',
     }
 ];
 

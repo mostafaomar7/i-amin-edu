@@ -121,8 +121,8 @@
                 <div class="dropdown-divider"></div>
                   <a (click)="logout()" ngbDropdownItem class="pb-2">
                     <span [class]="'mr-50'" [data-feather]="'power'"></span> Logout</a>
-                    <a routerLink="/dashboard/profile" ngbDropdownItem class="pt-2">
-                    <span [class]="'mr-50'" [data-feather]="'power'"></span> View Profile</a>
+                    <a routerLink="/dashboard/profile" ngbDropdownItem class="pt-2" *ngIf="userData.userType === 3">
+                    <span class="mr-50 fas fa-user"  ></span> View Profile</a>
                 </div>
         </li>
         <!--/ User Dropdown -->

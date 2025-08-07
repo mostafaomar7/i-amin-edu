@@ -24,9 +24,10 @@ import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { InstructorProfileComponent } from './instructor-profile/instructor-profile.component';
 import { UpdateProfileComponent } from './instructor-profile/update-profile/update-profile.component';
 import { UpdatePasswordComponent } from './instructor-profile/update-profile/update-password/update-password.component';
+import { LivesessionComponent } from './app/main/apps/livesession/livesession.component';
 
 @NgModule({
-    declarations: [AppComponent, WalletComponent, InstructorProfileComponent, UpdateProfileComponent, UpdatePasswordComponent],
+    declarations: [AppComponent, WalletComponent, InstructorProfileComponent, UpdateProfileComponent, UpdatePasswordComponent, LivesessionComponent],
     imports: [
         BrowserModule,
         BrowserAnimationsModule,

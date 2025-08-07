@@ -5,6 +5,7 @@ import {AuthGuard} from './auth/helpers';
 import { InstructorProfileComponent } from './instructor-profile/instructor-profile.component';
 import { UpdateProfileComponent } from './instructor-profile/update-profile/update-profile.component';
 import { UpdatePasswordComponent } from './instructor-profile/update-profile/update-password/update-password.component';
+import { LivesessionComponent } from './app/main/apps/livesession/livesession.component';
 
 const routes: Routes = [
     {
@@ -44,6 +45,10 @@ const routes: Routes = [
     {
         path: 'update-password',
         component: UpdatePasswordComponent // Ensure you have a HomeComponent
+    },
+    {
+        path: 'livesession',
+        component: LivesessionComponent // Ensure you have a HomeComponent
     },
     {
         path: '**',

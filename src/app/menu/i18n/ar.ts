@@ -28,7 +28,8 @@ export const locale = {
                 TERMS_AND_CONDITIONS: 'الشروط والأحكام',
                 HELP_AND_SUPPORT: 'المساعدة والدعم',
                 SETTINGS: 'الإعدادات',
-                Wallet : "معاملة المحفظة"
+                Wallet : "معاملة المحفظة",
+                Live : "جلسات مباشرة",
             },
             OTHERS: {
                 SUPPORT: 'الدعم والمساعدة'

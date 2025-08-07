@@ -1,6 +1,114 @@
 <!-- analytics.component.html -->
+<!-- Total Consultations -->
+ <div class="row" *ngIf="currentUser === 3">
+    <div class="col-lg-3 col-sm-6 col-12">
+  <div class="card">
+    <div class="card-header d-flex flex-column align-items-start pb-0">
+      <div class="avatar p-50 m-0" style="background-color: #7367F0;">
+        <div class="avatar-content">
+          <i class="fas fa-comments"></i>
+        </div>
+      </div>
+      <h2 class="font-weight-bolder mt-1">{{ data?.totalConsultations ?? 0 }}</h2>
+      <h4 class="mb-0">Consultations</h4>
+      <p class="mb-0" style="color: gray;">This Year</p>
+    </div>
 
-<div class="dashboard-statistics">
+    <div id="totalConsultations" #gainedChartRef>
+      <apx-chart
+        [series]="consultationsChart.series"
+        [chart]="consultationsChart.chart"
+        [stroke]="consultationsChart.stroke"
+        [fill]="consultationsChart.fill"
+        [tooltip]="consultationsChart.tooltip"
+        [colors]="consultationsChart.colors"
+        [dataLabels]="consultationsChart.dataLabels"
+      ></apx-chart>
+    </div>
+  </div>
+    </div>
+    <div class="col-lg-3 col-sm-6 col-12">
+    <div class="card">
+        <div class="card-header d-flex flex-column align-items-start pb-0">
+        <div class="avatar p-50 m-0" style="background-color: #7367F0;">
+            <div class="avatar-content">
+            <i class="fas fa-book"></i>
+            </div>
+        </div>
+        <h2 class="font-weight-bolder mt-1">{{ data?.totalCourses ?? 0 }}</h2>
+        <h4 class="mb-0">Courses</h4>
+        <p class="mb-0" style="color: gray;">This Year</p>
+        </div>
+
+        <div id="courses" #gainedChartRef>
+        <apx-chart
+            [series]="courses.series"
+            [chart]="courses.chart"
+            [stroke]="courses.stroke"
+            [fill]="courses.fill"
+            [tooltip]="courses.tooltip"
+            [colors]="courses.colors"
+            [dataLabels]="courses.dataLabels"
+        ></apx-chart>
+        </div>
+    </div>
+    </div>
+    <div class="col-lg-3 col-sm-6 col-12">
+    <div class="card">
+        <div class="card-header d-flex flex-column align-items-start pb-0">
+        <div class="avatar p-50 m-0" style="background-color: #7367F0;">
+            <div class="avatar-content">
+            <i class="fas fa-person"></i>
+            </div>
+        </div>
+        <h2 class="font-weight-bolder mt-1">{{ data?.totalEnrollments ?? 'N/A' }}</h2>
+        <h4 class="mb-0">Total Enrollments</h4>
+        <p class="mb-0" style="color: gray;">This Year</p>
+        </div>
+
+        <div id="totalEnrollments" #gainedChartRef>
+        <apx-chart
+            [series]="totalEnrollments.series"
+            [chart]="totalEnrollments.chart"
+            [stroke]="totalEnrollments.stroke"
+            [fill]="totalEnrollments.fill"
+            [tooltip]="totalEnrollments.tooltip"
+            [colors]="totalEnrollments.colors"
+            [dataLabels]="totalEnrollments.dataLabels"
+        ></apx-chart>
+        </div>
+    </div>
+    </div>
+    <div class="col-lg-3 col-sm-6 col-12">
+    <div class="card">
+        <div class="card-header d-flex flex-column align-items-start pb-0">
+        <div class="avatar p-50 m-0" style="background-color: #7367F0;">
+            <div class="avatar-content">
+            <i class="fas fa-money"></i>
+            </div>
+        </div>
+        <h2 class="font-weight-bolder mt-1">{{ data?.totalWalletBalance | currency:'EGP':'symbol':'1.2-2' }}</h2>
+        <h4 class="mb-0">Wallet Balance</h4>
+        <p class="mb-0" style="color: gray;">This Year</p>
+        </div>
+
+        <div id="walletBalance" #gainedChartRef>
+        <apx-chart
+            [series]="walletBalance.series"
+            [chart]="walletBalance.chart"
+            [stroke]="walletBalance.stroke"
+            [fill]="walletBalance.fill"
+            [tooltip]="walletBalance.tooltip"
+            [colors]="walletBalance.colors"
+            [dataLabels]="walletBalance.dataLabels"
+        ></apx-chart>
+        </div>
+    </div>
+    </div>
+ </div>
+
+
+<!-- <div class="dashboard-statistics">
 
   <h3>Dashboard Statistics</h3>
 
@@ -48,15 +156,15 @@
 
   </div>
 
-</div>
+</div> -->
 
-<div class="content-wrapper container-xxl p-0">
+<div class="content-wrapper container-xxl p-0" >
     <div class="content-body">
         <!-- Card Advance -->
-        <div class="row match-height">
+        <div class="row match-height" >
 
             <!-- Enrolments -->
-            <div class="col-lg-3 col-sm-6 col-12">
+            <div *ngIf="currentUser != 3" class="col-lg-3 col-sm-6 col-12">
                 <div class="card">
                     <div class="card-header d-flex flex-column align-items-start pb-0">
                         <div class="avatar p-50 m-0" style="background-color: #FF9F43;">
@@ -79,7 +187,7 @@
             </div>
 
             <!-- Organizations -->
-            <div class="col-lg-3 col-sm-6 col-12">
+            <div *ngIf="currentUser != 3" class="col-lg-3 col-sm-6 col-12">
                 <div class="card">
                     <div class="card-header d-flex flex-column align-items-start pb-0">
                         <div class="avatar p-50 m-0" style="background-color: #FF5888;">
@@ -103,7 +211,7 @@
             </div>
 
             <!-- Total Instructors -->
-            <div class="col-lg-3 col-sm-6 col-12">
+            <div *ngIf="currentUser != 3" class="col-lg-3 col-sm-6 col-12">
                 <div class="card">
                     <div class="card-header d-flex flex-column align-items-start pb-0">
                         <div class="avatar p-50 m-0" style="background-color: #b9c3cd;">
@@ -127,7 +235,7 @@
             </div>
 
             <!-- Total Courses -->
-            <div class="col-lg-3 col-sm-6 col-12">
+            <div *ngIf="currentUser != 3" class="col-lg-3 col-sm-6 col-12">
                 <div class="card">
                     <div class="card-header d-flex flex-column align-items-start pb-0">
                         <div class="avatar p-50 m-0" style="background-color: #00cfe8;">

@@ -47,30 +47,96 @@ export class AnalyticsComponent implements OnInit {
 
     this.initCharts();
   }
-  public data: any = null
-  ngOnInit(): void {
-     this._dashboardService.getDashboardStatistics().then(response => {
-    if (response.status) {
-      this.data = response.innerData;
-    }
-  });
-    this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
-    const userType = Number(localStorage.getItem('userType'));
+   public data: any = null;
 
-    if (userType === 3) {
-      // حاول تحمل البيانات من localStorage
-      const statsString = localStorage.getItem('dashboardStats');
-      if (statsString) {
-        const stats = JSON.parse(statsString);
-        this.setStatsFromStorage(stats);
-      } else {
-        this.loadStatsFromApiAndStore();
+  public totalCoursesChart: any;
+  public totalEnrollmentsChart: any;
+  public walletBalanceChart: any;
+  ngOnInit(): void {
+   
+    // get the currentUser details from localStorage
+    this.currentUser = JSON.parse(localStorage.getItem('userType'));
+
+    this._dashboardService.getEnrollmentStatistics().then(response => {
+      this.loading = false;
+      if (response.status) {
+        this.totalEnrollmentOverYear = response.innerData.reduce((accumulator, currentValue) => accumulator + currentValue, 0);
+        this.enrollment.series = [{
+          name: "Enrollment",
+          data: response.innerData
+        }]
       }
-    } else {
-      // مستخدم آخر، حمل من API بدون تخزين
-      this.loadStatsFromApiAndStore(false);
-    }
+    });
+
+    this._dashboardService.getOrganizationStatistics().then(response => {
+      this.loading = false;
+      if (response.status) {
+        this.totalOrganizationsOverYear = response.innerData.reduce((accumulator, currentValue) => accumulator + currentValue, 0);
+        this.organizations.series = [{
+          name: "Organization",
+          data: response.innerData
+        }]
+      }
+    });
+
+    this._dashboardService.getInstructorStatistics().then(response => {
+      this.loading = false;
+      if (response.status) {
+        this.totalInstructorOverYear = response.innerData.reduce((accumulator, currentValue) => accumulator + currentValue, 0);
+        this.totalInstructors.series = [{
+          name: "Total Instructors",
+          data: response.innerData
+        }]
+      }
+    });
+
+    this._dashboardService.getCourseStatistics().then(response => {
+      this.loading = false;
+      if (response.status) {
+        this.totalCoursesOverYear = response.innerData.reduce((accumulator, currentValue) => accumulator + currentValue, 0);
+        this.totalCourses.series = [{
+          name: "Total Courses",
+          data: response.innerData
+        }]
+      }
+    });
+  
+     this._dashboardService.getDashboardStatistics().then(response => {
+  if (response.status) {
+    this.data = response.innerData;
+
+    const totalConsultations = this.data?.totalConsultations ?? 0;
+    this.consultationsChart.series = [{
+      name: "Consultations",
+      data: [0, totalConsultations] 
+    }];
+
+    const totalCourses = this.data?.totalCourses ?? 0;
+    this.courses.series = [{
+      name: "Courses",
+      data: [0, totalCourses] 
+    }];
+
+    const totalEnrollments = this.data?.totalEnrollments ?? 0;
+    this.totalEnrollments.series = [{
+      name: "Courses",
+      data: [0, totalEnrollments] 
+    }];
+
+    const wallet = this.data?.totalWalletBalance ;
+    this.walletBalance.series = [{
+      name: "walletBalance",
+      data: [0, wallet] 
+    }];
+
   }
+    });
+    
+  }
+public consultationsChart: any;
+public courses: any;
+public totalEnrollments: any;
+public walletBalance: any;
 
   initCharts() {
     this.enrollment = {
@@ -112,6 +178,62 @@ export class AnalyticsComponent implements OnInit {
       tooltip: { x: { format: 'dd/MM/yy HH:mm' }},
       colors: [this.$info]
     };
+    this.consultationsChart = {
+      series: [{ name: "Consultations", data: [0] }],
+      chart: {
+        height: 200,
+        type: 'area',
+        toolbar: { show: false },
+        sparkline: { enabled: false }
+      },
+      dataLabels: { enabled: false },
+      stroke: { curve: 'smooth', width: 2.5 },
+      fill: { opacity: 1 },
+      tooltip: { x: { format: 'dd/MM/yy HH:mm' } },
+      colors: ['#c5e416ff']
+    };
+    this.courses = {
+      series: [{ name: "Courses", data: [0] }],
+      chart: {
+        height: 200,
+        type: 'area',
+        toolbar: { show: false },
+        sparkline: { enabled: false }
+      },
+      dataLabels: { enabled: false },
+      stroke: { curve: 'smooth', width: 2.5 },
+      fill: { opacity: 1 },
+      tooltip: { x: { format: 'dd/MM/yy HH:mm' } },
+      colors: ['#18df92ff']
+    };
+    this.totalEnrollments = {
+      series: [{ name: "Total Enrollments", data: [0] }],
+      chart: {
+        height: 200,
+        type: 'area',
+        toolbar: { show: false },
+        sparkline: { enabled: false }
+      },
+      dataLabels: { enabled: false },
+      stroke: { curve: 'smooth', width: 2.5 },
+      fill: { opacity: 1 },
+      tooltip: { x: { format: 'dd/MM/yy HH:mm' } },
+      colors: ['#7367F0']
+    };
+    this.walletBalance = {
+      series: [{ name: "Wallet Balance", data: [0] }],
+      chart: {
+        height: 200,
+        type: 'area',
+        toolbar: { show: false },
+        sparkline: { enabled: false }
+      },
+      dataLabels: { enabled: false },
+      stroke: { curve: 'smooth', width: 2.5 },
+      fill: { opacity: 1 },
+      tooltip: { x: { format: 'dd/MM/yy HH:mm' } },
+      colors: ['#db5cb9ff']
+    };
   }
 
   private setStatsFromStorage(stats: any) {
@@ -128,6 +250,7 @@ export class AnalyticsComponent implements OnInit {
   }
 
   private async loadStatsFromApiAndStore(saveToStorage: boolean = true) {
+     console.log('loadStatsFromApiAndStore CALLED');
     this.loading = true;
     try {
       const [enrollmentRes, organizationRes, instructorRes, courseRes] = await Promise.all([
@@ -138,9 +261,12 @@ export class AnalyticsComponent implements OnInit {
       ]);
 
       if (enrollmentRes.status) {
+      console.log('Enrollment chart data:', enrollmentRes.innerData);
+
         this.totalEnrollmentOverYear = enrollmentRes.innerData.reduce((acc, val) => acc + val, 0);
         this.enrollment.series = [{ name: "Enrollments", data: enrollmentRes.innerData }];
       }
+
       if (organizationRes.status) {
         this.totalOrganizationsOverYear = organizationRes.innerData.reduce((acc, val) => acc + val, 0);
         this.organizations.series = [{ name: "Organizations", data: organizationRes.innerData }];
