@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ApiService } from 'G:/Valu/01/iam-in-angular/iam-in-angular-develop/src/@core/services/api.service'; // عدل المسار حسب مكان الملف
+import { ApiService } from '@core/services/api.service'; // عدل المسار حسب مكان الملف
 import { ApiResult } from '@core/types/api-result';
 import { HttpClient } from '@angular/common/http';
 import { ToastrService } from 'ngx-toastr';

@@ -6,6 +6,8 @@ import { InstructorProfileComponent } from './instructor-profile/instructor-prof
 import { UpdateProfileComponent } from './instructor-profile/update-profile/update-profile.component';
 import { UpdatePasswordComponent } from './instructor-profile/update-profile/update-password/update-password.component';
 import { LivesessionComponent } from './app/main/apps/livesession/livesession.component';
+import { JoinLiveSessionComponent } from './app/main/apps/livesession/join-live-session/join-live-session.component';
+import { AnalyticsComponent } from './main/dashboard/admin-analytics/analytics.component';
 
 const routes: Routes = [
     {
@@ -36,20 +38,28 @@ const routes: Routes = [
     },
     {
         path: 'dashboard/profile',
-        component: InstructorProfileComponent // Ensure you have a HomeComponent
+        component: InstructorProfileComponent 
     },
     {
         path: 'update-profile',
-        component: UpdateProfileComponent // Ensure you have a HomeComponent
+        component: UpdateProfileComponent 
     },
     {
         path: 'update-password',
-        component: UpdatePasswordComponent // Ensure you have a HomeComponent
+        component: UpdatePasswordComponent 
     },
     {
         path: 'livesession',
-        component: LivesessionComponent // Ensure you have a HomeComponent
+        component: LivesessionComponent 
     },
+    {
+        path: 'joinlivesession',
+        component: JoinLiveSessionComponent 
+    },
+    // {
+    //     path: 'analysis',
+    //     component: AnalyticsComponent 
+    // },
     {
         path: '**',
         loadChildren: () => import('./main/pages/pages.module').then(m => m.PagesModule)

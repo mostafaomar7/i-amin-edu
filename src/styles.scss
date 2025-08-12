@@ -1,3 +1,9 @@
 @import '@core/scss/core.scss';
 @import './assets/scss/styles';
 
+.stu-img {
+  width: 30px !important;
+  height: 30px !important;
+  object-fit: cover;
+  border-radius: 50%;
+}

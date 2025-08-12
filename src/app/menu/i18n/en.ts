@@ -29,7 +29,8 @@ export const locale = {
                 HELP_AND_SUPPORT: 'Help and Support',
                 SETTINGS: 'Settings',
                 Wallet : "Wallet Transaction",
-                Live : "Live Sessions",
+                Live : "Consulting Manage",
+                analysis : "Analysis"
 
             },
             OTHERS: {

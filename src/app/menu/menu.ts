@@ -170,15 +170,15 @@ export const instructorMenu: CoreMenu[] = [
         icon: 'book-open',
         url: 'apps/courses/list'
     },
-    {
-        id: 'students',
-        title: 'Students Management',
-        translate: 'MENU.USERS.STUDENTS',
-        type: 'item',
-        role: ['organization'],
-        icon: 'users',
-        url: 'users/students/list',
-    },
+    // {
+    //     id: 'students',
+    //     title: 'Students Management',
+    //     translate: 'MENU.USERS.STUDENTS',
+    //     type: 'item',
+    //     role: ['organization'],
+    //     icon: 'users',
+    //     url: 'users/students/list',
+    // },
     {
         id: '6',
         title: 'Transactions List',
@@ -207,13 +207,22 @@ export const instructorMenu: CoreMenu[] = [
         url: 'apps/transaction-history/wallet',
     },
     {
-        id: 'Live Sessions',
-        title: 'Live Sessions',
+        id: 'Consulting Manage',
+        title: 'Consulting Manage',
         translate: 'MENU.APP.Live',
         icon: 'circle',
         type: 'item',
         role: ['organization'],
         url: 'livesession',
+    },
+    {
+        id: 'Analysis',
+        title: 'Analysis',
+        translate: 'MENU.APP.analysis',
+        icon: 'activity',
+        type: 'item',
+        role: ['organization'],
+        url: 'pages/auth/login',
     }
 ];
 

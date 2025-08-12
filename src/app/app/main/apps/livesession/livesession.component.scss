@@ -1,0 +1,37 @@
+form {
+  max-width: 500px;
+  margin: auto;
+}
+
+form .form-label {
+  color: #333;
+}
+
+form button {
+  font-size: 1.1rem;
+  padding: 10px;
+}
+.calendar-container {
+  background: #eef;
+  padding: 15px;
+  border-radius: 10px;
+}
+
+.day {
+  padding: 8px 12px;
+  margin: 0 5px;
+  background: #ccc;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.day.active {
+  background: #007bff;
+  color: #fff;
+}
+
+.times .btn.active {
+  background: #007bff;
+  color: #fff;
+}

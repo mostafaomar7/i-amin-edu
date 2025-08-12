@@ -1,0 +1,75 @@
+<div *ngIf="!selectedSession" class="container mt-4">
+  <h2 class="mb-4">Upcoming Group Sessions</h2>
+
+  <div class="table-responsive">
+    <table class="table table-striped table-hover align-middle">
+      <thead class="table-primary">
+        <tr>
+          <th scope="col">Student Name</th>
+          <th scope="col">Student Image</th>
+          <th scope="col">Title</th>
+          <th scope="col">Date & Time</th>
+          <th scope="col">Session Price</th>
+          <th scope="col" class="text-center">Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let session of sessions">
+          <td>MOO</td>
+          <td><img src="../../../../../../assets/images/default-user-image.png" class="stu-img" alt=""></td>
+          <td>{{ session.title }}</td>
+          <td>{{ session.time_slot.slotDateAndTime | date:'short' }}</td>
+          <td>{{ session.time_slot.sessionPrice}}</td>
+          <td class="text-center">
+            <button class="btn btn-success btn-sm mx-2" (click)="joinSession(session.id)">
+              <i class="fas fa-link"></i> Join
+            </button>
+            <button class="btn btn-danger btn-sm" (click)="cancelSession(session.id)">
+              <i class="fas fa-trash"></i> Cancel
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h2 class="mb-4 mt-5">Upcoming Solo Sessions</h2>
+  <div class="table-responsive">
+    <table class="table table-striped table-hover align-middle">
+      <thead class="table-primary">
+        <tr>
+          <th scope="col">Student Name</th>
+          <th scope="col">Student Image</th>
+          <th scope="col">Title</th>
+          <th scope="col">Date & Time</th>
+          <th scope="col">Session Price</th>
+          <th scope="col" class="text-center">Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let session of sessions">
+          <td>MOO</td>
+          <td><img src="../../../../../../assets/images/default-user-image.png" class="stu-img" alt=""></td>
+          <td>{{ session.title }}</td>
+          <td>{{ session.time_slot.slotDateAndTime | date:'short' }}</td>
+          <td>{{ session.time_slot.sessionPrice}}</td>
+          <td class="text-center">
+            <button class="btn btn-success btn-sm mx-2" (click)="joinSession(session.id)">
+              <i class="fas fa-link"></i> Join
+            </button>
+            <button class="btn btn-danger btn-sm" (click)="cancelSession(session.id)">
+              <i class="fas fa-trash"></i> Cancel
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div *ngIf="selectedSession" class="container mt-4">
+  <h2 class="mb-3">
+    Now in session: <span class="text-primary">{{ selectedSession.roomId }}</span>
+  </h2>
+  <div #videoContainer class="border rounded shadow-sm" style="width: 100%; height: 80vh;"></div>
+</div>

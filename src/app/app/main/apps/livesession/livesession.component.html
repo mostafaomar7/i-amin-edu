@@ -1,24 +1,107 @@
-<form [formGroup]="sessionForm" (ngSubmit)="submitForm()">
-  <label>عنوان الجلسة:</label>
-  <input type="text" formControlName="sessionTitle"><br>
+<div class="d-flex justify-content-end mb-3">
+  <a routerLink="/joinlivesession">
+    <button class="btn btn-primary">Join Sessions</button>
+  </a>
+</div>
 
-  <label>وصف الجلسة:</label>
-  <textarea formControlName="sessionDescription"></textarea><br>
+<form [formGroup]="sessionForm" (ngSubmit)="createSession()">
 
-  <label>تاريخ ووقت الجلسة:</label>
-  <input type="datetime-local" formControlName="slotDateAndTime"><br>
+    <div class="mb-3">
+      <label>Session Title</label>
+      <input type="text" class="form-control" formControlName="sessionTitle">
+    </div>
 
-  <label>عدد المقاعد:</label>
-  <input type="number" formControlName="numberOfSeats"><br>
+    <div class="mb-3">
+      <label>Session Description</label>
+      <textarea class="form-control" formControlName="sessionDescription"></textarea>
+    </div>
 
-  <label>سعر الجلسة:</label>
-  <input type="number" formControlName="sessionPrice"><br>
+    <div class="mb-3">
+      <label>Number of Seats</label>
+      <input type="number" class="form-control" formControlName="numberOfSeats">
+    </div>
 
-  <label>نوع الجلسة:</label>
-  <select formControlName="sessionType">
-    <option value="solo">Solo</option>
-    <option value="group">Group</option>
-  </select><br>
+    <div class="mb-3">
+      <label>Session Price</label>
+      <input type="number" class="form-control" formControlName="sessionPrice">
+    </div>
 
-  <button type="submit">إنشاء الجلسة</button>
-</form>
+    <div class="mb-3">
+      <label>Session Type</label>
+      <select class="form-control" formControlName="sessionType">
+        <option value="group">Group</option>
+        <option value="solo">Solo</option>
+      </select>
+    </div>
+
+    <!-- اختيار اليوم -->
+    <div class="mb-3">
+      <label>Select Day</label>
+      <div class="d-flex gap-2 flex-wrap">
+        <button type="button"
+                *ngFor="let day of availableDays"
+                (click)="selectDay(day.date)"
+                [class.btn-primary]="selectedDay === day.date"
+                class="btn btn-outline-primary mx-1">
+          {{ day.label }}
+        </button>
+      </div>
+    </div>
+
+    <!-- اختيار الوقت -->
+    <div class="mb-3">
+      <label>Select Time</label>
+      <div class="d-flex gap-2 flex-wrap">
+        <button type="button"
+                *ngFor="let time of availableTimes"
+                (click)="selectTime(time)"
+                [class.btn-success]="selectedTime === time"
+                class="btn btn-outline-success mx-1">
+          {{ time }}
+        </button>
+      </div>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Create Session</button>
+  </form>
+
+
+<div class="card mt-3">
+  <div class="card-header fw-bold">
+    Available Sessions
+  </div>
+  <div class="card-body p-0">
+    <table class="table table-striped table-hover m-0">
+      <thead class="table-light">
+        <tr>
+          <th>ID</th>
+          <th>Date</th>
+          <th>Time</th>
+          <th>Seats</th>
+          <th>Price</th>
+          <th>Type</th>
+          <th>Title</th>
+          <th>Description</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let s of sessions">
+          <td>{{ s.id }}</td>
+          <td><span class="badge bg-info">{{ s.slotDateAndTime | date: 'MMM d, y' }}</span></td>
+          <td><span class="badge bg-secondary">{{ s.slotDateAndTime | date: 'h:mm a' }}</span></td>
+          <td>{{ s.numberOfSeats }}</td>
+          <td>{{ s.sessionPrice }}</td>
+          <td>{{ s.sessionType }}</td>
+          <td>{{ s.sessionTitle || '-' }}</td>
+          <td>{{ s.sessionDescription || '-' }}</td>
+          <td>
+            <button class="btn btn-danger btn-sm" (click)="deleteSession(s.id)">
+              <i class="fa fa-trash"></i> Delete
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
