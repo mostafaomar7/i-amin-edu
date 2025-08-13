@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ProfileService } from '../../profile.service';
+import { TranslateService } from '@ngx-translate/core';
+import { en } from '../../en';
+import { ar } from '../../ar';
 
 @Component({
   selector: 'app-update-password',
@@ -12,19 +15,28 @@ export class UpdatePasswordComponent implements OnInit {
   passwordForm!: FormGroup;
   errorMsg = '';
   successMsg = '';
-  
+
   showOldPassword = false;
-showNewPassword = false;
+  showNewPassword = false;
 
-toggleOldPasswordVisibility() {
-  this.showOldPassword = !this.showOldPassword;
-}
+  constructor(
+    private fb: FormBuilder,
+    private profileService: ProfileService,
+    private translate: TranslateService
+  ) {
+    this.translate.setTranslation('en', en, true);
+    this.translate.setTranslation('ar', ar, true);
+    this.translate.setDefaultLang('en');
+    this.translate.use('en'); // أو 'ar' حسب اللغة الحالية
+  }
 
-toggleNewPasswordVisibility() {
-  this.showNewPassword = !this.showNewPassword;
-}
+  toggleOldPasswordVisibility() {
+    this.showOldPassword = !this.showOldPassword;
+  }
 
-  constructor(private fb: FormBuilder, private profileService: ProfileService) {}
+  toggleNewPasswordVisibility() {
+    this.showNewPassword = !this.showNewPassword;
+  }
 
   ngOnInit(): void {
     this.passwordForm = this.fb.group({
@@ -34,21 +46,20 @@ toggleNewPasswordVisibility() {
   }
 
   onSubmit(): void {
-  if (this.passwordForm.invalid) return;
+    if (this.passwordForm.invalid) return;
 
-  const { oldPassword, newPassword } = this.passwordForm.value;
+    const { oldPassword, newPassword } = this.passwordForm.value;
 
-  this.profileService.resetPassword(oldPassword, newPassword).subscribe({
-    next: () => {
-      this.successMsg = 'Password updated successfully!';
-      this.errorMsg = '';
-      this.passwordForm.reset();
-    },
-    error: (err) => {
-      this.errorMsg = err?.error?.message || 'Something went wrong.';
-      this.successMsg = '';
-    }
-  });
-}
-
+    this.profileService.resetPassword(oldPassword, newPassword).subscribe({
+      next: () => {
+        this.successMsg = this.translate.instant('PROFILE.PASSWORD_UPDATE_SUCCESS');
+        this.errorMsg = '';
+        this.passwordForm.reset();
+      },
+      error: (err) => {
+        this.errorMsg = err?.error?.message || this.translate.instant('PROFILE.PASSWORD_UPDATE_ERROR');
+        this.successMsg = '';
+      }
+    });
+  }
 }

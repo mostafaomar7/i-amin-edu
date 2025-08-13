@@ -1,8 +1,8 @@
 import { Component, OnInit, ViewChild, TemplateRef } from '@angular/core';
 import { ProfileService } from './profile.service';
 import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
-import { ar } from './ar';
 import { en } from './en';
+import { ar } from './ar';
 
 @Component({
   selector: 'app-instructor-profile',
@@ -36,7 +36,7 @@ export class InstructorProfileComponent implements OnInit {
     this.translate.setTranslation('en', en, true);
     this.translate.setTranslation('ar', ar, true);
     this.translate.setDefaultLang('en');
-    this.translate.use('ar'); // أو 'en' حسب اللغة الحالية
+    this.translate.use('en'); // أو 'en' حسب اللغة الحالية
   }
 
   ngOnInit(): void {

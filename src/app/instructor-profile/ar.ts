@@ -27,6 +27,15 @@ export const ar = {
   createdAt: 'تاريخ الإنشاء',
   updatedAt: 'تاريخ التحديث',
   actions: 'الإجراءات',
-  delete: 'حذف'
+  delete: 'حذف',
+  EDIT_PROFILE : "تعديل الملف الشخصي",
+  FIRST_NAME : 'الاسم الاول' ,
+  LAST_NAME : 'الاسم الاخير',
+  SAVE : 'حفظ',
+OLD_PASSWORD: 'كلمة المرور القديمة',
+  NEW_PASSWORD: 'كلمة المرور الجديدة',
+  UPDATEE_PASSWORD: 'تحديث كلمة المرور',
+  PASSWORD_UPDATE_SUCCESS: 'تم تحديث كلمة المرور بنجاح!',
+  PASSWORD_UPDATE_ERROR: 'حدث خطأ ما.'
   }
 };

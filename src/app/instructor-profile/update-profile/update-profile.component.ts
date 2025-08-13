@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ProfileService } from '../profile.service';
+import { TranslateService, LangChangeEvent } from '@ngx-translate/core';
+import { en } from '../en';
+import { ar } from '../ar';
 
 @Component({
   selector: 'app-update-profile',
@@ -12,7 +15,17 @@ export class UpdateProfileComponent implements OnInit {
   profileForm!: FormGroup;
   loading: boolean = true;
 
-  constructor(private fb: FormBuilder, private profileService: ProfileService) { }
+  constructor(
+    private fb: FormBuilder,
+    private profileService: ProfileService,
+    private translate: TranslateService
+  ) {
+    // تحميل ملفات الترجمة
+    this.translate.setTranslation('en', en, true);
+    this.translate.setTranslation('ar', ar, true);
+    this.translate.setDefaultLang('en');
+    this.translate.use('en'); // أو 'ar' حسب اللغة الحالية
+  }
 
   ngOnInit(): void {
     this.profileService.getInstructorProfile().subscribe({
@@ -39,14 +52,15 @@ export class UpdateProfileComponent implements OnInit {
     if (this.profileForm.invalid) return;
 
     this.profileService.updateInstructorProfile(this.profileForm.value).subscribe({
-      next: (res) => {
-        alert('Profile updated successfully!');
+      next: () => {
+        const msg = this.translate.instant('PROFILE.UPDATE_SUCCESS');
+        alert(msg);
       },
       error: (err) => {
         console.error('Update error:', err);
-        alert('Failed to update profile');
+        const msg = this.translate.instant('PROFILE.UPDATE_ERROR');
+        alert(msg);
       }
     });
   }
-
 }

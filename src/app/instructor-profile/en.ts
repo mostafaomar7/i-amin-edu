@@ -27,6 +27,15 @@ export const en = {
   createdAt: 'Created At',
   updatedAt: 'Updated At',
   actions: 'Actions',
-  delete: 'Delete'
+  delete: 'Delete',
+  EDIT_PROFILE : 'Edit Profile',
+  FIRST_NAME : 'First Name',
+  LAST_NAME : 'Last Name',
+  SAVE:'Save',
+    OLD_PASSWORD: 'Old Password',
+  NEW_PASSWORD: 'New Password',
+  UPDATEE_PASSWORD: 'Update Password',
+  PASSWORD_UPDATE_SUCCESS: 'Password updated successfully!',
+  PASSWORD_UPDATE_ERROR: 'Something went wrong.'
   }
 };

@@ -1,107 +1,155 @@
-<div class="d-flex justify-content-end mb-3">
-  <a routerLink="/joinlivesession">
-    <button class="btn btn-primary">Join Sessions</button>
-  </a>
-</div>
+<div class="container mt-4">
 
-<form [formGroup]="sessionForm" (ngSubmit)="createSession()">
+  <!-- زرار الذهاب لصفحة الانضمام -->
+  <div class="d-flex justify-content-end mb-3">
+    <a routerLink="/joinlivesession">
+      <button class="btn btn-primary">{{ 'LIVE.JOIN_SESSIONS' | translate }}</button>
+    </a>
+  </div>
+
+  <!-- أزرار اختيار نوع السيشن -->
+  <div class="mb-4 d-flex justify-content-center">
+    <button
+      type="button"
+      class="btn mx-2"
+      [ngClass]="selectedType === 'group' ? 'btn-primary' : 'btn-outline-primary'"
+      (click)="switchType('group')"
+    >
+      {{ 'LIVE.GROUP_SESSION' | translate }}
+    </button>
+    <button
+      type="button"
+      class="btn"
+      [ngClass]="selectedType === 'solo' ? 'btn-primary' : 'btn-outline-primary'"
+      (click)="switchType('solo')"
+    >
+      {{ 'LIVE.SOLO_SESSION' | translate }}
+    </button>
+  </div>
+
+  <!-- الفورم -->
+  <form [formGroup]="sessionForm" (ngSubmit)="createSession()">
 
     <div class="mb-3">
-      <label>Session Title</label>
+      <label>{{ 'LIVE.SESSION_TITLE' | translate }}</label>
       <input type="text" class="form-control" formControlName="sessionTitle">
     </div>
 
     <div class="mb-3">
-      <label>Session Description</label>
+      <label>{{ 'LIVE.SESSION_DESCRIPTION' | translate }}</label>
       <textarea class="form-control" formControlName="sessionDescription"></textarea>
     </div>
 
-    <div class="mb-3">
-      <label>Number of Seats</label>
+    <!-- عدد المقاعد يظهر فقط في group -->
+    <div class="mb-3" *ngIf="selectedType === 'group'">
+      <label>{{ 'LIVE.NUMBER_OF_SEATS' | translate }}</label>
       <input type="number" class="form-control" formControlName="numberOfSeats">
     </div>
 
     <div class="mb-3">
-      <label>Session Price</label>
+      <label>{{ 'LIVE.SESSION_PRICE' | translate }}</label>
       <input type="number" class="form-control" formControlName="sessionPrice">
     </div>
 
-    <div class="mb-3">
-      <label>Session Type</label>
-      <select class="form-control" formControlName="sessionType">
-        <option value="group">Group</option>
-        <option value="solo">Solo</option>
-      </select>
-    </div>
+    <input type="hidden" formControlName="sessionType">
 
-    <!-- اختيار اليوم -->
-    <div class="mb-3">
-      <label>Select Day</label>
-      <div class="d-flex gap-2 flex-wrap">
-        <button type="button"
-                *ngFor="let day of availableDays"
-                (click)="selectDay(day.date)"
-                [class.btn-primary]="selectedDay === day.date"
-                class="btn btn-outline-primary mx-1">
-          {{ day.label }}
-        </button>
+    <!-- اختيار التاريخ والوقت (group) -->
+    <div *ngIf="selectedType === 'group'">
+      <div class="mb-3">
+        <label>{{ 'LIVE.DATE_TIME' | translate }}</label>
+        <input type="datetime-local" class="form-control" formControlName="slotDateAndTime">
       </div>
     </div>
 
-    <!-- اختيار الوقت -->
-    <div class="mb-3">
-      <label>Select Time</label>
-      <div class="d-flex gap-2 flex-wrap">
+    <!-- اختيار اليوم والوقت (solo) -->
+    <div *ngIf="selectedType === 'solo'" class="solo-picker">
+ 
+      <h5>{{ 'LIVE.SELECT_DATE' | translate }}</h5>
+      <div class="date-navigation">
+        <button type="button" (click)="prevDates()">
+          <i class="fa fa-chevron-left"></i>
+        </button>
+        <div id="date-buttons">
+          <button type="button"
+              *ngFor="let date of visibleDates"
+              class="date-btn"
+              [class.active]="selectedDate && date.getTime() === selectedDate.getTime()"
+              (click)="selectDate(date)">
+            {{ formatDate(date) }}
+          </button>
+        </div>
+        <button type="button" (click)="nextDates()">
+          <i class="fa fa-chevron-right"></i>
+        </button>
+      </div>
+
+      <h5>{{ 'LIVE.SELECT_TIME' | translate }}</h5>
+      <div id="time-buttons">
         <button type="button"
                 *ngFor="let time of availableTimes"
-                (click)="selectTime(time)"
-                [class.btn-success]="selectedTime === time"
-                class="btn btn-outline-success mx-1">
+                [class.active]="time === selectedTime"
+                class="time-btn"
+                (click)="selectTime(time)">
           {{ time }}
         </button>
       </div>
+
     </div>
 
-    <button type="submit" class="btn btn-primary">Create Session</button>
+    <button type="submit" class="btn btn-primary">{{ 'LIVE.CREATE_SESSION' | translate }}</button>
+    
+    <div *ngIf="statusMessage"
+         class="mt-2 p-2 rounded"
+         [ngClass]="{
+           'bg-success text-white': statusType === 'success',
+           'bg-danger text-white': statusType === 'error'
+         }">
+      {{ statusMessage }}
+    </div>
   </form>
 
+  <!-- الجدول -->
+  <div class="card mt-3">
+    <div class="card-header fw-bold">
+      {{ 'LIVE.AVAILABLE_SESSIONS' | translate:{ type: (selectedType | titlecase) } }}
+    </div>
+    <div class="card-body p-0">
+      <table class="table table-striped table-hover m-0">
+        <thead class="table-light">
+          <tr>
+            <th>ID</th>
+            <th>{{ 'LIVE.DATE' | translate }}</th>
+            <th>{{ 'LIVE.TIME' | translate }}</th>
+            <th *ngIf="selectedType === 'group'">{{ 'LIVE.NUMBER_OF_SEATS' | translate }}</th>
+            <th>{{ 'LIVE.SESSION_PRICE' | translate }}</th>
+            <th>{{ 'LIVE.SESSION_TITLE' | translate }}</th>
+            <th>{{ 'LIVE.SESSION_DESCRIPTION' | translate }}</th>
+            <th>{{ 'LIVE.ACTIONS' | translate }}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let s of filteredSessions">
+            <td>{{ s.id }}</td>
+            <td><span class="badge bg-info">{{ s.slotDateAndTime | date: 'MMM d, y' }}</span></td>
+            <td><span class="badge bg-secondary">{{ s.slotDateAndTime | date: 'h:mm a' }}</span></td>
+            <td *ngIf="selectedType === 'group'">{{ s.numberOfSeats }}</td>
+            <td>{{ s.sessionPrice }}</td>
+            <td>{{ s.sessionTitle || '-' }}</td>
+            <td>{{ s.sessionDescription || '-' }}</td>
+            <td>
+              <button class="btn btn-danger btn-sm" (click)="deleteSession(s.id)">
+                <i class="fa fa-trash"></i> {{ 'LIVE.DELETE' | translate }}
+              </button>
+            </td>
+          </tr>
+          <tr *ngIf="filteredSessions.length === 0">
+            <td colspan="8" class="text-center py-3">
+              {{ 'LIVE.NO_SESSIONS' | translate:{ type: selectedType } }}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
 
-<div class="card mt-3">
-  <div class="card-header fw-bold">
-    Available Sessions
-  </div>
-  <div class="card-body p-0">
-    <table class="table table-striped table-hover m-0">
-      <thead class="table-light">
-        <tr>
-          <th>ID</th>
-          <th>Date</th>
-          <th>Time</th>
-          <th>Seats</th>
-          <th>Price</th>
-          <th>Type</th>
-          <th>Title</th>
-          <th>Description</th>
-          <th>Actions</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let s of sessions">
-          <td>{{ s.id }}</td>
-          <td><span class="badge bg-info">{{ s.slotDateAndTime | date: 'MMM d, y' }}</span></td>
-          <td><span class="badge bg-secondary">{{ s.slotDateAndTime | date: 'h:mm a' }}</span></td>
-          <td>{{ s.numberOfSeats }}</td>
-          <td>{{ s.sessionPrice }}</td>
-          <td>{{ s.sessionType }}</td>
-          <td>{{ s.sessionTitle || '-' }}</td>
-          <td>{{ s.sessionDescription || '-' }}</td>
-          <td>
-            <button class="btn btn-danger btn-sm" (click)="deleteSession(s.id)">
-              <i class="fa fa-trash"></i> Delete
-            </button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
 </div>
