@@ -68,8 +68,22 @@
                                 {{ 'INVALID_PHONE_NUMBER' | translate }}
                             </small>
                         </div>
+                        <div class="form-group col-md-6 col-12">
+                        <label class="form-label" for="countryId">Nationality</label>
+                        <select id="countryId" class="form-control" formControlName="countryId">
+                            <option *ngFor="let country of countries" [value]="country.id">
+                            {{ country.flag }} {{ country.name }}
+                            </option>
+                        </select>
+                        <small
+                            *ngIf="viewForm.get('countryId').hasError('required') && viewForm.get('countryId').touched"
+                            class="form-text text-danger">
+                            {{ 'REQUIRED_FIELD' | translate }}
+                        </small>
+                        </div>
                         <!-- Organization Info -->
-                        <div class="form-group col-12">
+                         
+                        <!-- <div class="form-group col-12">
                             <label for="info">{{ 'ORG_INFO' | translate }}</label>
                             <textarea id="info" class="form-control" formControlName="info" rows="4"
                                 required></textarea>
@@ -77,8 +91,29 @@
                                 class="form-text text-danger">
                                 {{ 'REQUIRED_FIELD' | translate }}
                             </small>
+                        </div> -->
+                        <div class="form-group col-12">
+                            <label for="experienceAr">{{ 'EXPERIENCE_ARABIC' | translate }}</label>
+                            <textarea id="experienceAr" class="form-control" formControlName="experienceAr" rows="4"
+                                required></textarea>
+                            <small
+                                *ngIf="viewForm.get('experienceAr').hasError('required') && viewForm.get('experienceAr').touched"
+                                class="form-text text-danger">
+                                {{ 'REQUIRED_FIELD' | translate }}
+                            </small>
+                        </div>
+                        <div class="form-group col-12">
+                            <label for="experienceEn">{{ 'EXPERIENCE_ENGLISH' | translate }}</label>
+                            <textarea id="experienceEn" class="form-control" formControlName="experienceEn" rows="4"
+                                required></textarea>
+                            <small
+                                *ngIf="viewForm.get('experienceEn').hasError('required') && viewForm.get('experienceEn').touched"
+                                class="form-text text-danger">
+                                {{ 'REQUIRED_FIELD' | translate }}
+                            </small>
                         </div>
                     </div>
+                    
                     <br>
                     <button [disabled]="loading" class="btn btn-primary btn-block" tabindex="4" rippleEffect>
                         <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>

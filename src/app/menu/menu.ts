@@ -281,7 +281,16 @@ export const organizationMenu: CoreMenu[] = [
         type: 'item',
         role: ['organization'],
         url: 'users/33/list',
-    }
+    },
+    {
+        id: 'Wallet Transaction',
+        title: 'Wallet Transaction',
+        translate: 'MENU.APP.Wallet',
+        icon: 'credit-card',
+        type: 'item',
+        role: ['organization'],
+        url: 'apps/transaction-history/wallet',
+    },
 
 ];
 

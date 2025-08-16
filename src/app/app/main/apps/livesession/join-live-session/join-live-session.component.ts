@@ -1,7 +1,7 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { LivesessionService } from '../livesession.service';
-import { ZegoUIKitPrebuilt, ScenarioModel } from '@zegocloud/zego-uikit-prebuilt';
 import { TranslateService, LangChangeEvent } from '@ngx-translate/core';
+import { ZegoUIKitPrebuilt, ScenarioModel } from '@zegocloud/zego-uikit-prebuilt';
 import { en } from '../en';
 import { ar } from '../ar';
 
