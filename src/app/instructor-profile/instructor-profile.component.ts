@@ -15,7 +15,7 @@ export class InstructorProfileComponent implements OnInit {
 
   profileData: any[] = [];
   bankAccounts: any[] = [];
-
+  usertype : any = localStorage.getItem("userType")
   columns: any[] = [];
 
   bankAccountData = {

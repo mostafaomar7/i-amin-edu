@@ -43,7 +43,8 @@ export const locale = {
       TOTAL_COURSES: 'إجمالي الدورات',
       TOTAL_INSTRUCTORS: 'إجمالي المدربين',
       TOTAL_STUDENTS: 'إجمالي الطلاب',
-      TOTAL_ENROLLMENT: 'إجمالي الملتحقين'
+      TOTAL_ENROLLMENT: 'إجمالي الملتحقين',
+      Live_Session: 'اجمالي الاستشارات المحجوزة',
     },
     ORGANIZATIONS_LIST: 'قائمة المنظمات',
 

@@ -1,5 +1,5 @@
 <div *ngIf="profileData">
-  <div class="profile-card">
+  <div class="profile-card" *ngIf="usertype==3">
     <img *ngIf="profileData.user.image" [src]="profileData.user.image" alt="{{ 'PROFILE.PICTURE_ALT' | translate }}" />
     <h2>{{ profileData.user.firstName }} {{ profileData.user.lastName }}</h2>
     <p><strong>{{ 'PROFILE.EMAIL' | translate }}:</strong> {{ profileData.user.email }}</p>

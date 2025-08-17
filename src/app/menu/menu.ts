@@ -274,13 +274,13 @@ export const organizationMenu: CoreMenu[] = [
         url: 'apps/transaction-history/list',
     },
     {
-        id: 'raise-support',
-        title: 'Raise Support',
-        translate: 'MENU.OTHERS.SUPPORT',
-        icon: 'life-buoy',
+        id: 'Consulting Manage',
+        title: 'Consulting Manage',
+        translate: 'MENU.APP.Live',
+        icon: 'circle',
         type: 'item',
         role: ['organization'],
-        url: 'users/33/list',
+        url: 'livesession',
     },
     {
         id: 'Wallet Transaction',
@@ -290,6 +290,15 @@ export const organizationMenu: CoreMenu[] = [
         type: 'item',
         role: ['organization'],
         url: 'apps/transaction-history/wallet',
+    },
+    {
+        id: 'raise-support',
+        title: 'Raise Support',
+        translate: 'MENU.OTHERS.SUPPORT',
+        icon: 'life-buoy',
+        type: 'item',
+        role: ['organization'],
+        url: 'users/33/list',
     },
 
 ];

@@ -27,10 +27,11 @@ export class CourseListService extends ApiService {
   /**
    * Get List
    */
-  getDataTableRows(): Promise<ApiResult<any>> {
-    let query = '';
-    return this.getResponse(`${this.routeEndPoint}/all?${query}`);
+  getDataTableRows(page: number = 1, limit: number = 1000): Promise<ApiResult<any>> {
+  let query = `page=${page}&limit=${limit}`;
+  return this.getResponse(`${this.routeEndPoint}/all?${query}`);
 }
+
 
 
 

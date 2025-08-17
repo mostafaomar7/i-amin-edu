@@ -134,11 +134,12 @@ export class CourseListComponent implements OnInit {
             break;
     }
 
-    await this._courseListService.getDataTableRows().then(response => {
+    this._courseListService.getDataTableRows(1, 1000).then(response => {
         this.isLoading = false;
         if (response.status) {
             this.rows = response.innerData;
             this.tempData = this.rows;
+                  console.log('courses length:', response.innerData.length);
         } else {
             this.ConfirmColorOpen(response.message, false);
         }

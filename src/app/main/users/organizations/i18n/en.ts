@@ -42,6 +42,7 @@ export const locale = {
       TOTAL_INSTRUCTORS: 'Total Instructors',
       TOTAL_STUDENTS: 'Total Students',
       TOTAL_ENROLLMENT: 'Total Enrollment',
+      Live_Session: 'Total Consultations Booked',
     },
     ORGANIZATIONS_LIST: 'Organizations List',
     ALL_ORGANIZATIONS: 'All Organizations',
