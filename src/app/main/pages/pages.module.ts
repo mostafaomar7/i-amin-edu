@@ -11,7 +11,8 @@ import {AuthenticationModule} from './authentication/authentication.module';
 import {MiscellaneousModule} from './miscellaneous/miscellaneous.module';
 
 @NgModule({
-    declarations: [],
+    declarations: [
+  ],
     imports: [
         CoreCommonModule,
         ContentHeaderModule,

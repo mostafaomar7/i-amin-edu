@@ -10,36 +10,36 @@
 
 .wallet-cards {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(225px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 1.5rem;
   padding: 2rem;
 
   .card {
     background-color: #ffffff;
-    border-radius: 16px;
-    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
-    padding: 1.5rem;
+    border-radius: .25rem;
+    // box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+    padding: 2rem;
     text-align: center;
     transition: all 0.3s ease;
     border: 1px solid #f0f0f0;
 
     h4 {
       margin-bottom: 0.75rem;
-      font-size: 1rem;
+      font-size: 1.7rem;
       font-weight: 600;
       color: #444;
     }
 
     p {
-      font-size: 1.6rem;
+      font-size: 1.7rem;
       color: #007bff;
       font-weight: bold;
       margin: 0;
     }
 
     &:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 8px 20px rgba(0, 123, 255, 0.15);
+      // transform: translateY(-5px);
+      // box-shadow: 0 8px 20px rgba(0, 123, 255, 0.15);
     }
 
     &.total {
@@ -47,7 +47,8 @@
       color: #fff;
       grid-column: 1 / -1; // يأخذ صف لوحده
       justify-self: center;
-      max-width: 280px;
+      width: 300px;
+      border-radius: 25px;
 
       h4, p {
         color: #fff;

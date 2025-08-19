@@ -5,6 +5,7 @@ export const en = {
     SOLO_SESSION: 'Solo Session',
     SESSION_TITLE: 'Session Title',
     SESSION_DESCRIPTION: 'Session Description',
+    SESSION_Instructor : 'Session Instructor' ,
     NUMBER_OF_SEATS: 'Number of Seats',
     SESSION_PRICE: 'Session Price',
     DATE_TIME: 'Date & Time',

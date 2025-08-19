@@ -8,6 +8,9 @@ import { UpdatePasswordComponent } from './instructor-profile/update-profile/upd
 import { LivesessionComponent } from './app/main/apps/livesession/livesession.component';
 import { JoinLiveSessionComponent } from './app/main/apps/livesession/join-live-session/join-live-session.component';
 import { AnalyticsComponent } from './main/dashboard/admin-analytics/analytics.component';
+import { BrokerUserComponent } from './main/users/broker/broker-user/broker-user.component';
+import { NewbrokerUserComponent } from './main/users/broker/newbroker-user/newbroker-user.component';
+import { BrokerUserinfoComponent } from './main/users/broker/broker-userinfo/broker-userinfo.component';
 
 const routes: Routes = [
     {
@@ -55,6 +58,18 @@ const routes: Routes = [
     {
         path: 'joinlivesession',
         component: JoinLiveSessionComponent 
+    },
+    {
+        path: 'user-broker',
+        component: BrokerUserComponent 
+    },
+    {
+        path: 'newuser-broker',
+        component: NewbrokerUserComponent 
+    },
+    {
+        path: 'userinfo-broker',
+        component: BrokerUserinfoComponent 
     },
     // {
     //     path: 'analysis',

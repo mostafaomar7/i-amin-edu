@@ -5,6 +5,7 @@ export const ar = {
     SOLO_SESSION: 'جلسة فردية',
     SESSION_TITLE: 'عنوان الجلسة',
     SESSION_DESCRIPTION: 'وصف الجلسة',
+    SESSION_Instructor : 'معلم الجلسة' ,
     NUMBER_OF_SEATS: 'عدد المقاعد',
     SESSION_PRICE: 'سعر الجلسة',
     DATE_TIME: 'التاريخ والوقت',

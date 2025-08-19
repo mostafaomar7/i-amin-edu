@@ -15,6 +15,7 @@ export const locale = {
   "SIGN_IN": "Sign in",
   "REGISTER_INSTRUCTOR": "Register as Instructor",
   "REGISTER_ORGANIZATION": "Register as Organization",
+  "REGISTER_BROKER": "Register as Broker",
   "NEW_ON_PLATFORM": "New on our platform?",
   "CREATE_ACCOUNT": "Create an account",
     "OR": "or",

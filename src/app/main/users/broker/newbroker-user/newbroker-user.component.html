@@ -1,0 +1,66 @@
+<div class="container mt-4">
+  <div class="card shadow-lg rounded-3">
+    <div class="card-header bg-light text-white">
+      <h5 class="mb-0">User Form</h5>
+    </div>
+    <div class="card-body">
+      <form>
+        <!-- Username -->
+        <div class="mb-3">
+          <label for="username" class="form-label fw-semibold mt-1">Username</label>
+          <input type="text" class="form-control" id="username" placeholder="Enter username">
+        </div>
+
+        <!-- User Bio (English) -->
+        <div class="mb-3">
+          <label for="bioEn" class="form-label fw-semibold">User Bio (English)</label>
+          <textarea class="form-control" id="bioEn" rows="3" placeholder="Enter bio in English"></textarea>
+        </div>
+
+        <!-- User Bio (Arabic) -->
+        <div class="mb-3">
+          <label for="bioAr" class="form-label fw-semibold">User Bio (Arabic)</label>
+          <textarea class="form-control text-end" id="bioAr" rows="3" dir="rtl" placeholder="اكتب البايو بالعربي"></textarea>
+        </div>
+
+        <!-- Phone Number -->
+        <div class="mb-3">
+          <label for="phone" class="form-label fw-semibold">Phone Number</label>
+          <div class="input-group">
+            <span class="input-group-text"><i class="fas fa-phone"></i></span>
+            <input type="tel" class="form-control" id="phone" placeholder="+20 100 000 0000">
+          </div>
+        </div>
+
+        <!-- User Image -->
+        <div class="mb-3">
+          <label for="userImage" class="form-label fw-semibold">User Image</label>
+          <div class="input-group">
+            <input class="form-control pt-1" type="file" id="userImage" accept="image/*">
+            <label class="input-group-text" for="userImage"><i class="fas fa-upload"></i></label>
+          </div>
+        </div>
+
+        <!-- User Role -->
+        <div class="mb-3">
+          <label for="userRole" class="form-label fw-semibold">User Role</label>
+          <div class="input-group">
+            <span class="input-group-text"><i class="fas fa-user-tag"></i></span>
+            <select class="form-select w-75" id="userRole">
+              <option value="">Select role</option>
+              <option value="instructor">Instructor</option>
+              <option value="organization">Organization</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Submit Button -->
+        <div class="d-grid">
+          <button type="submit" class="btn btn-primary btn-lg">
+            <i class="fas fa-check-circle mx-2"></i>Submit
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

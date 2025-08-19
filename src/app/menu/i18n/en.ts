@@ -12,7 +12,8 @@ export const locale = {
                 PERMISSIONS: 'Permissions Management',
                 ORGANIZATIONS: 'Organization Management',
                 INSTRUCTORS: 'Instructors Management',
-                STUDENTS: 'Students Management'
+                STUDENTS: 'Students Management',
+                USERS : 'User Management'
             },
             COURSES: {
                 COURSES_MANAGEMENT: 'Courses Management',

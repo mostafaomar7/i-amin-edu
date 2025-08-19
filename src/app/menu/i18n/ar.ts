@@ -12,7 +12,8 @@ export const locale = {
                 PERMISSIONS: 'إدارة الأذونات',
                 ORGANIZATIONS: 'إدارة المنظمات',
                 INSTRUCTORS: 'إدارة المدربين',
-                STUDENTS: 'إدارة الطلاب'
+                STUDENTS: 'إدارة الطلاب',
+                USERS : 'ادارة اليوزر'
             },
             COURSES: {
                 COURSES_MANAGEMENT: '--------- إدارة الدورات',

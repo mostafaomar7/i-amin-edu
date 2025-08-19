@@ -14,6 +14,7 @@ import {PortalListService} from 'app/main/apps/portals/portal-list.service';
 import {TranslateModule} from '@ngx-translate/core';
 import {OrgRegisterComponent} from './org-register/org-register.component';
 import {GuestGuards} from '../../../auth/helpers/guest.guards';
+import { BrokerRegisterComponent } from './broker-register/broker-register.component';
 
 // routing
 const routes: Routes = [
@@ -32,11 +33,16 @@ const routes: Routes = [
         path: 'auth/instructor-register',
         component: InstructorRegisterComponent,
         data: {animation: 'auth'}
-    }
+    },
+    {
+        path: 'auth/org-broker',
+        component: BrokerRegisterComponent,
+        data: {animation: 'auth'}
+    },
 ];
 
 @NgModule({
-    declarations: [AuthLoginComponent, InstructorRegisterComponent, OrgRegisterComponent],
+    declarations: [AuthLoginComponent, InstructorRegisterComponent, OrgRegisterComponent, BrokerRegisterComponent],
     imports: [CommonModule, RouterModule.forChild(routes), NgbModule, FormsModule, ReactiveFormsModule, CoreCommonModule, TranslateModule],
     providers: [SubjectListService, PortalListService]
 })

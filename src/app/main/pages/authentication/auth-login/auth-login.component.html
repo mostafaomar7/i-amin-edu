@@ -113,6 +113,12 @@
                         <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
                         {{ 'REGISTER_ORGANIZATION' | translate }}
                     </button>
+
+                    <button [disabled]="loading" class="btn btn-outline-info btn-block" tabindex="4"
+                        routerLink="/pages/auth/org-broker" rippleEffect>
+                        <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                        {{ 'REGISTER_BROKER' | translate }}
+                    </button>
                 </form>
 
                 <p class="text-center mt-2" hidden>

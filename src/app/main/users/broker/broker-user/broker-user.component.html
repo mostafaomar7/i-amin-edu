@@ -1,0 +1,115 @@
+<div class="content-wrapper container-xxl p-0">
+  <div class="content-body">
+    <!-- Users List -->
+    <section class="admins-list-wrapper">
+
+      <!-- Card Header -->
+      <div class="card">
+        <h5 class="card-header">Users</h5>
+      </div>
+
+      <!-- Main Card -->
+      <div class="card">
+        <div class="row p-2">
+          <!-- Show Entries -->
+          <div class="col-md-6 col-12">
+            <div class="d-flex justify-content-between align-items-center m-1">
+              <label class="d-flex align-items-center">SHOW
+                <select class="form-control mx-25">
+                  <option value="10">10</option>
+                  <option value="25">25</option>
+                  <option value="50">50</option>
+                  <option value="100">100</option>
+                </select>
+                ENTRIES
+              </label>
+            </div>
+          </div>
+
+          <!-- Search Input + Add Button -->
+          <div class="col-md-6 col-12 d-flex justify-content-start justify-content-md-end">
+            <div class="d-flex align-items-center justify-content-end">
+              <label class="d-flex align-items-center m-2 ml-md-0">SEARCH:</label>
+              <input name="searchValue" type="search" class="form-control" />
+
+              <!-- Add New Button -->
+              <button class="btn btn-primary m-2 col-4" rippleEffect (click)="addItem()">
+                ADD NEW
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Data Table -->
+        <ngx-datatable
+          [rows]="rows"
+          [rowHeight]="50"
+          class="bootstrap core-bootstrap"
+          [limit]="selectedOption"
+          [columnMode]="ColumnMode.force"
+          [headerHeight]="50"
+          [footerHeight]="50"
+          [scrollbarH]="true">
+
+          <ngx-datatable-column name="#" prop="id" [width]="50">
+            <ng-template let-row="row" ngx-datatable-cell-template>
+              {{ row.id }}
+            </ng-template>
+          </ngx-datatable-column>
+
+          <ngx-datatable-column name="User Image" [width]="80">
+            <ng-template let-row="row" ngx-datatable-cell-template>
+              <img [src]="row.image" alt="user" class="rounded-circle" width="40" height="40" />
+            </ng-template>
+          </ngx-datatable-column>
+
+          <ngx-datatable-column name="User Name" prop="name" [width]="150">
+  <ng-template let-row="row" let-name="value" ngx-datatable-cell-template>
+    {{ row.name }}
+  </ng-template>
+</ngx-datatable-column>
+
+<ngx-datatable-column name="Phone number" prop="phone" [width]="150">
+  <ng-template let-row="row" let-name="value" ngx-datatable-cell-template>
+    {{ row.phone }}
+  </ng-template>
+</ngx-datatable-column>
+
+<ngx-datatable-column name="Role" prop="role" [width]="100">
+  <ng-template let-row="row" let-name="value" ngx-datatable-cell-template>
+    {{ row.role }}
+  </ng-template>
+</ngx-datatable-column>
+
+<ngx-datatable-column name="User status" prop="status" [width]="100">
+  <ng-template let-row="row" let-name="value" ngx-datatable-cell-template>
+    {{ row.status }}
+  </ng-template>
+</ngx-datatable-column>
+
+
+          <!-- Actions -->
+          <ngx-datatable-column name="ACTIONS" [sortable]="false" [width]="180">
+            <ng-template ngx-datatable-cell-template let-row="row">
+              <div class="row">
+                <!-- View -->
+                <button class="btn btn-flat-secondary" rippleEffect (click)="eyeRoute()">
+                  <i class="fa fa-eye"></i>
+                </button>
+                <!-- Edit -->
+                <button class="btn btn-flat-secondary" rippleEffect>
+                  <i class="fas fa-edit"></i>
+                </button>
+                <!-- Delete -->
+                <button class="btn btn-flat-danger" rippleEffect>
+                    <i class="fas fa-trash text-danger"></i>
+                </button>
+              </div>
+            </ng-template>
+          </ngx-datatable-column>
+
+        </ngx-datatable>
+      </div>
+    </section>
+  </div>
+</div>

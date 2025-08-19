@@ -303,4 +303,62 @@ export const organizationMenu: CoreMenu[] = [
 
 ];
 
+export const brokerMenu: CoreMenu[] = [
+    {
+        id: 'dashboard',
+        title: 'Dashboard',
+        translate: 'MENU.DASHBOARD.COLLAPSIBLE',
+        type: 'item',
+        role: ['broker'],
+        icon: 'home',
+        url: 'dashboard'
+    },
+    {
+        id: 'Users',
+        title: 'Users Management',
+        translate: 'MENU.USERS.USERS',
+        type: 'item',
+        role: ['broker'],
+        icon: 'users',
+        url: 'user-broker',
+    },
+    {
+        id: '6',
+        title: 'Transactions List',
+        translate: 'MENU.APP.TRANSACTIONS',
+        type: 'item',
+        role: ['broker'],
+        icon: 'credit-card',
+        url: 'apps/transaction-history/list',
+    },
+    {
+        id: 'Consulting Manage',
+        title: 'Consulting Manage',
+        translate: 'MENU.APP.Live',
+        icon: 'circle',
+        type: 'item',
+        role: ['broker'],
+        url: 'livesession',
+    },
+    {
+        id: 'Wallet Transaction',
+        title: 'Wallet Transaction',
+        translate: 'MENU.APP.Wallet',
+        icon: 'credit-card',
+        type: 'item',
+        role: ['broker'],
+        url: 'apps/transaction-history/wallet',
+    },
+    {
+        id: 'raise-support',
+        title: 'Raise Support',
+        translate: 'MENU.OTHERS.SUPPORT',
+        icon: 'life-buoy',
+        type: 'item',
+        role: ['broker'],
+        url: 'users/33/list',
+    },
+
+];
+
 export const StudentMenu: CoreMenu[] = [];

@@ -55,7 +55,8 @@ export class LivesessionComponent implements OnInit {
       numberOfSeats: [1],
       sessionPrice: [10],
       sessionType: [this.selectedType],
-      slotDateAndTime: ['']
+      slotDateAndTime: [''] , 
+      sessionInstructor: ['', []] 
     });
 
     this.generateVisibleDates();
@@ -118,7 +119,7 @@ export class LivesessionComponent implements OnInit {
     const start = new Date(this.currentStartDate);
     start.setHours(0, 0, 0, 0);
 
-    for (let i = 0; i < 5; i++) {
+    for (let i = 0; i < 4; i++) {
       const d = new Date(start);
       d.setDate(start.getDate() + i);
       this.visibleDates.push(d);
@@ -150,10 +151,11 @@ export class LivesessionComponent implements OnInit {
   }
 
   formatDate(date: Date): string {
-    const days = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
-    const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-    return `${days[date.getDay()]}, ${date.getDate()} ${months[date.getMonth()]}`;
-  }
+  const days = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+  const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  return `${days[date.getDay()]}, ${date.getDate()} ${months[date.getMonth()]} ${date.getFullYear()}`;
+}
+
 
   private sameYMD(a: Date, b: Date): boolean {
     return a.getFullYear() === b.getFullYear() &&
