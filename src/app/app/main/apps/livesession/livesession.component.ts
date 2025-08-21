@@ -15,7 +15,6 @@ export class LivesessionComponent implements OnInit {
   sessions: any[] = [];
   selectedType: 'group' | 'solo' = 'group';
   filteredSessions: any[] = [];
-
   statusMessage: string = '';
   statusType: 'success' | 'error' | '' = '';
 
@@ -47,8 +46,9 @@ export class LivesessionComponent implements OnInit {
     });
   }
 
-
+  public userType : any ;
   ngOnInit(): void {
+    this.userType = localStorage.getItem('userType') 
     this.sessionForm = this.fb.group({
       sessionTitle: [''],
       sessionDescription: [''],
@@ -62,7 +62,7 @@ export class LivesessionComponent implements OnInit {
     this.generateVisibleDates();
     this.loadSessions();
   }
-
+  
   showMessage(message: string, type: 'success' | 'error') {
     this.statusMessage = message;
     this.statusType = type;

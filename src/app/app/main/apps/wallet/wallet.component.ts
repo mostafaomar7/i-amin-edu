@@ -18,7 +18,7 @@ import { CoreTranslationService } from '@core/services/translation.service';
 export class WalletComponent implements OnInit {
   stats: any = null;
   lang: 'en' | 'ar' = 'ar'; // لغة افتراضية ممكن تغيرها
-  
+  public userType:any;
   translations: any;
   // Course Transactions
   rows = [];
@@ -62,6 +62,7 @@ export class WalletComponent implements OnInit {
       this.sessionCurrentPage = 1;
       this.loadSessionBookings();
     });
+    this.userType = localStorage.getItem('userType');
   }
 
   async loadStats() {

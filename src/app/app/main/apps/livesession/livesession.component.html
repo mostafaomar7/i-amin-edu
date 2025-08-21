@@ -40,7 +40,7 @@
       <textarea class="form-control" formControlName="sessionDescription"></textarea>
     </div>
     
-    <div class="mb-3">
+    <div class="mb-3" *ngIf="userType == 2">
       <label>{{ 'LIVE.SESSION_Instructor' | translate }}</label>
       <select name="" id="" class="form-control" formControlName="sessionInstructor">
         <option value="" *ngFor=""></option>

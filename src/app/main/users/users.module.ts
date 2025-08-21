@@ -5,7 +5,7 @@ import { BrokerUserComponent } from './broker/broker-user/broker-user.component'
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { NewbrokerUserComponent } from './broker/newbroker-user/newbroker-user.component';
 import { BrokerUserinfoComponent } from './broker/broker-userinfo/broker-userinfo.component';
-
+import { TranslateModule } from '@ngx-translate/core';
 // routing
 const routes: Routes = [
     {
@@ -39,7 +39,7 @@ const routes: Routes = [
     NewbrokerUserComponent,
     BrokerUserinfoComponent
   ],
-    imports: [CommonModule, RouterModule.forChild(routes),NgxDatatableModule]
+    imports: [CommonModule, RouterModule.forChild(routes),NgxDatatableModule,TranslateModule]
 })
 export class UsersModule {
 }

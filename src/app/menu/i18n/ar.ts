@@ -13,7 +13,7 @@ export const locale = {
                 ORGANIZATIONS: 'إدارة المنظمات',
                 INSTRUCTORS: 'إدارة المدربين',
                 STUDENTS: 'إدارة الطلاب',
-                USERS : 'ادارة اليوزر'
+                USERS : 'ادارة المستخدم'
             },
             COURSES: {
                 COURSES_MANAGEMENT: '--------- إدارة الدورات',

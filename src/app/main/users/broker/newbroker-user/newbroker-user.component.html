@@ -1,40 +1,40 @@
 <div class="container mt-4">
   <div class="card shadow-lg rounded-3">
     <div class="card-header bg-light text-white">
-      <h5 class="mb-0">User Form</h5>
+      <h5 class="mb-0">{{ 'NEW_BROKER_USER.USER_FORM' | translate }}</h5>
     </div>
     <div class="card-body">
       <form>
         <!-- Username -->
         <div class="mb-3">
-          <label for="username" class="form-label fw-semibold mt-1">Username</label>
-          <input type="text" class="form-control" id="username" placeholder="Enter username">
+          <label for="username" class="form-label fw-semibold mt-1">{{ 'NEW_BROKER_USER.USERNAME' | translate }}</label>
+          <input type="text" class="form-control" id="username" [placeholder]="'NEW_BROKER_USER.PLACEHOLDER_USERNAME' | translate">
         </div>
 
         <!-- User Bio (English) -->
         <div class="mb-3">
-          <label for="bioEn" class="form-label fw-semibold">User Bio (English)</label>
-          <textarea class="form-control" id="bioEn" rows="3" placeholder="Enter bio in English"></textarea>
+          <label for="bioEn" class="form-label fw-semibold">{{ 'NEW_BROKER_USER.BIO_EN' | translate }}</label>
+          <textarea class="form-control" id="bioEn" rows="3" [placeholder]="'NEW_BROKER_USER.PLACEHOLDER_BIO_EN' | translate"></textarea>
         </div>
 
         <!-- User Bio (Arabic) -->
         <div class="mb-3">
-          <label for="bioAr" class="form-label fw-semibold">User Bio (Arabic)</label>
-          <textarea class="form-control text-end" id="bioAr" rows="3" dir="rtl" placeholder="اكتب البايو بالعربي"></textarea>
+          <label for="bioAr" class="form-label fw-semibold">{{ 'NEW_BROKER_USER.BIO_AR' | translate }}</label>
+          <textarea class="form-control text-end" id="bioAr" rows="3" dir="rtl" [placeholder]="'NEW_BROKER_USER.PLACEHOLDER_BIO_AR' | translate"></textarea>
         </div>
 
         <!-- Phone Number -->
         <div class="mb-3">
-          <label for="phone" class="form-label fw-semibold">Phone Number</label>
+          <label for="phone" class="form-label fw-semibold">{{ 'NEW_BROKER_USER.PHONE' | translate }}</label>
           <div class="input-group">
             <span class="input-group-text"><i class="fas fa-phone"></i></span>
-            <input type="tel" class="form-control" id="phone" placeholder="+20 100 000 0000">
+            <input type="tel" class="form-control" id="phone" [placeholder]="'NEW_BROKER_USER.PLACEHOLDER_PHONE' | translate">
           </div>
         </div>
 
         <!-- User Image -->
         <div class="mb-3">
-          <label for="userImage" class="form-label fw-semibold">User Image</label>
+          <label for="userImage" class="form-label fw-semibold">{{ 'NEW_BROKER_USER.IMAGE' | translate }}</label>
           <div class="input-group">
             <input class="form-control pt-1" type="file" id="userImage" accept="image/*">
             <label class="input-group-text" for="userImage"><i class="fas fa-upload"></i></label>
@@ -43,13 +43,13 @@
 
         <!-- User Role -->
         <div class="mb-3">
-          <label for="userRole" class="form-label fw-semibold">User Role</label>
+          <label for="userRole" class="form-label fw-semibold">{{ 'NEW_BROKER_USER.ROLE' | translate }}</label>
           <div class="input-group">
             <span class="input-group-text"><i class="fas fa-user-tag"></i></span>
             <select class="form-select w-75" id="userRole">
-              <option value="">Select role</option>
-              <option value="instructor">Instructor</option>
-              <option value="organization">Organization</option>
+              <option value="">{{ 'NEW_BROKER_USER.SELECT_ROLE' | translate }}</option>
+              <option value="instructor">{{ 'NEW_BROKER_USER.ROLE_INSTRUCTOR' | translate }}</option>
+              <option value="organization">{{ 'NEW_BROKER_USER.ROLE_ORGANIZATION' | translate }}</option>
             </select>
           </div>
         </div>
@@ -57,7 +57,7 @@
         <!-- Submit Button -->
         <div class="d-grid">
           <button type="submit" class="btn btn-primary btn-lg">
-            <i class="fas fa-check-circle mx-2"></i>Submit
+            <i class="fas fa-check-circle mx-2"></i>{{ 'NEW_BROKER_USER.SUBMIT' | translate }}
           </button>
         </div>
       </form>
