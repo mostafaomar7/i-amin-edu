@@ -2,76 +2,50 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from 'environments/environment';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable({ providedIn: 'root' })
 export class LivesessionService {
+  private baseUrl = `${environment.apiUrl}/dashboard`;
 
-  private createSlotUrl = `${environment.apiUrl}/dashboard/create-slot`;
-  private getSlotsUrl = `${environment.apiUrl}/dashboard/get-slots`;
+  constructor(private http: HttpClient) {}
 
-  constructor(private http: HttpClient) { }
+  private authHeaders(json = true) {
+    const token = localStorage.getItem('authToken') || '';
+    const base: any = { Authorization: `Bearer ${token}` };
+    if (json) base['Content-Type'] = 'application/json';
+    return new HttpHeaders(base);
+  }
 
   createSlot(data: any) {
-    const token = localStorage.getItem('authToken');
-
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${token}`
-    });
-
-    return this.http.post(this.createSlotUrl, data, { headers });
+    return this.http.post(`${this.baseUrl}/create-slot`, data, { headers: this.authHeaders() });
   }
 
   getSlots() {
-    const token = localStorage.getItem('authToken');
-
-    const headers = new HttpHeaders({
-      'Authorization': `Bearer ${token}`
-    });
-
-    return this.http.get(this.getSlotsUrl, { headers });
+    return this.http.get(`${this.baseUrl}/get-slots`, { headers: this.authHeaders(false) });
   }
+
   deleteSlot(id: number) {
-  const token = localStorage.getItem('authToken');
+    return this.http.request('DELETE', `${this.baseUrl}/delete-slot`, {
+      headers: this.authHeaders(),
+      body: { slotId: id },
+    });
+  }
 
-  const headers = new HttpHeaders({
-    'Content-Type': 'application/json',
-    'Authorization': `Bearer ${token}`
-  });
+  getUpcomingSessions() {
+    return this.http.get(`${this.baseUrl}/upcoming-sessions`, { headers: this.authHeaders(false) });
+  }
 
-  return this.http.request('DELETE', `${environment.apiUrl}/dashboard/delete-slot`, {
-    headers,
-    body: { slotId: id } 
-  });
+  joinSession(liveSessionId: number) {
+    // بيرجع kitToken + roomId من الباك إند
+    return this.http.post(
+      `${this.baseUrl}/join-session`,
+      { liveSessionId },
+      { headers: this.authHeaders() }
+    );
+  }
+
+  cancelSession(sessionId: number) {
+    return this.http.delete(`${this.baseUrl}/cancel-session/${sessionId}`, {
+      headers: this.authHeaders(),
+    });
+  }
 }
-getUpcomingSessions() {
-  const token = localStorage.getItem('authToken');
-  const headers = new HttpHeaders({
-    'Authorization': `Bearer ${token}`
-  });
-  return this.http.get(`${environment.apiUrl}/dashboard/upcoming-sessions`, { headers });
-}
-
-joinSession(liveSessionId: number) {
-  const token = localStorage.getItem('authToken');
-  const headers = new HttpHeaders({
-    'Authorization': `Bearer ${token}`,
-    'Content-Type': 'application/json'
-  });
-  return this.http.post(`${environment.apiUrl}/dashboard/join-session`, { liveSessionId }, { headers });
-}
-cancelSession(sessionId: number) {
-  const token = localStorage.getItem('authToken');
-  const headers = new HttpHeaders({
-    'Authorization': `Bearer ${token}`,
-    'Content-Type': 'application/json'
-  });
-
-  return this.http.delete(`${environment.apiUrl}/dashboard/cancel-session/${sessionId}`, { headers });
-}
-
-
-
-}
-

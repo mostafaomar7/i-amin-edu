@@ -1,109 +1,118 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+// join-live-session.component.ts
+import { Component, ElementRef, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { LivesessionService } from '../livesession.service';
 import { TranslateService, LangChangeEvent } from '@ngx-translate/core';
-import { ZegoUIKitPrebuilt, ScenarioModel } from '@zegocloud/zego-uikit-prebuilt';
-import { en } from '../en';
-import { ar } from '../ar';
+import { ZegoExpressEngine } from 'zego-express-engine-webrtc';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-join-live-session',
   templateUrl: './join-live-session.component.html',
 })
-export class JoinLiveSessionComponent implements OnInit {
+export class JoinLiveSessionComponent implements OnInit, OnDestroy {
   sessions: any[] = [];
   selectedSession: any = null;
-  successMessage: string = '';
-  errorMessage: string = '';
+  successMessage = '';
+  errorMessage = '';
 
-  @ViewChild('videoContainer', { static: false }) videoContainer!: ElementRef;
+  @ViewChild('localVideo', { static: false }) localVideo!: ElementRef<HTMLVideoElement>;
+  @ViewChild('remoteVideo', { static: false }) remoteVideo!: ElementRef<HTMLVideoElement>;
+
+  private langSub?: Subscription;
+  private zg!: ZegoExpressEngine;
 
   constructor(
     private liveService: LivesessionService,
     private translate: TranslateService
-  ) {
-    // تحميل ملفات الترجمة
-    this.translate.setTranslation('en', en, true);
-    this.translate.setTranslation('ar', ar, true);
-    this.translate.setDefaultLang('en');
-    this.translate.use('en'); // أو 'ar' حسب اللغة الحالية
-  }
+  ) {}
 
   ngOnInit(): void {
     this.loadSessions();
-
-    // تحديث النصوص عند تغيير اللغة
-    this.translate.onLangChange.subscribe((event: LangChangeEvent) => {
+    this.langSub = this.translate.onLangChange.subscribe((_event: LangChangeEvent) => {
       this.loadSessions();
     });
   }
 
+  ngOnDestroy(): void {
+    this.langSub?.unsubscribe();
+    this.zg?.destroyEngine();
+  }
+
   loadSessions() {
     this.liveService.getUpcomingSessions().subscribe((res: any) => {
-      if (res.status) this.sessions = res.innerData;
+      if (res.status) {
+        this.sessions = res.innerData || [];
+      }
     });
   }
 
-  joinSession(sessionId: number) {
+  async joinSession(sessionId: number) {
+    this.selectedSession = null;
+    this.errorMessage = '';
+    this.successMessage = '';
+
     this.liveService.joinSession(sessionId).subscribe({
-      next: (res: any) => {
-        if (res.status && res.innerData) {
-          this.successMessage = this.translate.instant('LIVE_SESSION.JOIN_SUCCESS');
-          this.errorMessage = '';
-          this.showMessageForLimitedTime();
-          this.selectedSession = res.innerData;
-          this.startVideo(res.innerData);
+      next: async (res: any) => {
+        console.log('API response:', res);
+
+        const data = res?.innerData;
+        if (res.status && data?.token && data?.roomId && data?.appId && data?.userId) {
+          this.selectedSession = data;
+
+          try {
+            const appId = Number(data.appId);
+
+            if (!appId || isNaN(appId)) {
+              this.errorMessage = 'Invalid App ID received from server.';
+              return;
+            }
+
+            // Initialize Zego engine
+                this.zg = new ZegoExpressEngine(appId, "wss://webliveroom.zego.im/ws");
+
+
+             
+
+            // Login with server-provided token & userId
+            await this.zg.loginRoom(data.roomId, data.token, {
+              userID: data.userId.toString(),
+              userName: 'Guest User',
+            });
+            console.log('Trying to login:', {
+              appId,
+              roomId: data.roomId,
+              token: data.token,
+              userID: data.userId,
+              userName: 'Guest User'
+            });
+            // Create local stream
+            const localStream = await this.zg.createStream({ camera: { video: true, audio: true } });
+            this.localVideo.nativeElement.srcObject = localStream;
+            this.localVideo.nativeElement.play();
+            this.zg.startPublishingStream('stream1', localStream);
+
+            // Handle remote streams
+            this.zg.on('roomStreamUpdate', async (_roomID, updateType, streamList) => {
+              if (updateType === 'ADD' && streamList.length) {
+                const remoteStream = await this.zg.startPlayingStream(streamList[0].streamID);
+                this.remoteVideo.nativeElement.srcObject = remoteStream;
+                this.remoteVideo.nativeElement.play();
+              }
+            });
+
+            this.successMessage = 'Joined session successfully!';
+          } catch (err) {
+            console.error('Zego init error:', err);
+            this.errorMessage = 'Failed to initialize video session.';
+          }
         } else {
-          this.errorMessage = res.message || this.translate.instant('LIVE_SESSION.JOIN_FAILED');
-          this.successMessage = '';
-          this.showMessageForLimitedTime();
+          this.errorMessage = 'Incomplete session details from server.';
         }
       },
-      error: (err: any) => {
-        this.errorMessage = err.error?.message || this.translate.instant('LIVE_SESSION.JOIN_FAILED');
-        this.successMessage = '';
-        this.showMessageForLimitedTime();
-      }
+      error: (err) => {
+        console.error(err);
+        this.errorMessage = 'An error occurred while joining the session.';
+      },
     });
-  }
-
-  startVideo(data: any) {
-    try {
-      const kitToken = data.token; 
-      const zp = ZegoUIKitPrebuilt.create(kitToken);
-      zp.joinRoom({
-        container: this.videoContainer.nativeElement,
-        scenario: { mode: ScenarioModel.GroupCall },
-        sharedLinks: [
-          {
-            name: this.translate.instant('LIVE_SESSION.JOIN_ROOM'),
-            url: `${window.location.origin}${window.location.pathname}?roomID=${data.roomId}`,
-          },
-        ],
-      });
-    } catch (err) {
-      console.error('Error starting video', err);
-    }
-  }
-
-  cancelSession(sessionId: number) {
-    this.liveService.cancelSession(sessionId).subscribe((res: any) => {
-      if (res.status) {
-        this.sessions = this.sessions.filter(s => s.id !== sessionId);
-        this.successMessage = this.translate.instant('LIVE_SESSION.CANCEL_SUCCESS');
-        this.errorMessage = '';
-        this.showMessageForLimitedTime();
-      } else {
-        this.errorMessage = res.message || this.translate.instant('LIVE_SESSION.CANCEL_FAILED');
-        this.successMessage = '';
-        this.showMessageForLimitedTime();
-      }
-    });
-  }
-
-  private showMessageForLimitedTime() {
-    setTimeout(() => {
-      this.successMessage = '';
-      this.errorMessage = '';
-    }, 10000); // 10 ثواني
   }
 }

@@ -1,27 +1,23 @@
-<!-- رسائل النجاح والخطأ -->
-<div *ngIf="successMessage" class="alert alert-success mt-2">
-  {{ successMessage }}
-</div>
-<div *ngIf="errorMessage" class="alert alert-danger mt-2">
-  {{ errorMessage }}
-</div>
+<div *ngIf="successMessage" class="alert alert-success mt-2">{{ successMessage }}</div>
+<div *ngIf="errorMessage" class="alert alert-danger mt-2">{{ errorMessage }}</div>
 
-<!-- عرض الجلسات لو مفيش جلسة محددة -->
+<!-- Sessions list (no selected session) -->
 <div *ngIf="!selectedSession" class="container mt-4">
   <h2 class="mb-4">{{ 'LIVE.UPCOMING_GROUP' | translate }}</h2>
   <div class="d-flex justify-content-between mt-3 mb-3">
-    <select name="" id="" class="input-group w-25 p-1">
+    <select class="input-group w-25 p-1">
       <option value="upcoming">Upcoming</option>
       <option value="later">Later</option>
       <option value="rejected">Rejected</option>
     </select>
-    <input type="search" name="" id="" placeholder="Group Search" class="form-control w-25">
+    <input type="search" placeholder="Group Search" class="form-control w-25" />
   </div>
+
   <div class="table-responsive">
     <table class="table table-striped table-hover align-middle">
       <thead class="table-primary">
         <tr>
-          <th scope="col">{{ 'LIVE.STUDENT_NAME' | translate }}</th> <!--عايزين نرجع الاسامي الي سجلت كلها ف arr-->
+          <th scope="col">{{ 'LIVE.STUDENT_NAME' | translate }}</th>
           <th scope="col">{{ 'LIVE.STUDENT_BOOK' | translate }}</th>
           <th scope="col">{{ 'LIVE.TITLE' | translate }}</th>
           <th scope="col">{{ 'LIVE.DATE_TIME' | translate }}</th>
@@ -29,14 +25,12 @@
           <th scope="col" class="text-center">{{ 'LIVE.ACTION' | translate }}</th>
         </tr>
       </thead>
-      <tbody *ngFor="let session of sessions">
-        <tr *ngIf="session.time_slot.sessionType === 'group'">
+      <tbody>
+        <tr *ngFor="let session of sessions" [hidden]="session.time_slot.sessionType !== 'group'">
           <td>MOO</td>
-          <td>
-            
-          </td>
+          <td></td>
           <td>{{ session.title }}</td>
-          <td>{{ session.time_slot.slotDateAndTime | date:'short' }}</td>
+          <td>{{ session.time_slot.slotDateAndTime | date: 'short' }}</td>
           <td>{{ session.time_slot.sessionPrice }}</td>
           <td class="text-center">
             <button class="btn btn-success btn-sm mx-2" (click)="joinSession(session.id)">
@@ -52,15 +46,15 @@
   </div>
 
   <h2 class="mb-4 mt-5">{{ 'LIVE.UPCOMING_SOLO' | translate }}</h2>
-  <div class="table-responsive">
-    <div class="d-flex justify-content-between mt-3 mb-3">
-    <select name="" id="" class="input-group w-25 p-1">
+  <div class="d-flex justify-content-between mt-3 mb-3">
+    <select class="input-group w-25 p-1">
       <option value="upcoming">Upcoming</option>
       <option value="later">Later</option>
       <option value="rejected">Rejected</option>
     </select>
-    <input type="search" name="" id="" placeholder="Solo Search" class="form-control w-25">
+    <input type="search" placeholder="Solo Search" class="form-control w-25" />
   </div>
+  <div class="table-responsive">
     <table class="table table-striped table-hover align-middle">
       <thead class="table-primary">
         <tr>
@@ -72,14 +66,12 @@
           <th scope="col" class="text-center">{{ 'LIVE.ACTION' | translate }}</th>
         </tr>
       </thead>
-      <tbody *ngFor="let session of sessions">
-        <tr *ngIf="session.time_slot.sessionType === 'solo'">
+      <tbody>
+        <tr *ngFor="let session of sessions" [hidden]="session.time_slot.sessionType !== 'solo'">
           <td>MOO</td>
-          <td>
-            <img src="../../../../../../assets/images/default-user-image.png" class="stu-img" alt="">
-          </td>
+          <td><img src="../../../../../../assets/images/default-user-image.png" class="stu-img" alt="" /></td>
           <td>{{ session.title }}</td>
-          <td>{{ session.time_slot.slotDateAndTime | date:'short' }}</td>
+          <td>{{ session.time_slot.slotDateAndTime | date: 'short' }}</td>
           <td>{{ session.time_slot.sessionPrice }}</td>
           <td class="text-center">
             <button class="btn btn-success btn-sm mx-2" (click)="joinSession(session.id)">
@@ -95,7 +87,7 @@
   </div>
 </div>
 
-<!-- عرض الجلسة المحددة -->
+<!-- Selected session (video container) -->
 <div *ngIf="selectedSession" class="container mt-4">
   <h2 class="mb-3">
     {{ 'LIVE.NOW_IN_SESSION' | translate }}:
@@ -103,3 +95,7 @@
   </h2>
   <div #videoContainer class="border rounded shadow-sm" style="width: 100%; height: 80vh;"></div>
 </div>
+<!-- <div>
+  <video #localVideo autoplay muted playsinline></video>
+  <video #remoteVideo autoplay playsinline></video>
+</div> -->
