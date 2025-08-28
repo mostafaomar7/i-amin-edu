@@ -6,7 +6,9 @@ import { ApiResult } from '@core/types/api-result';
 
 import { ToastrService } from 'ngx-toastr';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class InstructorsListService extends ApiService {
 
   public routeEndPoint: string = 'teacher';

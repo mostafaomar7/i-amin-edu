@@ -1,3 +1,9 @@
+
+<div class="d-flex justify-content-start">
+  <input type="text" class="input-group w-50" [(ngModel)]="roomId">
+  <button (click)="enterRoom()" class="btn btn-info mx-2">Submit</button>
+</div>
+
 <div *ngIf="successMessage" class="alert alert-success mt-2">{{ successMessage }}</div>
 <div *ngIf="errorMessage" class="alert alert-danger mt-2">{{ errorMessage }}</div>
 
@@ -88,13 +94,13 @@
 </div>
 
 <!-- Selected session (video container) -->
-<div *ngIf="selectedSession" class="container mt-4">
+<!-- <div *ngIf="selectedSession" class="container mt-4">
   <h2 class="mb-3">
     {{ 'LIVE.NOW_IN_SESSION' | translate }}:
     <span class="text-primary">{{ selectedSession.roomId }}</span>
   </h2>
   <div #videoContainer class="border rounded shadow-sm" style="width: 100%; height: 80vh;"></div>
-</div>
+</div> -->
 <!-- <div>
   <video #localVideo autoplay muted playsinline></video>
   <video #remoteVideo autoplay playsinline></video>

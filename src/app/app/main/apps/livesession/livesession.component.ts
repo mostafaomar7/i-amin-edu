@@ -4,6 +4,9 @@ import { LivesessionService } from './livesession.service';
 import { TranslateService, LangChangeEvent } from '@ngx-translate/core';
 import { en } from './en';
 import { ar } from './ar';
+import { InstructorsListService } from 'app/main/users/instructors/instructors-list.service';
+import { PermissionListService } from 'app/main/users/permissions/permission-list.service';
+import { Role } from 'app/auth/models';
 
 @Component({
   selector: 'app-livesession',
@@ -17,7 +20,9 @@ export class LivesessionComponent implements OnInit {
   filteredSessions: any[] = [];
   statusMessage: string = '';
   statusType: 'success' | 'error' | '' = '';
-
+  
+  teachers: any[] = [];   // هنا هنخزن الـ instructors
+   
   availableTimes: string[] = [
     '08:00','09:00','10:00','11:00',
     '12:00','13:00','14:00','15:00',
@@ -34,7 +39,9 @@ export class LivesessionComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private sessionService: LivesessionService,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private _instructorsListService: InstructorsListService,
+    private _permissionListService: PermissionListService,
   ) {
     this.translate.setTranslation('en', en, true);
     this.translate.setTranslation('ar', ar, true);
@@ -61,6 +68,7 @@ export class LivesessionComponent implements OnInit {
 
     this.generateVisibleDates();
     this.loadSessions();
+    this.getTeachers();
   }
   
   showMessage(message: string, type: 'success' | 'error') {
@@ -70,6 +78,21 @@ export class LivesessionComponent implements OnInit {
       this.statusMessage = '';
       this.statusType = '';
     }, 10000);
+  }
+    async getTeachers() {
+    let centerId = 0;
+    switch (this._permissionListService.getRoleType()) {
+      case Role.Admin:
+        break;
+      default:
+        centerId = JSON.parse(localStorage.getItem('userData')).id;
+        break;
+    }
+    await this._instructorsListService.getDataTableRows(centerId).then((response: any) => {
+      if (response.status) {
+        this.teachers = response.innerData;
+      }
+    });
   }
 
   switchType(type: 'group' | 'solo') {

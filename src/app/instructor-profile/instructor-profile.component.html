@@ -1,10 +1,10 @@
 <div *ngIf="profileData">
-  <div class="profile-card" *ngIf="usertype==3">
+  <div class="profile-card">
     <img *ngIf="profileData.user.image" [src]="profileData.user.image" alt="{{ 'PROFILE.PICTURE_ALT' | translate }}" />
     <h2>{{ profileData.user.firstName }} {{ profileData.user.lastName }}</h2>
     <p><strong>{{ 'PROFILE.EMAIL' | translate }}:</strong> {{ profileData.user.email }}</p>
     <p><strong>{{ 'PROFILE.PHONE' | translate }}:</strong> {{ profileData.user.phone }}</p>
-    <p><strong>{{ 'PROFILE.EXPERIENCE' | translate }}:</strong> {{ profileData.experienceEn }}</p>
+    <p *ngIf="usertype==3"><strong>{{ 'PROFILE.EXPERIENCE' | translate }}:</strong> {{ profileData.experienceEn }}</p>
     <p><strong>{{ 'PROFILE.JOIN_DATE' | translate }}:</strong> {{ profileData.createdAt | date: 'mediumDate' }}</p>
     <p><strong>{{ 'PROFILE.WALLET_BALANCE' | translate }}:</strong> {{ profileData.user.walletBalance }} EGP</p>
     <p><strong>{{ 'PROFILE.COUNTRY' | translate }}:</strong>

@@ -7,7 +7,9 @@ import { ToastrService } from 'ngx-toastr';
 import { AuthenticationService } from '../../pages/authentication/authentication.service';
 import { Role } from 'app/auth/models';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class PermissionListService extends ApiService {
 
     public routeEndPoint: string = 'roles';

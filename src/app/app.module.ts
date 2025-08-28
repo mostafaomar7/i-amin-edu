@@ -26,9 +26,10 @@ import { UpdateProfileComponent } from './instructor-profile/update-profile/upda
 import { UpdatePasswordComponent } from './instructor-profile/update-profile/update-password/update-password.component';
 import { LivesessionComponent } from './app/main/apps/livesession/livesession.component';
 import { JoinLiveSessionComponent } from './app/main/apps/livesession/join-live-session/join-live-session.component';
+import { LiveroomComponent } from './app/main/apps/livesession/liveroom/liveroom.component';
 
 @NgModule({
-    declarations: [AppComponent, WalletComponent, InstructorProfileComponent, UpdateProfileComponent, UpdatePasswordComponent, LivesessionComponent, JoinLiveSessionComponent],
+    declarations: [AppComponent, WalletComponent, InstructorProfileComponent, UpdateProfileComponent, UpdatePasswordComponent, LivesessionComponent, JoinLiveSessionComponent, LiveroomComponent],
     imports: [
         BrowserModule,
         BrowserAnimationsModule,

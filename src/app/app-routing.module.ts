@@ -11,6 +11,7 @@ import { AnalyticsComponent } from './main/dashboard/admin-analytics/analytics.c
 import { BrokerUserComponent } from './main/users/broker/broker-user/broker-user.component';
 import { NewbrokerUserComponent } from './main/users/broker/newbroker-user/newbroker-user.component';
 import { BrokerUserinfoComponent } from './main/users/broker/broker-userinfo/broker-userinfo.component';
+import { LiveroomComponent } from './app/main/apps/livesession/liveroom/liveroom.component';
 
 const routes: Routes = [
     {
@@ -58,6 +59,10 @@ const routes: Routes = [
     {
         path: 'joinlivesession',
         component: JoinLiveSessionComponent 
+    },
+    {
+        path: 'room/:roomId',
+        component: LiveroomComponent
     },
     {
         path: 'user-broker',

@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { LiveroomComponent } from './livesession/liveroom/liveroom.component';
 
 
 // routing
@@ -60,7 +61,9 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  declarations: [],
+  declarations: [
+    LiveroomComponent
+  ],
   imports: [CommonModule, RouterModule.forChild(routes)]
 })
 export class AppsModule { }

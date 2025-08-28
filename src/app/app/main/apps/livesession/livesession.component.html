@@ -42,10 +42,14 @@
     
     <div class="mb-3" *ngIf="userType == 2">
       <label>{{ 'LIVE.SESSION_Instructor' | translate }}</label>
-      <select name="" id="" class="form-control" formControlName="sessionInstructor">
-        <option value="" *ngFor=""></option>
+      <select class="form-control" formControlName="sessionInstructor">
+        <option value="">{{ 'Select Teacher' | translate }}</option>
+        <option *ngFor="let teacher of teachers" [value]="teacher.id">
+          {{ teacher.user.firstName }} {{ teacher.user.lastName }}
+        </option>
       </select>
     </div>
+
     <!-- عدد المقاعد يظهر فقط في group -->
     <div class="mb-3" *ngIf="selectedType === 'group'">
       <label>{{ 'LIVE.NUMBER_OF_SEATS' | translate }}</label>
