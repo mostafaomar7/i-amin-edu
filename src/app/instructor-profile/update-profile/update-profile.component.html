@@ -1,3 +1,9 @@
+<div *ngIf="successMessage" class="alert alert-success mt-2">
+  {{ successMessage }}
+</div>
+<div *ngIf="errorMessage" class="alert alert-danger mt-2">
+  {{ errorMessage }}
+</div>
 <div *ngIf="!loading && profileForm" class="container mt-4">
   <div class="card shadow-sm">
     <div class="card-header bg-primary text-white mb-2">
@@ -16,10 +22,10 @@
             <input id="lastName" formControlName="lastName" type="text" class="form-control" />
           </div>
 
-          <div class="col-md-6">
+          <!-- <div class="col-md-6">
             <label for="email" class="form-label">{{ 'PROFILE.EMAIL' | translate }}</label>
             <input id="email" formControlName="email" type="email" class="form-control" />
-          </div>
+          </div> -->
 
           <div class="col-md-6">
             <label for="phone" class="form-label">{{ 'PROFILE.PHONE' | translate }}</label>
@@ -30,14 +36,17 @@
             <label for="experience" class="form-label">{{ 'PROFILE.EXPERIENCE' | translate }}</label>
             <input id="experience" formControlName="experienceEn" type="text" class="form-control" />
           </div>
-
-          <div class="col-md-6" style="margin-top: 30px;">
+          <div class="col-md-6">
+            <label for="experience" class="form-label">{{ 'PROFILE.EXPERIENCEar' | translate }}</label>
+            <input id="experience" formControlName="experienceAr" type="text" class="form-control" />
+          </div>
+          <!-- <div class="col-md-6" style="margin-top: 30px;">
             <label for="countryId" class="form-label mx-2">{{ 'PROFILE.COUNTRY' | translate }}</label>
             <select id="countryId" formControlName="countryId" class="form-select">
               <option [value]="1">{{ 'PROFILE.COUNTRY_EGYPTIAN' | translate }}</option>
               <option [value]="2">{{ 'PROFILE.COUNTRY_SAUDI' | translate }}</option>
             </select>
-          </div>
+          </div> -->
         </div>
 
         <div class="mt-4 text-end">

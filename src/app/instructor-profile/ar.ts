@@ -4,6 +4,7 @@ export const ar = {
     EMAIL: "البريد الإلكتروني",
     PHONE: "رقم الهاتف",
     EXPERIENCE: "الخبرة",
+    EXPERIENCEar: "الخبرة",
     JOIN_DATE: "تاريخ الانضمام",
     WALLET_BALANCE: "رصيد المحفظة",
     COUNTRY: "الجنسية",

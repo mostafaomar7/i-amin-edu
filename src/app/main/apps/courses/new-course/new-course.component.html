@@ -54,7 +54,7 @@
     <!-- Discount -->
     <div class="form-group col-md-6 col-12">
       <label for="discount">{{ "discount" | translate }}</label>
-      <input type="number" id="discount" class="form-control" formControlName="discount" required />
+      <input type="number" id="discount" class="form-control" formControlName="discount"  />
       <small *ngIf="courseForm.get('discount').hasError('required') && courseForm.get('discount').touched"
         class="form-text text-danger">
         {{ "REQUIRED_FIELD" | translate }}

@@ -1,7 +1,10 @@
 
-<div class="d-flex justify-content-start">
-  <input type="text" class="input-group w-50" [(ngModel)]="roomId">
-  <button (click)="enterRoom()" class="btn btn-info mx-2">Submit</button>
+<div *ngIf="selectedSession" class="container mt-4">
+  <h2 class="mb-3">
+    {{ 'LIVE.NOW_IN_SESSION' | translate }}:
+    <span class="text-primary">{{ selectedSession.roomId }}</span>
+  </h2>
+  <div #videoContainer class="border rounded shadow-sm" style="width: 100%; height: 80vh;"></div>
 </div>
 
 <div *ngIf="successMessage" class="alert alert-success mt-2">{{ successMessage }}</div>
@@ -23,7 +26,7 @@
     <table class="table table-striped table-hover align-middle">
       <thead class="table-primary">
         <tr>
-          <th scope="col">{{ 'LIVE.STUDENT_NAME' | translate }}</th>
+          <!-- <th scope="col">{{ 'LIVE.STUDENT_NAME' | translate }}</th> -->
           <th scope="col">{{ 'LIVE.STUDENT_BOOK' | translate }}</th>
           <th scope="col">{{ 'LIVE.TITLE' | translate }}</th>
           <th scope="col">{{ 'LIVE.DATE_TIME' | translate }}</th>
@@ -33,8 +36,7 @@
       </thead>
       <tbody>
         <tr *ngFor="let session of sessions" [hidden]="session.time_slot.sessionType !== 'group'">
-          <td>MOO</td>
-          <td></td>
+          <td>{{ session.studentCount }}</td>
           <td>{{ session.title }}</td>
           <td>{{ session.time_slot.slotDateAndTime | date: 'short' }}</td>
           <td>{{ session.time_slot.sessionPrice }}</td>
@@ -47,6 +49,7 @@
             </button>
           </td>
         </tr>
+
       </tbody>
     </table>
   </div>

@@ -12,6 +12,9 @@ import {Role} from 'app/auth/models';
 
 import {CoreCommonModule} from '@core/common.module';
 
+import { NgSelectModule } from '@ng-select/ng-select';
+import { NgxDatatableModule } from '@swimlane/ngx-datatable';
+import { Ng2FlatpickrModule } from 'ng2-flatpickr';
 
 import {DashboardService} from 'app/main/dashboard/dashboard.service';
 
@@ -49,7 +52,10 @@ const routes = [
         NgApexchartsModule,
         CourseModule,
         InstructorsModule,
-        OrganizationModule
+        OrganizationModule,
+         NgSelectModule,
+    Ng2FlatpickrModule,
+    NgxDatatableModule,
     ],
     providers: [DashboardService],
     exports: []

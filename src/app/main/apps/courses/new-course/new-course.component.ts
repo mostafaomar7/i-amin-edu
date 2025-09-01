@@ -73,7 +73,7 @@ export class NewCourseComponent implements OnInit {
       name: ['', [Validators.required]],
       info: ['', [Validators.required]],
       duration: ['', [Validators.required]],
-      price: ['', [Validators.required]],
+      price: [''],
       discount: ['', [Validators.required]],
       isActive: ['', [Validators.required]],
       coverImage: ['', [Validators.required]],
@@ -194,29 +194,57 @@ export class NewCourseComponent implements OnInit {
  */
 
 async saveItem() {
-  const formData = { ...this.courseForm.value };
-
-  // احذف centerId لو فاضي أو null
-  if (!formData.centerId) {
-    delete formData.centerId;
+  if (!this.courseForm.valid) {
+    this.courseForm.markAllAsTouched();
+    return;
   }
+
+  const formData: any = { ...this.courseForm.value };
+
+  // إذا كان Organization user، حدد centerId تلقائيًا
+  if (this.userType === 2) {
+    const orgData = JSON.parse(localStorage.getItem('userData'));
+    formData.centerId = orgData.centerId || orgData.id; // حسب ما يتطلب API
+  }
+
+  // تحويل الحقول الرقمية
+  formData.duration = Number(formData.duration);
+  formData.price = Number(formData.price);
+  formData.discount = Number(formData.discount);
+  formData.subjectId = Number(formData.subjectId);
+  formData.stageId = Number(formData.stageId);
+  formData.teacherId = formData.teacherId ? Number(formData.teacherId) : null;
+  formData.educationalPortalId = Number(formData.educationalPortalId);
+  formData.centerId = formData.centerId ? Number(formData.centerId) : null;
+
+  // تحويل boolean
+  formData.isActive = formData.isActive === true || formData.isActive === 'true';
+
+  // حذف الحقول الفارغة أو null
+  Object.keys(formData).forEach(key => {
+    if (formData[key] === null || formData[key] === undefined || formData[key] === '') {
+      delete formData[key];
+    }
+  });
 
   console.log('Sending course data:', formData);
 
   this.isLoading = true;
-  await this._courseListService.addItem(formData).then(response => {
+  try {
+    const response = await this._courseListService.addItem(formData);
     this.isLoading = false;
     if (response.status) {
       this.back();
     } else {
       this.ConfirmColorOpen(response.message, false);
     }
-  }).catch(error => {
+  } catch (error) {
     this.isLoading = false;
     console.error('Add course error:', error);
     this.ConfirmColorOpen('حدث خطأ أثناء الإضافة', false);
-  });
+  }
 }
+
 
 async updateItem() {
   const formData = { ...this.courseForm.value };

@@ -1,13 +1,14 @@
 import { Component, OnInit, ViewEncapsulation, ViewChild } from '@angular/core';
 
 import { CoreConfigService } from '@core/services/config.service';
-
+import { DatatableComponent, ColumnMode } from '@swimlane/ngx-datatable';
 import { colors } from 'app/colors.const';
 import { User } from 'app/auth/models';
 import { DashboardService } from 'app/main/dashboard/dashboard.service';
 import { CoreTranslationService } from '@core/services/translation.service';
 import { locale as english } from '../i18n/en';
 import { locale as arabic } from '../i18n/ar';
+import { LivesessionService } from 'app/app/main/apps/livesession/livesession.service';
 
 @Component({
   selector: 'app-analytics',
@@ -18,9 +19,16 @@ import { locale as arabic } from '../i18n/ar';
 export class AnalyticsComponent implements OnInit {
   
   @ViewChild('gainedChartRef') gainedChartRef: any;
-
+    @ViewChild(DatatableComponent) table: DatatableComponent;
+ public tempData = [];
+  public rows = [];
+  public ColumnMode = ColumnMode;
+    sessions: any[] = [];
   public currentUser: any;
   public loading = false;
+    public isLoading = true;
+
+
 
   public enrollment;
   public organizations;
@@ -41,7 +49,8 @@ export class AnalyticsComponent implements OnInit {
   constructor(
     private _dashboardService: DashboardService,
     private _coreConfigService: CoreConfigService,
-    private _coreTranslationService: CoreTranslationService
+    private _coreTranslationService: CoreTranslationService,
+    private liveService: LivesessionService,
   ) {
     this._coreTranslationService.translate(english, arabic);
 
@@ -53,7 +62,8 @@ export class AnalyticsComponent implements OnInit {
   public totalEnrollmentsChart: any;
   public walletBalanceChart: any;
   ngOnInit(): void {
-   
+       this.loadSessions();
+
     // get the currentUser details from localStorage
     this.currentUser = JSON.parse(localStorage.getItem('userType'));
 
@@ -137,7 +147,7 @@ public consultationsChart: any;
 public courses: any;
 public totalEnrollments: any;
 public walletBalance: any;
-
+  
   initCharts() {
     this.enrollment = {
       series: [{ name: "Enrollments", data: [0] }],
@@ -295,4 +305,33 @@ public walletBalance: any;
       this.loading = false;
     }
   }
+    loadSessions() {
+    this.isLoading = true;
+    this.liveService.getUpcomingSessions().subscribe((res: any) => {
+      console.log('API Response:', res);
+      if (res.status) {
+        const rawSessions = res.innerData || [];
+        const grouped: any = {};
+
+        rawSessions.forEach((s: any) => {
+          if (s.time_slot.sessionType === 'group') {
+            const key = s.time_slot.roomID || s.time_slot.id;
+            if (!grouped[key]) {
+              grouped[key] = { ...s, studentCount: 1 };
+            } else {
+              grouped[key].studentCount += 1;
+            }
+          } else {
+            grouped[`${s.id}_solo`] = { ...s, studentCount: 1 };
+          }
+        });
+
+        this.sessions = Object.values(grouped);
+        this.rows = [...this.sessions];
+        this.tempData = [...this.sessions];
+      }
+      this.isLoading = false;
+    });
+  }
+
 }

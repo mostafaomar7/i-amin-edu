@@ -40,6 +40,7 @@
       <textarea class="form-control" formControlName="sessionDescription"></textarea>
     </div>
     
+    <!-- اختيار teacher يظهر فقط للـ Center -->
     <div class="mb-3" *ngIf="userType == 2">
       <label>{{ 'LIVE.SESSION_Instructor' | translate }}</label>
       <select class="form-control" formControlName="sessionInstructor">
@@ -49,6 +50,7 @@
         </option>
       </select>
     </div>
+
 
     <!-- عدد المقاعد يظهر فقط في group -->
     <div class="mb-3" *ngIf="selectedType === 'group'">
@@ -100,9 +102,10 @@
                 [class.active]="time === selectedTime"
                 class="time-btn"
                 (click)="selectTime(time)">
-          {{ time }}
+          {{ formatTime12(time) }}
         </button>
       </div>
+
 
     </div>
 

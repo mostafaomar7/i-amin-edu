@@ -14,6 +14,8 @@ export class UpdateProfileComponent implements OnInit {
 
   profileForm!: FormGroup;
   loading: boolean = true;
+  successMessage: string = '';
+errorMessage: string = '';
 
   constructor(
     private fb: FormBuilder,
@@ -35,9 +37,10 @@ export class UpdateProfileComponent implements OnInit {
           firstName: [data.user.firstName],
           lastName: [data.user.lastName],
           phone: [data.user.phone],
-          email: [data.user.email],
+          // email: [data.user.email],
           experienceEn: [data.experienceEn],
-          countryId: [data.user.countryId]
+          experienceAr: [data.experienceAr],
+          // countryId: [data.user.countryId]
         });
         this.loading = false;
       },
@@ -49,18 +52,19 @@ export class UpdateProfileComponent implements OnInit {
   }
 
   onSubmit(): void {
-    if (this.profileForm.invalid) return;
+  if (this.profileForm.invalid) return;
 
-    this.profileService.updateInstructorProfile(this.profileForm.value).subscribe({
-      next: () => {
-        const msg = this.translate.instant('PROFILE.UPDATE_SUCCESS');
-        alert(msg);
-      },
-      error: (err) => {
-        console.error('Update error:', err);
-        const msg = this.translate.instant('PROFILE.UPDATE_ERROR');
-        alert(msg);
-      }
-    });
-  }
+  this.profileService.updateInstructorProfile(this.profileForm.value).subscribe({
+    next: () => {
+      this.successMessage = this.translate.instant('PROFILE.UPDATE_SUCCESS');
+      this.errorMessage = '';
+    },
+    error: (err) => {
+      console.error('Update error:', err);
+      this.errorMessage = this.translate.instant('PROFILE.UPDATE_ERROR');
+      this.successMessage = '';
+    }
+  });
+}
+
 }

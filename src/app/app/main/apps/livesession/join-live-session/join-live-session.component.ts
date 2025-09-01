@@ -38,78 +38,67 @@ export class JoinLiveSessionComponent implements OnInit {
   }
 
   loadSessions() {
-    this.liveService.getUpcomingSessions().subscribe((res: any) => {
-      if (res.status) this.sessions = res.innerData || [];
-    });
-  }
+  this.liveService.getUpcomingSessions().subscribe((res: any) => {
+    if (res.status) {
+      const rawSessions = res.innerData || [];
+
+      // نجمع الـ group sessions حسب roomId (أو id بتاع الـ time_slot لو unique)
+      const grouped: any = {};
+
+      rawSessions.forEach((s: any) => {
+        if (s.time_slot.sessionType === 'group') {
+          const key = s.time_slot.roomID || s.time_slot.id; // حسب المفتاح المتاح عندك
+          if (!grouped[key]) {
+            grouped[key] = { ...s, studentCount: 1 };
+          } else {
+            grouped[key].studentCount += 1; // نزود عدد الطلبة
+          }
+        } else {
+          // الـ solo نسيبها زي ما هي
+          grouped[`${s.id}_solo`] = { ...s, studentCount: 1 };
+        }
+      });
+
+      // حول الـ object لمصفوفة
+      this.sessions = Object.values(grouped);
+    }
+  });
+}
+
 
   enterRoom() {
     this.route.navigateByUrl(`/room/${this.roomId}`);
   }
 
   joinSession(sessionId: number) {
-    this.selectedSession = null;
-    this.errorMessage = '';
-    this.successMessage = '';
+  this.errorMessage = '';
+  this.successMessage = '';
 
-    this.liveService.joinSession(sessionId).subscribe({
-      next: (res: any) => {
-        console.log('Full API Response:', res);
+  this.liveService.joinSession(sessionId).subscribe({
+    next: (res: any) => {
+      console.log('Full API Response:', res);
 
-        const kitTokenObj = res?.innerData?.kitToken;
+      const kitTokenObj = res?.innerData?.kitToken;
 
-        if (kitTokenObj) {
-          try {
-            // توليد kitToken من Angular
-            const kitToken = ZegoUIKitPrebuilt.generateKitTokenForTest(
-              Number(kitTokenObj.appID),
-              kitTokenObj.token,
-              kitTokenObj.roomID,
-              kitTokenObj.userID,
-              kitTokenObj.userName
-            );
-
-            this.roomId = kitTokenObj.roomID;
-            this.selectedSession = res.innerData;
-
-            // فحص صلاحيات الميكروفون والكاميرا قبل الانضمام
-            navigator.mediaDevices.getUserMedia({ video: true, audio: true })
-              .then(() => {
-                setTimeout(() => {
-                  const zp = ZegoUIKitPrebuilt.create(kitToken);
-                  zp.joinRoom({
-                    container: this.videoContainer.nativeElement,
-                    sharedLinks: [
-                      { name: 'Personal link', url: window.location.href }
-                    ],
-                    scenario: { mode: ZegoUIKitPrebuilt.GroupCall },
-                    showScreenSharingButton: true,
-                    turnOnCameraWhenJoining: true,
-                    turnOnMicrophoneWhenJoining: true,
-                    showTextChat: true,
-                    showRoomTimer: true,
-                  });
-                  this.successMessage = 'تم الانضمام للجلسة بنجاح';
-                }, 0);
-              })
-              .catch(() => {
-                this.errorMessage = 'يرجى السماح بالوصول للكاميرا والميكروفون.';
-              });
-
-          } catch (e) {
-            console.error(e);
-            this.errorMessage = 'فشل الانضمام للجلسة (UIKit).';
-          }
-        } else {
-          this.errorMessage = 'الـ Backend لم يرجع kitToken/roomId.';
+      if (kitTokenObj) {
+        try {
+          // مجرد نعمل Navigate لصفحة الـ Room
+          this.route.navigateByUrl(`/room/${kitTokenObj.roomID}`);
+        } catch (e) {
+          console.error(e);
+          this.errorMessage = 'فشل فتح صفحة الجلسة.';
         }
-      },
-      error: (err) => {
-        console.error(err);
-        this.errorMessage = 'حصل خطأ أثناء الانضمام.';
+      } else {
+        this.errorMessage = 'الـ Backend لم يرجع kitToken/roomId.';
       }
-    });
-  }
+    },
+    error: (err) => {
+      console.error(err);
+      this.errorMessage = 'حصل خطأ أثناء الانضمام.';
+    }
+  });
+}
+
 
   cancelSession(sessionId: number) {
     this.liveService.cancelSession(sessionId).subscribe({

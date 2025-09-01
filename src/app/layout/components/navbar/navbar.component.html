@@ -36,7 +36,7 @@
     </div>
     
     <ul class="nav navbar-nav align-items-center ml-auto">
-        <li *ngIf="userData?.userType === 3" class="nav-item dropdown" ngbDropdown>
+        <li  class="nav-item dropdown" ngbDropdown>
   <a class="nav-link" id="dropdownNotification" ngbDropdownToggle (click)="fetchNotifications()">
     <span class="ficon" data-feather="bell"></span>
     <span *ngIf="unreadCount >= 0" class="badge badge-pill badge-danger badge-up mx-1">

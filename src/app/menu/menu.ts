@@ -170,6 +170,24 @@ export const instructorMenu: CoreMenu[] = [
         icon: 'book-open',
         url: 'apps/courses/list'
     },
+    {
+        id: 'Consulting Manage',
+        title: 'Consulting Manage',
+        translate: 'MENU.APP.Live',
+        icon: 'circle',
+        type: 'item',
+        role: ['organization'],
+        url: 'livesession',
+    },
+    {
+        id: 'Wallet Transaction',
+        title: 'Wallet Transaction',
+        translate: 'MENU.APP.Wallet',
+        icon: 'credit-card',
+        type: 'item',
+        role: ['organization'],
+        url: 'apps/transaction-history/wallet',
+    },
     // {
     //     id: 'students',
     //     title: 'Students Management',
@@ -189,6 +207,15 @@ export const instructorMenu: CoreMenu[] = [
         url: 'apps/transaction-history/list',
     },
     {
+        id: 'Analysis',
+        title: 'Analysis',
+        translate: 'MENU.APP.analysis',
+        icon: 'activity',
+        type: 'item',
+        role: ['organization'],
+        url: 'pages/auth/login',
+    },
+    {
         id: 'raise-support',
         title: 'Raise Support',
         translate: 'MENU.OTHERS.SUPPORT',
@@ -197,33 +224,6 @@ export const instructorMenu: CoreMenu[] = [
         role: ['organization'],
         url: 'apps/support/list/new',
     },
-    {
-        id: 'Wallet Transaction',
-        title: 'Wallet Transaction',
-        translate: 'MENU.APP.Wallet',
-        icon: 'credit-card',
-        type: 'item',
-        role: ['organization'],
-        url: 'apps/transaction-history/wallet',
-    },
-    {
-        id: 'Consulting Manage',
-        title: 'Consulting Manage',
-        translate: 'MENU.APP.Live',
-        icon: 'circle',
-        type: 'item',
-        role: ['organization'],
-        url: 'livesession',
-    },
-    {
-        id: 'Analysis',
-        title: 'Analysis',
-        translate: 'MENU.APP.analysis',
-        icon: 'activity',
-        type: 'item',
-        role: ['organization'],
-        url: 'pages/auth/login',
-    }
 ];
 
 
@@ -247,14 +247,32 @@ export const organizationMenu: CoreMenu[] = [
         url: 'apps/courses/list'
     },
     {
-        id: 'students',
-        title: 'Students Management',
-        translate: 'MENU.USERS.STUDENTS',
+        id: 'Consulting Manage',
+        title: 'Consulting Manage',
+        translate: 'MENU.APP.Live',
+        icon: 'circle',
         type: 'item',
         role: ['organization'],
-        icon: 'users',
-        url: 'users/students/list',
+        url: 'livesession',
     },
+    {
+        id: 'Wallet Transaction',
+        title: 'Wallet Transaction',
+        translate: 'MENU.APP.Wallet',
+        icon: 'credit-card',
+        type: 'item',
+        role: ['organization'],
+        url: 'apps/transaction-history/wallet',
+    },
+    // {
+    //     id: 'students',
+    //     title: 'Students Management',
+    //     translate: 'MENU.USERS.STUDENTS',
+    //     type: 'item',
+    //     role: ['organization'],
+    //     icon: 'users',
+    //     url: 'users/students/list',
+    // },
     {
         id: 'instructors',
         title: 'Instructors Management',
@@ -273,24 +291,7 @@ export const organizationMenu: CoreMenu[] = [
         icon: 'credit-card',
         url: 'apps/transaction-history/list',
     },
-    {
-        id: 'Consulting Manage',
-        title: 'Consulting Manage',
-        translate: 'MENU.APP.Live',
-        icon: 'circle',
-        type: 'item',
-        role: ['organization'],
-        url: 'livesession',
-    },
-    {
-        id: 'Wallet Transaction',
-        title: 'Wallet Transaction',
-        translate: 'MENU.APP.Wallet',
-        icon: 'credit-card',
-        type: 'item',
-        role: ['organization'],
-        url: 'apps/transaction-history/wallet',
-    },
+    
     {
         id: 'raise-support',
         title: 'Raise Support',

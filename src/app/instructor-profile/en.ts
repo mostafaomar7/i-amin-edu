@@ -3,7 +3,8 @@ export const en = {
   PROFILE: {
     EMAIL: "Email",
     PHONE: "Phone",
-    EXPERIENCE: "Experience",
+    EXPERIENCE: "Experience_en",
+    EXPERIENCEar: "Experience_ar",
     JOIN_DATE: "Join Date",
     WALLET_BALANCE: "Wallet Balance",
     COUNTRY: "Country",

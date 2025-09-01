@@ -5,6 +5,7 @@
     <p><strong>{{ 'PROFILE.EMAIL' | translate }}:</strong> {{ profileData.user.email }}</p>
     <p><strong>{{ 'PROFILE.PHONE' | translate }}:</strong> {{ profileData.user.phone }}</p>
     <p *ngIf="usertype==3"><strong>{{ 'PROFILE.EXPERIENCE' | translate }}:</strong> {{ profileData.experienceEn }}</p>
+    <p *ngIf="usertype==3"><strong>{{ 'PROFILE.EXPERIENCEar' | translate }}:</strong> {{ profileData.experienceAr }}</p>
     <p><strong>{{ 'PROFILE.JOIN_DATE' | translate }}:</strong> {{ profileData.createdAt | date: 'mediumDate' }}</p>
     <p><strong>{{ 'PROFILE.WALLET_BALANCE' | translate }}:</strong> {{ profileData.user.walletBalance }} EGP</p>
     <p><strong>{{ 'PROFILE.COUNTRY' | translate }}:</strong>
