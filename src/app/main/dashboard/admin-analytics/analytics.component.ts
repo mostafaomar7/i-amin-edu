@@ -133,11 +133,14 @@ export class AnalyticsComponent implements OnInit {
       data: [0, totalEnrollments] 
     }];
 
-    const wallet = this.data?.totalWalletBalance ;
-    this.walletBalance.series = [{
-      name: "walletBalance",
-      data: [0, wallet] 
-    }];
+    const wallet = this.data?.totalWalletBalance ?? 0;
+// تقريب الرقم لأقرب مضاعف 20
+const roundedWallet = Math.round(wallet / 20) * 20;
+
+this.walletBalance.series = [{
+  name: "walletBalance",
+  data: [0, roundedWallet] 
+}];
 
   }
     });

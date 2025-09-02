@@ -37,5 +37,7 @@ export const locale = {
     "EDUCATIONAL_GATE": "البوابة التعليمية",    
       "REGISTER_AS_ORG": "تسجيل كمنظمة",
       "ORG_INFO": "معلومات المنظمة",
+   "REGISTER_AS_Broker" : "تسجيل وسيط"
+
   }
 };

@@ -29,6 +29,7 @@
           <!-- <th scope="col">{{ 'LIVE.STUDENT_NAME' | translate }}</th> -->
           <th scope="col">{{ 'LIVE.STUDENT_BOOK' | translate }}</th>
           <th scope="col">{{ 'LIVE.TITLE' | translate }}</th>
+          <th scope="col">{{ 'LIVE.Desc' | translate }}</th>
           <th scope="col">{{ 'LIVE.DATE_TIME' | translate }}</th>
           <th scope="col">{{ 'LIVE.SESSION_PRICE' | translate }}</th>
           <th scope="col" class="text-center">{{ 'LIVE.ACTION' | translate }}</th>
@@ -38,6 +39,7 @@
         <tr *ngFor="let session of sessions" [hidden]="session.time_slot.sessionType !== 'group'">
           <td>{{ session.studentCount }}</td>
           <td>{{ session.title }}</td>
+          <td>{{ session.time_slot.sessionDescription }}</td>
           <td>{{ session.time_slot.slotDateAndTime | date: 'short' }}</td>
           <td>{{ session.time_slot.sessionPrice }}</td>
           <td class="text-center">

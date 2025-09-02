@@ -38,6 +38,7 @@ export const ar = {
     JOIN_FAILED: 'فشل في الانضمام للجلسة',
     CANCEL_SUCCESS: 'تم إلغاء الجلسة بنجاح!',
     CANCEL_FAILED: 'فشل في إلغاء الجلسة',
-    JOIN_ROOM: 'انضم للغرفة'
+    JOIN_ROOM: 'انضم للغرفة',
+    Desc : 'وصف'
   }
 };

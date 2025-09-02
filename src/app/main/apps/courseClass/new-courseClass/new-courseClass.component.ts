@@ -44,7 +44,7 @@ export class NewCourseClassComponent implements OnInit {
       id: [''],
       courseId: [''],
       nameEn: ['', [Validators.required]],
-      duration: ['', [Validators.required]],
+      duration: [{ value: '', disabled: true }, [Validators.required]],
       classStatus: ['1', [Validators.required]],
       // --- بداية التعديل: إعادة إضافة هذا السطر ---
       mediaUrl: [''], 
@@ -68,14 +68,26 @@ export class NewCourseClassComponent implements OnInit {
   }
 
   onFileSelected(event: any): void {
-    const file = event.target.files[0];
-    if (!file) return;
+  const file = event.target.files[0];
+  if (!file) return;
 
-    this.selectedFile = file;
-    this.selectedFileName = file.name;
-    this.videoPreviewUrl = this.sanitizer.bypassSecurityTrustUrl(URL.createObjectURL(file));
-    this.uploadProgress = 'default';
-  }
+  this.selectedFile = file;
+  this.selectedFileName = file.name;
+  this.videoPreviewUrl = this.sanitizer.bypassSecurityTrustUrl(URL.createObjectURL(file));
+  this.uploadProgress = 'default';
+
+  const video = document.createElement('video');
+  video.preload = 'metadata';
+  video.src = URL.createObjectURL(file);
+  video.onloadedmetadata = () => {
+    URL.revokeObjectURL(video.src);
+    const durationInSeconds = Math.floor(video.duration);
+    // تحديث قيمة الحقل حتى لو disabled
+    this.newItemForm.get('duration').setValue(durationInSeconds);
+  };
+}
+
+
 
   async onSubmit() {
   // --- لا تغيير هنا ---

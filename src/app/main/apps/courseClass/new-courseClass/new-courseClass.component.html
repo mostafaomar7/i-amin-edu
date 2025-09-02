@@ -20,11 +20,12 @@
 
     <div class="form-group col-md-6 col-12">
       <label for="duration">{{ "DURATION" | translate }}</label>
-      <input class="form-control" formControlName="duration" id="duration" required type="number" />
+      <input class="form-control" placeholder="Duration Take When Upload Video" formControlName="duration" id="duration" type="number" disabled />
       <small *ngIf="newItemForm.get('duration').hasError('required') && newItemForm.get('duration').touched" class="form-text text-danger">
         {{ "REQUIRED_FIELD" | translate }}
       </small>
     </div>
+
 
     <div *ngIf="!currentItem" class="form-group col-md-6 col-12">
       <fieldset class="form-group">

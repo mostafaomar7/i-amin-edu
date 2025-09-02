@@ -66,48 +66,38 @@
     <input type="hidden" formControlName="sessionType">
 
     <!-- اختيار التاريخ والوقت (group) -->
-    <div *ngIf="selectedType === 'group'">
-      <div class="mb-3">
-        <label>{{ 'LIVE.DATE_TIME' | translate }}</label>
-        <input type="datetime-local" class="form-control" formControlName="slotDateAndTime">
-      </div>
+    <div *ngIf="selectedType === 'group' || selectedType === 'solo'" class="solo-picker">
+  <h5>{{ 'LIVE.SELECT_DATE' | translate }}</h5>
+  <div class="date-navigation">
+    <button type="button" (click)="prevDates()">
+      <i class="fa fa-chevron-left"></i>
+    </button>
+    <div id="date-buttons">
+      <button type="button"
+          *ngFor="let date of visibleDates"
+          class="date-btn"
+          [class.active]="selectedDate && date.getTime() === selectedDate.getTime()"
+          (click)="selectDate(date)">
+        {{ formatDate(date) }}
+      </button>
     </div>
+    <button type="button" (click)="nextDates()">
+      <i class="fa fa-chevron-right"></i>
+    </button>
+  </div>
 
-    <!-- اختيار اليوم والوقت (solo) -->
-    <div *ngIf="selectedType === 'solo'" class="solo-picker">
- 
-      <h5>{{ 'LIVE.SELECT_DATE' | translate }}</h5>
-      <div class="date-navigation">
-        <button type="button" (click)="prevDates()">
-          <i class="fa fa-chevron-left"></i>
-        </button>
-        <div id="date-buttons">
-          <button type="button"
-              *ngFor="let date of visibleDates"
-              class="date-btn"
-              [class.active]="selectedDate && date.getTime() === selectedDate.getTime()"
-              (click)="selectDate(date)">
-            {{ formatDate(date) }}
-          </button>
-        </div>
-        <button type="button" (click)="nextDates()">
-          <i class="fa fa-chevron-right"></i>
-        </button>
-      </div>
+  <h5>{{ 'LIVE.SELECT_TIME' | translate }}</h5>
+  <div id="time-buttons">
+    <button type="button"
+            *ngFor="let time of availableTimes"
+            [class.active]="time === selectedTime"
+            class="time-btn"
+            (click)="selectTime(time)">
+      {{ formatTime12(time) }}
+    </button>
+  </div>
+</div>
 
-      <h5>{{ 'LIVE.SELECT_TIME' | translate }}</h5>
-      <div id="time-buttons">
-        <button type="button"
-                *ngFor="let time of availableTimes"
-                [class.active]="time === selectedTime"
-                class="time-btn"
-                (click)="selectTime(time)">
-          {{ formatTime12(time) }}
-        </button>
-      </div>
-
-
-    </div>
 
     <button type="submit" class="btn btn-primary">{{ 'LIVE.CREATE_SESSION' | translate }}</button>
     

@@ -204,27 +204,16 @@ export class LivesessionComponent implements OnInit {
   createSession() {
   let slotDateAndTime: string;
 
-  if (this.selectedType === 'group') {
-    const dateTime = this.sessionForm.value.slotDateAndTime;
-    if (!dateTime) {
-      this.showMessage('Please select date and time', 'error');
-      return;
-    }
-    slotDateAndTime = new Date(dateTime).toISOString();
-  } else {
-    this.sessionForm.patchValue({ numberOfSeats: 1 });
-    if (this.selectedDate && this.selectedTime) {
-      const [h, m] = this.selectedTime.split(':').map(Number);
-      const d = new Date(this.selectedDate);
-      d.setHours(h, m ?? 0, 0, 0);
-      slotDateAndTime = d.toISOString();
-    } else if (this.selectedDay && this.selectedTime) {
-      slotDateAndTime = new Date(`${this.selectedDay}T${this.selectedTime}:00`).toISOString();
-    } else {
-      this.showMessage('Please select a date and time.', 'error');
-      return;
-    }
-  }
+if (this.selectedDate && this.selectedTime) {
+  const [h, m] = this.selectedTime.split(':').map(Number);
+  const d = new Date(this.selectedDate);
+  d.setHours(h, m ?? 0, 0, 0);
+  slotDateAndTime = d.toISOString();
+} else {
+  this.showMessage('Please select a date and time.', 'error');
+  return;
+}
+
 
   if (this.userType === 2 && !this.sessionForm.value.sessionInstructor) {
     this.showMessage('Please select a teacher', 'error');

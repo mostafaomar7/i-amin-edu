@@ -38,6 +38,6 @@ export const locale = {
     "EDUCATIONAL_GATE": "Educational Gate",
     "REGISTER_AS_ORG": "Register as Organization",
     "ORG_INFO": "Organization Info",
-
+   "REGISTER_AS_Broker" : "Register AS Broker",
   }
 };

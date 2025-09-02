@@ -101,7 +101,8 @@ export class JoinLiveSessionComponent implements OnInit {
 
 
   cancelSession(sessionId: number) {
-    this.liveService.cancelSession(sessionId).subscribe({
+    if (confirm('Are you sure you want to delete this session?')) {
+      this.liveService.cancelSession(sessionId).subscribe({
       next: (res) => {
         console.log('Session canceled:', res);
         this.sessions = this.sessions.filter(s => s.id !== sessionId);
@@ -110,5 +111,6 @@ export class JoinLiveSessionComponent implements OnInit {
         console.error('Cancel failed:', err);
       }
     });
+    }
   }
 }
