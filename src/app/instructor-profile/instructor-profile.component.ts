@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild, TemplateRef } from '@angular/core';
 import { ProfileService } from './profile.service';
 import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
+import Swal from 'sweetalert2';
 import { en } from './en';
 import { ar } from './ar';
 
@@ -104,32 +105,68 @@ export class InstructorProfileComponent implements OnInit {
   }
 
   submitBankAccount(): void {
-    this.profileService.addBankAccount(this.bankAccountData).subscribe({
-      next: () => {
-        const message = this.translate.instant('PROFILE.TOAST_SUCCESS');
-        this.showCustomToast('✅ ' + message, 'success');
-        this.loadProfileData(); // reload data after adding
-      },
-      error: () => {
-        const message = this.translate.instant('PROFILE.TOAST_ERROR');
-        this.showCustomToast('❌ ' + message, 'error');
-      }
-    });
-  }
+  Swal.fire({
+    title: this.translate.instant('Profile Confirm Add Title'),
+    text: this.translate.instant('PROFILE CONFIRM ADD TEXT'),
+    icon: 'question',
+    showCancelButton: true,
+    confirmButtonText: this.translate.instant('YES'),
+    cancelButtonText: this.translate.instant('NO')
+  }).then(result => {
+    if (result.isConfirmed) {
+      this.profileService.addBankAccount(this.bankAccountData).subscribe({
+        next: (res: any) => {
+          if (res.status) {
+            const message = this.translate.instant('PROFILE.TOAST_SUCCESS');
+            this.showCustomToast('✅ ' + message, 'success');
 
-  deleteBankAccount(id: number) {
-    this.profileService.deleteBankAccount(id).subscribe({
-      next: () => {
-        const msg = this.translate.instant('PROFILE.DELETE_SUCCESS');
-        this.showCustomToast(msg, 'success');
-        this.loadBankAccounts();
-      },
-      error: () => {
-        const msg = this.translate.instant('PROFILE.DELETE_ERROR');
-        this.showCustomToast(msg, 'error');
-      }
-    });
-  }
+            // ضيف الحساب الجديد مباشرة
+            this.bankAccounts = [...this.bankAccounts, res.innerData];
+
+            // امسح الفورم
+            this.bankAccountData = {
+              bankAccountNumber: '',
+              bankAccountName: '',
+              bankName: '',
+              bankCode: ''
+            };
+          }
+        },
+        error: () => {
+          const message = this.translate.instant('PROFILE.TOAST_ERROR');
+          this.showCustomToast('❌ ' + message, 'error');
+        }
+      });
+    }
+  });
+}
+
+deleteBankAccount(id: number) {
+  Swal.fire({
+    title: this.translate.instant('Profile Confirm Delete Title'),
+    text: this.translate.instant('PROFILE CONFIRM DELETE TEXT'),
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonText: this.translate.instant('YES'),
+    cancelButtonText: this.translate.instant('NO')
+  }).then(result => {
+    if (result.isConfirmed) {
+      this.profileService.deleteBankAccount(id).subscribe({
+        next: () => {
+          const msg = this.translate.instant('PROFILE.DELETE_SUCCESS');
+          this.showCustomToast(msg, 'success');
+          this.bankAccounts = this.bankAccounts.filter(acc => acc.id !== id);
+        },
+        error: () => {
+          const msg = this.translate.instant('PROFILE.DELETE_ERROR');
+          this.showCustomToast(msg, 'error');
+        }
+      });
+    }
+  });
+}
+
+
 
   loadBankAccounts() {
     this.profileService.getBankAccounts().subscribe({
