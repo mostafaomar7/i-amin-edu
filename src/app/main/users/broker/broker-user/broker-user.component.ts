@@ -2,11 +2,11 @@ import { Component, Input, OnInit, ViewEncapsulation, AfterViewInit } from '@ang
 import { Router } from '@angular/router';
 import { ColumnMode } from '@swimlane/ngx-datatable';
 import * as feather from 'feather-icons';
-
-// استيراد التراجم
+import { CoreTranslationService } from '@core/services/translation.service';
+import { UserService } from '../user.service';
 import { locale as english } from './en';
 import { locale as arabic } from './ar';
-import { CoreTranslationService } from '@core/services/translation.service';
+import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-broker-user',
@@ -20,30 +20,64 @@ export class BrokerUserComponent implements OnInit, AfterViewInit {
   public isLoading = true;
   public rows: any[] = [];
   public selectedOption = 10;
-  public ColumnMode = ColumnMode;   // مهم جداً للـ ngx-datatable
+  public ColumnMode = ColumnMode;
   public searchValue = '';
 
-  lang: 'en' | 'ar' = 'ar'; // لغة افتراضية
+  lang: 'en' | 'ar' = 'ar';
   translations: any;
 
   constructor(
     private router: Router,
-    private _coreTranslationService: CoreTranslationService
+    private _coreTranslationService: CoreTranslationService,
+    private _user: UserService,
+    private sanitizer: DomSanitizer
   ) {
-    // تحميل التراجم للكمبونينت
     this._coreTranslationService.translate(english, arabic);
   }
 
   ngOnInit(): void {
-    this.rows = [
-      { id: 1, name: 'Ahmed Ali', phone: '01012345678', role: 'instructor', status: 'Active' },
-      { id: 2, name: 'Sara Mohamed', phone: '01198765432', role: 'organization', status: 'Inactive' },
-      { id: 3, name: 'Omar Hassan', phone: '01234567890', role: 'instructor', status: 'Active' }
-    ];
+    this.fetchUsers();
   }
 
   ngAfterViewInit(): void {
-    feather.replace(); // علشان يحوّل [data-feather] → SVG
+    feather.replace();
+  }
+
+  fetchUsers() {
+    this.isLoading = true;
+    this._user.listUsers().subscribe({
+      next: (res) => {
+        if (res.status && res.data?.users) {
+          // تحويل الـ API data لتتناسب مع جدولك
+          this.rows = res.data.users.map((user: any, index: number) => ({
+            id: index + 1,
+            image: this.getSafeImage(user.image),
+            name: user.username,
+            phone: user.phone,
+            role: this.mapUserType(user.userType || user.role),
+            status: user.status
+          }));
+        }
+        this.isLoading = false;
+      },
+      error: (err) => {
+        console.error('Error fetching users', err);
+        this.isLoading = false;
+      }
+    });
+  }
+
+  // تحويل الصور إلى SafeUrl لدعم Base64 و URLs
+  getSafeImage(image: string): SafeUrl {
+    if (!image) return 'assets/images/default-user.png'; // صورة افتراضية لو فارغة
+    return this.sanitizer.bypassSecurityTrustUrl(image);
+  }
+
+  // تحويل userType الرقم إلى نص إذا لزم
+  mapUserType(type: any): string {
+    if (type === 2 || type === '2') return 'Organization';
+    if (type === 3 || type === '3') return 'Instructor';
+    return type; // لو كان نص مسبقًا
   }
 
   filterUpdate(event: any) {

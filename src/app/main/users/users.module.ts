@@ -6,6 +6,8 @@ import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { NewbrokerUserComponent } from './broker/newbroker-user/newbroker-user.component';
 import { BrokerUserinfoComponent } from './broker/broker-userinfo/broker-userinfo.component';
 import { TranslateModule } from '@ngx-translate/core';
+import { ReactiveFormsModule } from '@angular/forms';
+
 // routing
 const routes: Routes = [
     {
@@ -39,7 +41,7 @@ const routes: Routes = [
     NewbrokerUserComponent,
     BrokerUserinfoComponent
   ],
-    imports: [CommonModule, RouterModule.forChild(routes),NgxDatatableModule,TranslateModule]
+    imports: [CommonModule, RouterModule.forChild(routes),NgxDatatableModule,TranslateModule,ReactiveFormsModule]
 })
 export class UsersModule {
 }

@@ -16,7 +16,9 @@ export const locale = {
       SELECT_ROLE: 'Select role',
       ROLE_INSTRUCTOR: 'Instructor',
       ROLE_ORGANIZATION: 'Organization',
-      SUBMIT: 'Submit'
+      SUBMIT: 'Submit',
+      PASSWORD: 'User Password',
+      EMAIL : 'User Email'
     }
   }
 };

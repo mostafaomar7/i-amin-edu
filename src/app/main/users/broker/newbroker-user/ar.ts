@@ -16,7 +16,9 @@ export const locale = {
       SELECT_ROLE: 'اختر الدور',
       ROLE_INSTRUCTOR: 'مدرب',
       ROLE_ORGANIZATION: 'منظمة',
-      SUBMIT: 'إرسال'
+      SUBMIT: 'إرسال',
+      PASSWORD: 'كلمة سر المستخدم',
+      EMAIL : 'ايميل المستخدم'
     }
   }
 };
