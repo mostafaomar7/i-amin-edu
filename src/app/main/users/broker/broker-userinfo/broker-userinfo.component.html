@@ -1,7 +1,7 @@
-<div class="container mt-4">
+<div class="container mt-4" *ngIf="userData">
   <div class="card shadow-lg rounded-3">
     <!-- Header -->
-    <div class="card-header bg-light text-white">
+    <div class="card-header bg-light">
       <h5 class="mb-0">{{ 'BROKER_USER.USER_DETAILS' | translate }}</h5>
     </div>
 
@@ -11,13 +11,21 @@
         
         <!-- Left Side (User Image + Name + Role) -->
         <div class="col-md-4 text-center border-end">
-          <img src="https://via.placeholder.com/120" 
+          <img [src]="userData.image || 'assets/images/default-user.png'" 
                alt="User Image" 
                class="rounded-circle border border-3 shadow-sm mb-3" 
                width="120" height="120">
-          <h4 class="fw-bold mb-1">John Doe</h4>
-          <p class="text-muted mb-2">{{ 'BROKER_USER.ROLE_INSTRUCTOR' | translate }}</p>
-          <span class="badge bg-success">{{ 'BROKER_USER.STATUS_APPROVED' | translate }}</span>
+          
+          <h4 class="fw-bold mb-1">{{ userData.username }}</h4>
+          <p class="text-muted mb-2">{{ mapUserType(userData.userType || userData.role) }}</p>
+          <span class="badge" 
+                [ngClass]="{
+                  'bg-success': userData.status === 'approved',
+                  'bg-warning': userData.status === 'pending',
+                  'bg-danger': userData.status === 'rejected'
+                }">
+            {{ userData.status }}
+          </span>
         </div>
 
         <!-- Right Side (User Info) -->
@@ -25,23 +33,23 @@
           <ul class="list-group list-group-flush">
             <li class="list-group-item">
               <i class="fas fa-user me-2 text-primary"></i>
-              <strong>{{ 'BROKER_USER.USERNAME' | translate }}:</strong> John Doe
+              <strong>{{ 'BROKER_USER.USERNAME' | translate }}:</strong> {{ userData.username }}
             </li>
-            <li class="list-group-item">
+            <!-- <li class="list-group-item">
               <i class="fas fa-info-circle me-2 text-primary"></i>
-              <strong>{{ 'BROKER_USER.BIO_EN' | translate }}:</strong> Passionate instructor sharing knowledge.
+              <strong>{{ 'BROKER_USER.BIO_EN' | translate }}:</strong> {{ userData.bioEn }}
             </li>
             <li class="list-group-item text-end" dir="rtl">
               <i class="fas fa-info-circle ms-2 text-primary"></i>
-              <strong>{{ 'BROKER_USER.BIO_AR' | translate }}:</strong> مدرب شغوف بمشاركة المعرفة
-            </li>
+              <strong>{{ 'BROKER_USER.BIO_AR' | translate }}:</strong> {{ userData.bioAr }}
+            </li> -->
             <li class="list-group-item">
               <i class="fas fa-phone me-2 text-primary"></i>
-              <strong>{{ 'BROKER_USER.PHONE' | translate }}:</strong> +20 100 000 0000
+              <strong>{{ 'BROKER_USER.PHONE' | translate }}:</strong> {{ userData.phone }}
             </li>
             <li class="list-group-item">
               <i class="fas fa-user-tag me-2 text-primary"></i>
-              <strong>{{ 'BROKER_USER.ROLEE' | translate }}:</strong> Instructor
+              <strong>{{ 'BROKER_USER.ROLEE' | translate }}:</strong> {{ mapUserType(userData.userType || userData.role) }}
             </li>
           </ul>
         </div>

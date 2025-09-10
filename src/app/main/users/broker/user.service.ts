@@ -26,5 +26,14 @@ export class UserService {
   const headers = { 'Authorization': `Bearer ${token}` }; // لا تحدد Content-Type، Angular هيتعامل مع FormData
   return this.http.post(`${this.api_url}/broker/user-management/add-user`, userData, { headers });
 }
+getUserById(userId: number): Observable<any> {
+  const token = localStorage.getItem('authToken');
+  const headers = new HttpHeaders({
+    'Authorization': `Bearer ${token}`,
+    'Content-Type': 'application/json'
+  });
+
+  return this.http.get(`${this.api_url}/broker/user-management/${userId}`, { headers });
+}
 
 }

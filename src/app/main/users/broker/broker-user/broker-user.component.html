@@ -95,9 +95,10 @@
             <ng-template ngx-datatable-cell-template let-row="row">
               <div class="row">
                 <!-- View -->
-                <button class="btn btn-flat-secondary" rippleEffect (click)="eyeRoute()">
+                <button class="btn btn-flat-secondary" rippleEffect (click)="eyeRoute(row)">
                   <i class="fa fa-eye"></i>
                 </button>
+
                 <!-- Edit -->
                 <!-- <button class="btn btn-flat-secondary" (click)="eyeRoute()" rippleEffect>
                   <i class="fas fa-edit"></i>

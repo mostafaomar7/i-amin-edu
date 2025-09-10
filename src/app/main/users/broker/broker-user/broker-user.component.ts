@@ -50,7 +50,7 @@ export class BrokerUserComponent implements OnInit, AfterViewInit {
         if (res.status && res.data?.users) {
           // تحويل الـ API data لتتناسب مع جدولك
           this.rows = res.data.users.map((user: any, index: number) => ({
-            id: index + 1,
+            id: user.userId,
             image: this.getSafeImage(user.image),
             name: user.username,
             phone: user.phone,
@@ -68,10 +68,12 @@ export class BrokerUserComponent implements OnInit, AfterViewInit {
   }
 
   // تحويل الصور إلى SafeUrl لدعم Base64 و URLs
-  getSafeImage(image: string): SafeUrl {
-    if (!image) return 'assets/images/default-user.png'; // صورة افتراضية لو فارغة
-    return this.sanitizer.bypassSecurityTrustUrl(image);
+getSafeImage(image: string): SafeUrl {
+  if (!image) {
+    return 'assets/images/default-user-image.png';
   }
+  return this.sanitizer.bypassSecurityTrustUrl(image);
+}
 
   // تحويل userType الرقم إلى نص إذا لزم
   mapUserType(type: any): string {
@@ -91,7 +93,8 @@ export class BrokerUserComponent implements OnInit, AfterViewInit {
     this.router.navigate([`newuser-broker`]);
   }
 
-  eyeRoute() {
-    this.router.navigate([`userinfo-broker`]);
-  }
+  eyeRoute(row: any) {
+  this.router.navigate([`userinfo-broker`, row.id]);
+}
+
 }

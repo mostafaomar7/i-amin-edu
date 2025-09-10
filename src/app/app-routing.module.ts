@@ -73,7 +73,7 @@ const routes: Routes = [
         component: NewbrokerUserComponent 
     },
     {
-        path: 'userinfo-broker',
+        path: 'userinfo-broker/:id',
         component: BrokerUserinfoComponent 
     },
     // {
