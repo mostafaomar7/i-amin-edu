@@ -59,21 +59,22 @@ export class NewbrokerUserComponent implements OnInit {
     return;
   }
 
-  const payload: any = {
-  username: this.userForm.get('username')?.value.trim(),
-  email: this.userForm.get('email')?.value.trim(),
-  password: this.userForm.get('password')?.value,
-  phone: this.userForm.get('phone')?.value.trim(),
-  userType: Number(this.userForm.get('userType')?.value), // تحويل للقيمة رقم
-  bioAr: this.userForm.get('bioAr')?.value.trim(),
-  bioEn: this.userForm.get('bioEn')?.value.trim()
-};
+  const formData = new FormData();
 
-if (this.imagePreview) {
-  payload.image = this.imagePreview.toString();
-}
+  formData.append('username', this.userForm.get('username')?.value.trim());
+  formData.append('email', this.userForm.get('email')?.value.trim());
+  formData.append('password', this.userForm.get('password')?.value);
+  formData.append('phone', this.userForm.get('phone')?.value.trim());
+  formData.append('userType', this.userForm.get('userType')?.value.toString());
+  formData.append('bioAr', this.userForm.get('bioAr')?.value.trim());
+  formData.append('bioEn', this.userForm.get('bioEn')?.value.trim());
 
-  this.userService.addUser(payload).subscribe({
+  // الصورة
+  if (this.selectedFile) {
+    formData.append('image', this.selectedFile, this.selectedFile.name);
+  }
+
+  this.userService.addUser(formData).subscribe({
     next: (res: any) => {
       console.log('API Response:', res);
       if (res.status) {
@@ -93,7 +94,6 @@ if (this.imagePreview) {
 }
 
 
-  // دالة سهلة للوصول للحقول في HTML
   get f() {
     return this.userForm.controls;
   }

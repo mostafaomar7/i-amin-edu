@@ -35,6 +35,10 @@ export class WalletService extends ApiService {
   return this.getResponse(route);
 }
 
+async getBrokerWallet(): Promise<ApiResult<any>> {
+    return this.getResponse(`broker/transactions/wallet/statistics`);
+  }
+
   async getSessionBookings(
   page: number = 1,
   limit: number = 10,

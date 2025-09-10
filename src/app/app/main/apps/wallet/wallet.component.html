@@ -22,28 +22,18 @@
     <p>{{ stats.totalAmount.toFixed(2) }} EGP</p>
   </div>
 </div>
-<div class="wallet-cards" *ngIf="userType==5">
-  <div class="card">
-    <h4>{{ 'WALLET.SUCCESSFUL_TRANSACTIONS' | translate }}</h4>
-    <p>0</p>
-  </div>
-  <div class="card">
-    <h4>{{ 'WALLET.FAILED_TRANSACTIONS' | translate }}</h4>
-    <p>0</p>
-  </div>
-  <div class="card">
-    <h4>{{ 'WALLET.COURSES_AMOUNT' | translate }}</h4>
-    <p>0 EGP</p>
-  </div>
-  <div class="card">
-    <h4>{{ 'WALLET.SESSIONS_AMOUNT' | translate }}</h4>
-    <p>0 EGP</p>
-  </div>
-  <div class="card total">
-    <h4>{{ 'WALLET.TOTAL' | translate }}</h4>
-    <p>0 EGP</p>
+<div class="wallet-cards" *ngIf="userType == 5">
+  <div 
+    class="card" 
+    *ngFor="let stat of brokerStats" 
+    [ngClass]="{'total': stat.isTotal}"
+  >
+    <h4>{{ stat.label | translate }}</h4>
+    <p>{{ stat.value }}{{ stat.currency ? ' ' + stat.currency : '' }}</p>
   </div>
 </div>
+
+
 <!-- Loading for Course Transactions -->
 <div *ngIf="isCourseLoading" class="spinner-grow" role="status">
   <span class="sr-only">Loading...</span>

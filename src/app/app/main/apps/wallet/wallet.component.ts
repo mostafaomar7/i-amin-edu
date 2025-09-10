@@ -17,6 +17,7 @@ import { CoreTranslationService } from '@core/services/translation.service';
 })
 export class WalletComponent implements OnInit {
   stats: any = null;
+  brokerStats : any [] = [];
   lang: 'en' | 'ar' = 'ar'; // لغة افتراضية ممكن تغيرها
   public userType:any;
   translations: any;
@@ -49,21 +50,27 @@ export class WalletComponent implements OnInit {
   }
 
   ngOnInit(): void {
+  this.userType = Number(localStorage.getItem('userType')); // الأول هنا ✅
+
+  if (this.userType === 2 || this.userType === 3) {
     this.loadStats();
     this.loadTransactions();
     this.loadSessionBookings();
-
-    this.courseSearchSubject.pipe(debounceTime(400)).subscribe(() => {
-      this.courseCurrentPage = 1;
-      this.loadTransactions();
-    });
-
-    this.sessionSearchSubject.pipe(debounceTime(400)).subscribe(() => {
-      this.sessionCurrentPage = 1;
-      this.loadSessionBookings();
-    });
-    this.userType = localStorage.getItem('userType');
+  } else if (this.userType === 5) {
+    this.getBrokerTransaction();
   }
+
+  this.courseSearchSubject.pipe(debounceTime(400)).subscribe(() => {
+    this.courseCurrentPage = 1;
+    this.loadTransactions();
+  });
+
+  this.sessionSearchSubject.pipe(debounceTime(400)).subscribe(() => {
+    this.sessionCurrentPage = 1;
+    this.loadSessionBookings();
+  });
+}
+
 
   async loadStats() {
     try {
@@ -102,6 +109,48 @@ export class WalletComponent implements OnInit {
     this.courseTotal = 0;
   }
   this.isCourseLoading = false;
+}
+
+async getBrokerTransaction() {
+  try {
+    const res = await this.walletService.getBrokerWallet();
+    console.log('broker stats raw:', res);
+
+    if (res.status) {
+      const data = res['data'];
+
+      this.brokerStats = [
+        {
+          label: 'WALLET.SUCCESSFUL_TRANSACTIONS',
+          value: data.totalCompletedTransactions,
+        },
+        {
+          label: 'WALLET.FAILED_TRANSACTIONS',
+          value: data.totalFailedTransactions,
+        },
+        {
+          label: 'WALLET.COURSES_AMOUNT',
+          value: data.totalCourseAmount.toFixed(2),
+          currency: 'EGP'
+        },
+        {
+          label: 'WALLET.SESSIONS_AMOUNT',
+          value: data.totalConsultantAmount.toFixed(2),
+          currency: 'EGP'
+        },
+        {
+          label: 'WALLET.TOTAL',
+          value: data.totalAmountTransactions.toFixed(2),
+          currency: 'EGP',
+          isTotal: true // علامة للـ HTML لإضافة الكلاس total
+        }
+      ];
+
+      console.log('broker stats formatted:', this.brokerStats);
+    }
+  } catch (error) {
+    console.error('Wallet Stats Error:', error);
+  }
 }
 
 
