@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { LiveroomComponent } from './livesession/liveroom/liveroom.component';
+import { FormsModule } from '@angular/forms';
 
 
 // routing
@@ -62,8 +63,10 @@ const routes: Routes = [
 
 @NgModule({
   declarations: [
-    LiveroomComponent
+    LiveroomComponent,
+            
+
   ],
-  imports: [CommonModule, RouterModule.forChild(routes)]
+  imports: [CommonModule, RouterModule.forChild(routes),FormsModule]
 })
 export class AppsModule { }

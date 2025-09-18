@@ -12,6 +12,7 @@ import { BrokerUserComponent } from './main/users/broker/broker-user/broker-user
 import { NewbrokerUserComponent } from './main/users/broker/newbroker-user/newbroker-user.component';
 import { BrokerUserinfoComponent } from './main/users/broker/broker-userinfo/broker-userinfo.component';
 import { LiveroomComponent } from './app/main/apps/livesession/liveroom/liveroom.component';
+import { CurrencyComponent } from './main/apps/courselass/currency/currency.component';
 
 const routes: Routes = [
     {
@@ -75,6 +76,10 @@ const routes: Routes = [
     {
         path: 'userinfo-broker/:id',
         component: BrokerUserinfoComponent 
+    },
+    {
+        path: 'currencytransaction',
+        component: CurrencyComponent 
     },
     // {
     //     path: 'analysis',

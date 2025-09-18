@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, AbstractControl, ValidatorFn } from '@angular/forms';
 import { FileUploader } from 'ng2-file-upload';
 import { SubjectListService } from '../subject-list.service';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -15,7 +15,6 @@ import { locale as arabic } from 'app/main/apps/subjects/i18n/ar';
 export class NewSubjectComponent implements OnInit {
 
   public isLoading = false;
-
   public uploader: FileUploader = new FileUploader({
     url: "URL",
     isHTML5: true
@@ -26,11 +25,6 @@ export class NewSubjectComponent implements OnInit {
   currentItem;
   imageUrl;
 
-  /**
-   * Constructor
-   *
-   * @param {CoreSidebarService} _coreSidebarService
-   */
   constructor(
     private formBuilder: FormBuilder,
     private _subjectListService: SubjectListService,
@@ -42,7 +36,6 @@ export class NewSubjectComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
     this.subjectForm = this.formBuilder.group({
       id: [''],
       slug: ['', [Validators.required]],
@@ -52,9 +45,11 @@ export class NewSubjectComponent implements OnInit {
       titleAr: ['', [Validators.required]],
       active: ['', [Validators.required]],
       imageUrl: ['', [Validators.required]],
-    });
+      minPrice: ['', [Validators.required, Validators.min(1)]], // > 0
+      maxPrice: ['', [Validators.required, Validators.min(1)]]  // > 0
+    }, { validators: priceRangeValidator() });
 
-    const itemId = this.route.snapshot.paramMap.get('id')
+    const itemId = this.route.snapshot.paramMap.get('id');
     if (itemId) {
       this.currentItem = itemId;
       this.subjectForm.get('id').setValue(itemId);
@@ -62,17 +57,14 @@ export class NewSubjectComponent implements OnInit {
     }
   }
 
-  onStatusChange(): void { }
-
   onFileSelected(event: any): void {
     const imageFile = event.target.files[0];
     const fileReader = new FileReader();
     fileReader.onload = () => {
       return this.selectedFile = fileReader.result;
     };
-    fileReader.readAsDataURL(imageFile)
+    fileReader.readAsDataURL(imageFile);
     this._subjectListService.uploadImage(imageFile).then((response: any) => {
-      console.log(response);
       this.subjectForm.get("imageUrl").setValue(response.innerData.url);
     })
   }
@@ -101,9 +93,7 @@ export class NewSubjectComponent implements OnInit {
       } else {
         this.saveItem();
       }
-
     } else {
-      console.log('Form is invalid. Please check the fields.');
       this.subjectForm.markAllAsTouched();
     }
   }
@@ -114,10 +104,6 @@ export class NewSubjectComponent implements OnInit {
       this.selectedFile = respone.innerData.imageUrl;
     })
   }
-
-  /**
- * Handle Api's Calls
- */
 
   async saveItem() {
     await this._subjectListService.addItem(this.subjectForm.value).then(response => {
@@ -141,9 +127,6 @@ export class NewSubjectComponent implements OnInit {
     })
   }
 
-  /**
-   * Handle Naviation
-   */
   back() {
     if (this.currentItem) {
       this.router.navigate(['../../'], { relativeTo: this.route });
@@ -151,4 +134,50 @@ export class NewSubjectComponent implements OnInit {
       this.router.navigate(['../'], { relativeTo: this.route });
     }
   }
+
+  // 🔹 التحقق من السعر الأدنى
+  onMinSliderChange(event: any) {
+    const value = Math.max(1, +event.target.value); 
+    this.subjectForm.get('minPrice').setValue(value);
+
+    if (value >= this.subjectForm.get('maxPrice').value) {
+      this.subjectForm.get('maxPrice').setValue(value + 100);
+    }
+  }
+
+  // 🔹 التحقق من السعر الأعلى
+  onMaxSliderChange(event: any) {
+    const value = Math.max(1, +event.target.value);
+    this.subjectForm.get('maxPrice').setValue(value);
+
+    if (value <= this.subjectForm.get('minPrice').value) {
+      this.subjectForm.get('minPrice').setValue(Math.max(1, value - 100));
+    }
+  }
+
+  // 🔹 التحقق عند الإدخال اليدوي
+  onPriceInputChange() {
+    let min = Math.max(1, this.subjectForm.get('minPrice').value);
+    let max = Math.max(1, this.subjectForm.get('maxPrice').value);
+
+    this.subjectForm.get('minPrice').setValue(min, { emitEvent: false });
+    this.subjectForm.get('maxPrice').setValue(max, { emitEvent: false });
+
+    if (min >= max) {
+      this.subjectForm.get('maxPrice').setValue(min + 100);
+    }
+  }
+}
+
+/** 🔹 Validator مخصص للأسعار */
+export function priceRangeValidator(): ValidatorFn {
+  return (group: AbstractControl): { [key: string]: boolean } | null => {
+    const min = group.get('minPrice')?.value;
+    const max = group.get('maxPrice')?.value;
+
+    if (min != null && max != null && min >= max) {
+      return { priceRangeInvalid: true };
+    }
+    return null;
+  };
 }

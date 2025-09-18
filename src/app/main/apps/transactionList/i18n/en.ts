@@ -33,7 +33,10 @@ export const locale = {
     BANK_ACCOUNT_WITHDRAW: 'Bank Account Withdraw',
     COURSE_RESERVATION: 'Course Reservation',
     CREATED_AT: 'Created At',
-    EGP: 'EGP'
+    EGP: 'EGP',
+    Convert : 'Convert Form SAR To EGP',
+    Currency : 'Currency Conversion',
+    Submit : 'Submit'
 
   }
 };

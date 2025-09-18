@@ -97,6 +97,58 @@
             </small>
         </div>
 
+        <!-- Price Range -->
+<div class="form-group col-md-12 col-12">
+  <label>{{ 'PRICE_RANGE' | translate }}</label>
+
+  <div class="d-flex align-items-center mb-2">
+    <!-- Min Input -->
+    <input type="number" class="form-control mr-2"
+           formControlName="minPrice"
+           placeholder="{{ 'MIN_PRICE' | translate }}"
+           (input)="onPriceInputChange()" />
+
+    <span class="mx-2"> - </span>
+
+    <!-- Max Input -->
+    <input type="number" class="form-control ml-2"
+           formControlName="maxPrice"
+           placeholder="{{ 'MAX_PRICE' | translate }}"
+           (input)="onPriceInputChange()" />
+  </div>
+
+  <!-- Range Slider -->
+  <div class="d-flex align-items-center">
+    <input type="range" min="1" max="10000" step="100"
+           [value]="subjectForm.get('minPrice').value"
+           (input)="onMinSliderChange($event)"
+           class="flex-fill mr-2" />
+
+    <input type="range" min="1" max="10000" step="100"
+           [value]="subjectForm.get('maxPrice').value"
+           (input)="onMaxSliderChange($event)"
+           class="flex-fill ml-2" />
+  </div>
+
+  <!-- رسائل التحقق -->
+  <small *ngIf="subjectForm.get('minPrice').touched && subjectForm.get('minPrice').hasError('min')" 
+         class="form-text text-danger">
+    {{ 'MIN_PRICE_SHOULD_BE_POSITIVE' | translate }}
+  </small>
+
+  <small *ngIf="subjectForm.get('maxPrice').touched && subjectForm.get('maxPrice').hasError('min')" 
+         class="form-text text-danger">
+    {{ 'MAX_PRICE_SHOULD_BE_POSITIVE' | translate }}
+  </small>
+
+  <small *ngIf="subjectForm.errors?.priceRangeInvalid"
+         class="form-text text-danger">
+    {{ 'MIN_PRICE_SHOULD_BE_LESS' | translate }}
+  </small>
+</div>
+
+
+
         <!-- Actions -->
         <div class=" col-12 ">
             <button type="submit" rippleEffect class=" btn btn-primary mr-1 " (click)="onSubmit()">

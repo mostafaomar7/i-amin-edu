@@ -32,6 +32,11 @@ export const locale = {
     WARNING: "You won't be able to revert this!",
     DELETED: 'Deleted!',
     DELETE_SUCCESS: 'Your file has been deleted.',
-    DELETE_CONFIRM: 'Yes, delete it!'
+    DELETE_CONFIRM: 'Yes, delete it!',
+    PRICE_RANGE : 'Price Range',
+    MAX_PRICE : 'Max Price',
+    MIN_PRICE : 'Min Price',
+    MIN_PRICE_SHOULD_BE_LESS: 'Min Price should be less than Max Price',
+
   }
 };

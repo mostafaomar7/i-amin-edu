@@ -33,6 +33,9 @@ export const locale = {
     BANK_ACCOUNT_WITHDRAW: 'سحب من حساب بنكي',
     COURSE_RESERVATION: 'حجز دورة',
     CREATED_AT: 'تاريخ الإنشاء',
-    EGP: 'جنيه مصري'
+    EGP: 'جنيه مصري',
+    Convert : 'تحويل من ريال سعودي الي جنيه مصري',
+    Currency : 'تحويل العملة',
+    Submit : 'تأكيد'
   }
 };

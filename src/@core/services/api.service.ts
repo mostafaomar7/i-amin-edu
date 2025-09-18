@@ -46,6 +46,10 @@ export abstract class ApiService {
         const uri = `${environment.apiUrl}/${route}`;
         return this.parseResponse<T>(this.http.delete<T>(uri, this.buildHeaders(requireAuth)));
     }
+    protected async patchResponse<T>(route: string, data?: unknown, requireAuth = true): Promise<ApiResult<T>> {
+        const uri = `${environment.apiUrl}/${route}`;
+        return this.parseResponse<T>(this.http.patch<T>(uri, JSON.stringify(data), this.buildHeaders(requireAuth)));
+    }
 
     protected async postVimeoDataResponse<T>(file: any): Promise<ApiResult<T>> {
         const uri = 'https://api.vimeo.com/me/videos';

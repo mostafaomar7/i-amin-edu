@@ -31,8 +31,8 @@ export const locale = {
                 SETTINGS: 'Settings',
                 Wallet : "Wallet Transaction",
                 Live : "Consulting Manage",
-                analysis : "Analysis"
-
+                analysis : "Analysis",
+                currency : "Currency Transaction"
             },
             OTHERS: {
                 SUPPORT: 'Support & Help'

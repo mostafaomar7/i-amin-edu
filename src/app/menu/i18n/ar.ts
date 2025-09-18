@@ -31,7 +31,8 @@ export const locale = {
                 SETTINGS: 'الإعدادات',
                 Wallet : "معاملة المحفظة",
                 Live : "جلسات مباشرة",
-                analysis : "تحليل"
+                analysis : "تحليل",
+                currency : "تحويل العملة"
             },
             OTHERS: {
                 SUPPORT: 'الدعم والمساعدة'

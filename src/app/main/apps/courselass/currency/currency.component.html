@@ -1,0 +1,15 @@
+<div  class="card">
+    <h5 class="card-header">{{ "Currency" | translate }}</h5>
+</div>
+<div class="p-4">
+  <label for="" class="font-weight-bold">{{ "Convert" | translate }}</label> <br>
+  <input 
+    type="number" 
+    [(ngModel)]="rate" 
+    placeholder="currency conversion" 
+    class="border rounded p-2 mr-2"
+  />
+  <button (click)="submitRate()" class="btn btn-primary rounded">
+    {{ "Submit" | translate }}
+  </button>
+</div>

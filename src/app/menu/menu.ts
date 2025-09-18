@@ -117,6 +117,14 @@ export const adminMenu: CoreMenu[] = [
         icon: 'package',
         children: [
             {
+                id: 'currency',
+                title: 'currency transaction',
+                translate: 'MENU.APP.currency',
+                type: 'item',
+                icon: 'credit-card',
+                url: 'currencytransaction',
+            },
+            {
                 id: 'transactions',
                 title: 'Transactions List',
                 translate: 'MENU.APP.TRANSACTIONS',

@@ -42,9 +42,8 @@ export class SubjectListService extends ApiService {
    * Upate Item
    */
   updateItem(request: any): Promise<ApiResult<any>> {
-    return this.putResponse(`${this.routeEndPoint}/update`, request);
+  return this.patchResponse(`${this.routeEndPoint}/update`, request);
   }
-
   /**
    * Delete Item
    */

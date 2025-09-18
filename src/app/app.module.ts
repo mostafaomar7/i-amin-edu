@@ -27,16 +27,18 @@ import { UpdatePasswordComponent } from './instructor-profile/update-profile/upd
 import { LivesessionComponent } from './app/main/apps/livesession/livesession.component';
 import { JoinLiveSessionComponent } from './app/main/apps/livesession/join-live-session/join-live-session.component';
 import { LiveroomComponent } from './app/main/apps/livesession/liveroom/liveroom.component';
+import { FormsModule } from '@angular/forms';
+import { CurrencyComponent } from './main/apps/courselass/currency/currency.component';
 
 @NgModule({
-    declarations: [AppComponent, WalletComponent, InstructorProfileComponent, UpdateProfileComponent, UpdatePasswordComponent, LivesessionComponent, JoinLiveSessionComponent, LiveroomComponent],
+    declarations: [AppComponent, CurrencyComponent, WalletComponent, InstructorProfileComponent, UpdateProfileComponent, UpdatePasswordComponent, LivesessionComponent, JoinLiveSessionComponent, LiveroomComponent],
     imports: [
         BrowserModule,
         BrowserAnimationsModule,
         HttpClientModule,
         AppRoutingModule,
         TranslateModule.forRoot(),
-
+        FormsModule,
         //NgBootstrap
         NgbModule,
         ToastrModule.forRoot(),

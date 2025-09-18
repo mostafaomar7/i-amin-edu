@@ -33,5 +33,10 @@ export const locale = {
     DELETED: 'تم الحذف!',
     DELETE_SUCCESS: 'تم حذف الملف الخاص بك.',
     DELETE_CONFIRM: 'نعم، احذفه!',
+    PRICE_RANGE : 'مدي السعر',
+     MAX_PRICE : 'اقصي سعر',
+    MIN_PRICE : 'اقل سعر',
+    MIN_PRICE_SHOULD_BE_LESS: 'Min Price should be less than Max Price',
+
   }
 };
