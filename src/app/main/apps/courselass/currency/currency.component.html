@@ -1,5 +1,5 @@
-<div  class="card">
-    <h5 class="card-header">{{ "Currency" | translate }}</h5>
+<div class="card">
+  <h5 class="card-header">{{ "Currency" | translate }}</h5>
 </div>
 <div class="p-4">
   <label for="" class="font-weight-bold">{{ "Convert" | translate }}</label> <br>
@@ -12,4 +12,11 @@
   <button (click)="submitRate()" class="btn btn-primary rounded">
     {{ "Submit" | translate }}
   </button>
+
+  <!-- رسالة النجاح/الفشل -->
+  <div *ngIf="message" 
+       [ngClass]="isSuccess ? 'bg-success' : 'bg-danger'" 
+       class="text-white p-2 mt-2 rounded">
+    {{ message }}
+  </div>
 </div>

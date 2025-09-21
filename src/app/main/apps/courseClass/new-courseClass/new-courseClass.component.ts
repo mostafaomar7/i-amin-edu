@@ -81,11 +81,15 @@ export class NewCourseClassComponent implements OnInit {
   video.src = URL.createObjectURL(file);
   video.onloadedmetadata = () => {
     URL.revokeObjectURL(video.src);
+
     const durationInSeconds = Math.floor(video.duration);
+    const durationInMinutes = Math.ceil(durationInSeconds / 60); // ⬅️ التحويل لدقايق (مقرب لأعلى)
+
     // تحديث قيمة الحقل حتى لو disabled
-    this.newItemForm.get('duration').setValue(durationInSeconds);
+    this.newItemForm.get('duration').setValue(durationInMinutes);
   };
 }
+
 
 
 
