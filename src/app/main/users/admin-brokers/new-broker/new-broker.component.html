@@ -1,0 +1,76 @@
+<div class="card">
+  <h5 class="card-header">{{ 'ADD_BROKER' | translate }}</h5>
+</div>
+
+<div *ngIf="isLoading" class="spinner-grow" role="status">
+  <span class="sr-only">{{ 'LOADING' | translate }}</span>
+</div>
+
+<form *ngIf="!isLoading" [formGroup]="brokerForm" (ngSubmit)="onSubmit()">
+  <div class="row">
+
+    <!-- First Name -->
+    <div class="form-group col-md-6 col-12">
+      <label>{{ 'FIRST_NAME' | translate }}</label>
+      <input type="text" class="form-control" formControlName="firstName" required />
+    </div>
+
+    <!-- Last Name -->
+    <div class="form-group col-md-6 col-12">
+      <label>{{ 'LAST_NAME' | translate }}</label>
+      <input type="text" class="form-control" formControlName="lastName" required />
+    </div>
+
+    <!-- Email -->
+    <div class="form-group col-md-6 col-12">
+      <label>{{ 'EMAIL' | translate }}</label>
+      <input type="email" class="form-control" formControlName="email" required />
+    </div>
+
+    <!-- Password -->
+    <div class="form-group col-md-6 col-12">
+      <label>{{ 'PASSWORD' | translate }}</label>
+      <input type="password" class="form-control" formControlName="password" required />
+    </div>
+
+    <!-- Phone -->
+    <div class="form-group col-md-6 col-12">
+      <label>{{ 'PHONE' | translate }}</label>
+      <input type="tel" class="form-control" formControlName="phone" required />
+    </div>
+
+    <!-- Status -->
+    <div class="form-group col-md-6 col-12">
+      <label>{{ 'STATUS' | translate }}</label>
+      <select class="form-control" formControlName="isActive">
+        <option [ngValue]="true">{{ 'ACTIVE' | translate }}</option>
+        <option [ngValue]="false">{{ 'INACTIVE' | translate }}</option>
+      </select>
+    </div>
+
+    <!-- Info -->
+    <div class="form-group col-md-12">
+      <label>{{ 'INFO' | translate }}</label>
+      <textarea class="form-control" formControlName="info" rows="3"></textarea>
+    </div>
+
+    <!-- Upload File -->
+    <div class="form-group col-md-6 col-12">
+      <label>{{ 'IMAGE' | translate }}</label>
+      <input type="file" accept="image/*" class="form-control" (change)="onFileSelected($event)" />
+      <div *ngIf="selectedFile">
+        <img [src]="selectedFile" alt="{{ 'BROKER_IMAGE' | translate }}" style="width: 200px; height: 200px;" />
+        <button type="button" class="btn btn-danger btn-sm mt-1" (click)="deleteImage()">
+          {{ 'DELETE' | translate }}
+        </button>
+      </div>
+    </div>
+
+    <!-- Actions -->
+    <div class="col-12 mt-2">
+      <button type="submit" class="btn btn-primary mr-1">{{ 'SUBMIT' | translate }}</button>
+      <button type="reset" class="btn btn-outline-secondary">{{ 'CANCEL' | translate }}</button>
+    </div>
+
+  </div>
+</form>

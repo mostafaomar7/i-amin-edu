@@ -59,6 +59,14 @@ export const adminMenu: CoreMenu[] = [
                 url: 'users/instructors/list',
             },
             {
+                id: 'Broker',
+                title: 'Brokers Management',
+                translate: 'MENU.USERS.BROKERS',
+                type: 'item',
+                icon: 'users',
+                url: 'users/broker-list',
+            },  
+            {
                 id: 'students',
                 title: 'Students Management',
                 translate: 'MENU.USERS.STUDENTS',
@@ -107,6 +115,14 @@ export const adminMenu: CoreMenu[] = [
                 icon: 'book-open',
                 url: 'apps/courses/list'
             },
+            {
+                id: 'Consulting',
+                title: 'Consulting Manage',
+                translate: 'MENU.COURSES.Consulting',
+                type: 'item',
+                icon: 'circle',
+                url: 'livesession'
+            }
         ]
     },
     {

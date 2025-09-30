@@ -13,14 +13,16 @@ export const locale = {
                 ORGANIZATIONS: 'إدارة المنظمات',
                 INSTRUCTORS: 'إدارة المدربين',
                 STUDENTS: 'إدارة الطلاب',
-                USERS : 'ادارة المستخدم'
+                USERS : 'ادارة المستخدم',
+                BROKERS: 'ادارة الوسطاء',
             },
             COURSES: {
                 COURSES_MANAGEMENT: '--------- إدارة الدورات',
                 PORTAL: 'البوابة التعليمية',
                 STAGE: 'المراحل التعليمية',
                 SUBJECT: 'المواد',
-                COURSES: 'الدورات'
+                COURSES: 'الدورات',
+                Consulting: 'جلسات'
             },
             APP: {
                 MANAGEMENT: '--------- إدارة التطبيق',

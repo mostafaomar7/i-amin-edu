@@ -39,6 +39,7 @@ export const en = {
     JOIN: 'Join',
     CANCEL: 'Cancel',
     NOW_IN_SESSION: 'Now in session',
-    Desc : 'Description'
+    Desc : 'Description',
+    TEACHERNAME : 'Teacher Name'
   }
 };

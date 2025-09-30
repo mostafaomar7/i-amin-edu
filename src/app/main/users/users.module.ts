@@ -6,7 +6,10 @@ import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { NewbrokerUserComponent } from './broker/newbroker-user/newbroker-user.component';
 import { BrokerUserinfoComponent } from './broker/broker-userinfo/broker-userinfo.component';
 import { TranslateModule } from '@ngx-translate/core';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { BrokersListComponent } from './admin-brokers/brokers-list/brokers-list.component';
+import { BrokersViewComponent } from './admin-brokers/brokers-view/brokers-view.component';
+import { NewBrokerComponent } from './admin-brokers/new-broker/new-broker.component';
 
 // routing
 const routes: Routes = [
@@ -32,6 +35,18 @@ const routes: Routes = [
     {
         path: 'organizations',
         loadChildren: () => import('./organizations/organization.module').then(m => m.OrganizationModule)
+    },
+    {
+        path : 'broker-list',
+        component : BrokersListComponent
+    },
+    {
+        path : 'brokers/list/new',
+        component : NewBrokerComponent
+    },
+    {
+        path : 'brokers/list/new/:id',
+        component : NewBrokerComponent
     }
 ];
 
@@ -39,9 +54,12 @@ const routes: Routes = [
     declarations: [
     BrokerUserComponent,
     NewbrokerUserComponent,
-    BrokerUserinfoComponent
+    BrokerUserinfoComponent,
+    BrokersListComponent,
+    BrokersViewComponent,
+    NewBrokerComponent
   ],
-    imports: [CommonModule, RouterModule.forChild(routes),NgxDatatableModule,TranslateModule,ReactiveFormsModule]
+    imports: [CommonModule, RouterModule.forChild(routes),NgxDatatableModule,TranslateModule,ReactiveFormsModule , FormsModule]
 })
 export class UsersModule {
 }

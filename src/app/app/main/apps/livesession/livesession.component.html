@@ -3,7 +3,7 @@
   <!-- زرار الذهاب لصفحة الانضمام -->
   <div class="d-flex justify-content-end mb-3">
     <a routerLink="/joinlivesession">
-      <button class="btn btn-primary">{{ 'LIVE.JOIN_SESSIONS' | translate }}</button>
+      <button class="btn btn-primary" *ngIf="userType !== 1">{{ 'LIVE.JOIN_SESSIONS' | translate }}</button>
     </a>
   </div>
 
@@ -41,7 +41,7 @@
     </div>
     
     <!-- اختيار teacher يظهر فقط للـ Center -->
-    <div class="mb-3" *ngIf="userType == 2">
+    <div class="mb-3" *ngIf="userType !== 3">
       <label>{{ 'LIVE.SESSION_Instructor' | translate }}</label>
       <select class="form-control" formControlName="sessionInstructor">
         <option value="">{{ 'Select Teacher' | translate }}</option>
@@ -123,6 +123,7 @@
             <th>ID</th>
             <th>{{ 'LIVE.DATE' | translate }}</th>
             <th>{{ 'LIVE.TIME' | translate }}</th>
+            <th *ngIf="userType == 1">{{ 'LIVE.TEACHERNAME' | translate }}</th>
             <th *ngIf="selectedType === 'group'">{{ 'LIVE.NUMBER_OF_SEATS' | translate }}</th>
             <th>{{ 'LIVE.SESSION_PRICE' | translate }}</th>
             <!-- <th>{{ 'LIVE.SESSION_TITLE' | translate }}</th>
@@ -135,6 +136,7 @@
             <td>{{ s.id }}</td>
             <td><span class="badge bg-info">{{ s.slotDateAndTime | date: 'MMM d, y' }}</span></td>
             <td><span class="badge bg-secondary">{{ s.slotDateAndTime | date: 'h:mm a' }}</span></td>
+            <td *ngIf="userType == 1">{{ s.teacher.user.firstName}} {{ s.teacher.user.lastName}}</td>
             <td *ngIf="selectedType === 'group'">{{ s.numberOfSeats }}</td>
             <td>{{ s.sessionPrice }}</td>
             <!-- <td>{{ s.sessionTitle || '-' }}</td>

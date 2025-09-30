@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgSelectModule } from '@ng-select/ng-select';
@@ -20,9 +20,10 @@ import { SubjectListService } from 'app/main/apps/subjects/subject-list.service'
 import { PortalListService } from 'app/main/apps/portals/portal-list.service';
 import { PermissionListService } from '../permissions/permission-list.service';
 import { InstructorsListComponent } from './instructors-list/instructors-list.component';
+import { BrokerService } from '../admin-brokers/broker.service';
 
 @NgModule({
-  declarations: [InstructorsListComponent, NewInstructorsComponent],
+  declarations: [InstructorsListComponent, NewInstructorsComponent ],
   exports: [InstructorsListComponent],
   imports: [
     CommonModule,
@@ -37,8 +38,9 @@ import { InstructorsListComponent } from './instructors-list/instructors-list.co
     CoreDirectivesModule,
     CoreSidebarModule,
     FileUploadModule,
-    TranslateModule
+    TranslateModule,
+    ReactiveFormsModule
   ],
-  providers: [InstructorsListService, PortalListService, SubjectListService, PermissionListService]
+  providers: [InstructorsListService, PortalListService, SubjectListService, PermissionListService , BrokerService]
 })
 export class InstructorsModule { }

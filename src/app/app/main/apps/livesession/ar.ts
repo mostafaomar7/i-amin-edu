@@ -39,6 +39,7 @@ export const ar = {
     CANCEL_SUCCESS: 'تم إلغاء الجلسة بنجاح!',
     CANCEL_FAILED: 'فشل في إلغاء الجلسة',
     JOIN_ROOM: 'انضم للغرفة',
-    Desc : 'وصف'
+    Desc : 'وصف',
+    TEACHERNAME : 'اسم المدرس'
   }
 };
