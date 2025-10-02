@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { Router } from '@angular/router';
-import { TeacherListService } from '../instructors-list.service';
+import { InstructorsListService } from '../instructors-list.service';
 import { Teacher } from 'rxjs';
 
 
@@ -36,7 +36,7 @@ export class TeacherPreviewComponent implements OnInit, OnDestroy {
    */
   constructor(
     private router: Router,
-    private _teacherPreviewService: TeacherListService,
+    private _teacherPreviewService: InstructorsListService,
   ) {
     this._unsubscribeAll = new Teacher();
     this.urlLastValue = this.url.substr(this.url.lastIndexOf('/') + 1);

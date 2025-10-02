@@ -1,0 +1,126 @@
+<div class="content-wrapper container-xxl p-0" >
+  <div class="content-body">
+
+    <div class="" >
+      <div class="card-body">
+        <h3 class="p-2 bg-white">Instructor Details</h3>
+        <ul style="margin-top: -10px;" ngbNav #navJustified="ngbNav" class="nav nav-pills nav-justified bg-white p-2">
+           
+          <!-- Overview -->
+          <li ngbNavItem>
+            <a ngbNavLink>{{ 'INSTRUCTOR.OVERVIEW' | translate }}</a>
+            <ng-template ngbNavContent>
+              
+              <!-- Statistics Section -->
+              <section id="statistics-card" class="p-3 rounded"  *ngIf="statistics">
+                <div class="row">
+
+                  <!-- Wallet Balance -->
+                  <div class="col-md-6 col-sm-12 mb-2">
+                    <div class="p-3 bg-white text-center rounded shadow-sm">
+                      <div class="d-flex justify-content-center align-items-center mb-2">
+                        <div class="avatar bg-light-info p-50 m-0 rounded-circle">
+                          <div class="avatar-content">
+                            <i data-feather="activity" class="font-medium-5 text-info"></i>
+                          </div>
+                        </div>
+                      </div>
+                      <h2 class="font-weight-bolder mb-0">{{ statistics.totalWalletBalance | number }} EGP</h2>
+                      <p class="text-muted mb-0">{{ 'STATISTICS.CURRENT_BALANCE' | translate }}</p>
+                    </div>
+                  </div>
+
+                  <!-- Total Courses -->
+                  <div class="col-md-6 col-sm-6 mb-2">
+                    <div class="p-3 bg-white text-center rounded shadow-sm">
+                      <div class="d-flex justify-content-center align-items-center mb-2">
+                        <div class="avatar bg-light-warning p-50 rounded-circle">
+                          <div class="avatar-content">
+                            <i data-feather="book-open" class="font-medium-5 text-warning"></i>
+                          </div>
+                        </div>
+                      </div>
+                      <h2 class="font-weight-bolder mb-0">{{ statistics.totalCourses }}</h2>
+                      <p class="text-muted mb-0">{{ 'STATISTICS.TOTAL_COURSES' | translate }}</p>
+                    </div>
+                  </div>
+
+                  <!-- Total Sessions -->
+                  <div class="col-md-4 mt-3 col-sm-6 mb-2">
+                    <div class="p-3 bg-white text-center rounded shadow-sm">
+                      <div class="d-flex justify-content-center align-items-center mb-2">
+                        <div class="avatar bg-light-danger p-50 rounded-circle">
+                          <div class="avatar-content">
+                            <i data-feather="git-pull-request" class="font-medium-5 text-danger"></i>
+                          </div>
+                        </div>
+                      </div>
+                      <h2 class="font-weight-bolder mb-0">{{ statistics.totalSessions }}</h2>
+                      <p class="text-muted mb-0">{{ 'STATISTICS.TOTAL_SESSIONS' | translate }}</p>
+                    </div>
+                  </div>
+
+                  <!-- Total Enrollments -->
+                  <div class="col-md-4 mt-3 col-sm-6 mb-2">
+                    <div class="p-3 bg-white text-center rounded shadow-sm">
+                      <div class="d-flex justify-content-center align-items-center mb-2">
+                        <div class="avatar bg-light-success p-50 rounded-circle">
+                          <div class="avatar-content">
+                            <i data-feather="user-check" class="font-medium-5 text-success"></i>
+                          </div>
+                        </div>
+                      </div>
+                      <h2 class="font-weight-bolder mb-0">{{ statistics.totalEnrollments }}</h2>
+                      <p class="text-muted mb-0">{{ 'STATISTICS.TOTAL_ENROLLMENTS' | translate }}</p>
+                    </div>
+                  </div>
+
+                  <!-- Total Students -->
+                  <div class="col-md-4 mt-3 col-sm-6 mb-2">
+                    <div class="p-3 bg-white text-center rounded shadow-sm">
+                      <div class="d-flex justify-content-center align-items-center mb-2">
+                        <div class="avatar bg-light-primary p-50 rounded-circle">
+                          <div class="avatar-content">
+                            <i data-feather="users" class="font-medium-5 text-primary"></i>
+                          </div>
+                        </div>
+                      </div>
+                      <h2 class="font-weight-bolder mb-0">{{ statistics.totalStudents }}</h2>
+                      <p class="text-muted mb-0">{{ 'STATISTICS.TOTAL_STUDENTS' | translate }}</p>
+                    </div>
+                  </div>
+
+                </div>
+              </section>
+
+            </ng-template>
+          </li>
+
+          <li ngbNavItem>
+            <a ngbNavLink>{{ 'INSTRUCTOR.COURSES' | translate }}</a>
+            <ng-template ngbNavContent>
+              <app-course-list [instructorId]="instructorId"></app-course-list>
+            </ng-template>
+          </li>
+
+          <li ngbNavItem>
+            <a ngbNavLink>{{ 'INSTRUCTOR.Sessions' | translate }}</a>
+            <ng-template ngbNavContent>
+              <app-course-list [instructorId]="instructorId"></app-course-list>
+            </ng-template>
+          </li>
+
+          <li ngbNavItem>
+            <a ngbNavLink>{{ 'INSTRUCTOR.Payout Requests' | translate }}</a>
+            <ng-template ngbNavContent>
+              <app-course-list [instructorId]="instructorId"></app-course-list>
+            </ng-template>
+          </li>
+
+        </ul>
+        <div [ngbNavOutlet]="navJustified" class="mt-2"></div>
+      </div>
+    </div>
+
+  </div>
+</div>

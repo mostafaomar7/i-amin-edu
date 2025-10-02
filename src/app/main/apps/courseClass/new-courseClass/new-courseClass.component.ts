@@ -94,30 +94,29 @@ export class NewCourseClassComponent implements OnInit {
 
 
   async onSubmit() {
-  // --- لا تغيير هنا ---
   if (this.newItemForm.invalid) {
     this.newItemForm.markAllAsTouched();
     this.ConfirmColorOpen('Please fill all required fields.', false);
     return;
   }
+
   this.isLoading = true;
 
   try {
-    // **حالة التعديل (Update Mode)**
-    if (this.currentItem) {
-      const response = await this._courseClassListService.updateItem(this.newItemForm.value);
-      this.handleResponse(response, true);
-    } 
-    // **حالة الإنشاء (Create Mode)**
-    else {
-      if (this.selectedFile) {
-        // --- بداية التعديل: أضف هذا السطر ---
-        this.uploadProgress = 'uploading';
-        // --- نهاية التعديل ---
+    // نجمع قيمة الفورم + duration حتى لو disabled
+    const formData = {
+      ...this.newItemForm.getRawValue(), // getRawValue بترجع كل الحقول حتى المعطلة
+    };
 
+    if (this.currentItem) {
+      const response = await this._courseClassListService.updateItem(formData);
+      this.handleResponse(response, true);
+    } else {
+      if (this.selectedFile) {
+        this.uploadProgress = 'uploading';
         const response = await this._courseClassListService.uploadVideoAndCreateClass(
           this.selectedFile,
-          this.newItemForm.value
+          formData
         );
         this.handleResponse(response, true);
         this.uploadProgress = response?.status ? 'complete' : 'error';
@@ -132,7 +131,7 @@ export class NewCourseClassComponent implements OnInit {
     this.isLoading = false;
   }
 }
-  
+
   // دالة مساعدة لتجنب تكرار الكود
   handleResponse(response: any, navigateOnSuccess: boolean) {
     if (response && response.status) {

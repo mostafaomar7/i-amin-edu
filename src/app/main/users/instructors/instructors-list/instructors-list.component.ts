@@ -150,6 +150,9 @@ export class InstructorsListComponent implements OnInit {
   editItem(row: any) {
     this.router.navigate([`/users/instructors/list/new/${row.user.id}`]);
   }
+  viewItem(row: any) {
+  this.router.navigate([`/users/instructors/list/info/${row.id}`]);
+}
 
   deleteItem(id: string) {
     this.isLoading = true;

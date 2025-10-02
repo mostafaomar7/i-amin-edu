@@ -69,5 +69,9 @@ export class InstructorsListService extends ApiService {
     formData.append('file', file, file.name);
     return this.postMultiDataResponse(`upload-media`, formData);
   }
+  getStatistics(id: string): Promise<ApiResult<any>> {
+  return this.getResponse(`dashboard/statistics/${id}`);
+}
+
 
 }

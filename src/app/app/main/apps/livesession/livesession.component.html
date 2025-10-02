@@ -27,20 +27,20 @@
     </button>
   </div>
 
-  <!-- الفورم -->
   <form [formGroup]="sessionForm" (ngSubmit)="createSession()">
 
-    <div class="mb-3">
-      <label>{{ 'LIVE.SESSION_TITLE' | translate }}</label>
-      <input type="text" class="form-control" formControlName="sessionTitle">
-    </div>
+    <!-- Session Title -->
+<div class="mb-3" *ngIf="selectedType !== 'solo'">
+  <label>{{ 'LIVE.SESSION_TITLE' | translate }}</label>
+  <input type="text" class="form-control" formControlName="sessionTitle">
+</div>
 
-    <div class="mb-3">
-      <label>{{ 'LIVE.SESSION_DESCRIPTION' | translate }}</label>
-      <textarea class="form-control" formControlName="sessionDescription"></textarea>
-    </div>
+<!-- Session Description -->
+<div class="mb-3" *ngIf="selectedType !== 'solo'">
+  <label>{{ 'LIVE.SESSION_DESCRIPTION' | translate }}</label>
+  <textarea class="form-control" formControlName="sessionDescription"></textarea>
+</div>
     
-    <!-- اختيار teacher يظهر فقط للـ Center -->
     <div class="mb-3" *ngIf="userType !== 3">
       <label>{{ 'LIVE.SESSION_Instructor' | translate }}</label>
       <select class="form-control" formControlName="sessionInstructor">

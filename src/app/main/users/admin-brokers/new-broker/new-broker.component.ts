@@ -102,7 +102,7 @@ export class NewBrokerComponent implements OnInit {
           this.isLoading = false;
           if (response.status) {
             Swal.fire('SUCCESS', 'BROKER_UPDATED_SUCCESSFULLY', 'success');
-            this.router.navigate(['/users/broker-list']); // رجوع للقائمة
+            this.router.navigate(['/users/broker-list']); 
           } else {
             Swal.fire('FAILED', response.message, 'error');
           }
@@ -113,7 +113,7 @@ export class NewBrokerComponent implements OnInit {
           this.isLoading = false;
           if (response.status) {
             Swal.fire('SUCCESS', 'BROKER_CREATED_SUCCESSFULLY', 'success');
-            this.router.navigate(['/users/brokers/list']); // رجوع للقائمة
+            this.router.navigate(['/users/brokers/list']); 
           } else {
             Swal.fire('FAILED', response.message, 'error');
           }

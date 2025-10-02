@@ -138,9 +138,11 @@
             <ng-template ngx-datatable-cell-template let-row="row">
               <div class="row">
                 <button *ngIf="_permissionListService.hasPermission('Instructors','view_instructor')"
-                        (click)="editItem(row)" class="btn btn-flat-secondary btn-sm" rippleEffect>
-                  <span [data-feather]="'eye'"></span>
-                </button>
+        (click)="viewItem(row)" 
+        class="btn btn-flat-secondary btn-sm" rippleEffect>
+  <span [data-feather]="'eye'"></span>
+</button>
+
                 <button *ngIf="_permissionListService.hasPermission('Instructors','edit_instructor')"
                         (click)="editItem(row)" class="btn btn-flat-secondary btn-sm" rippleEffect>
                   <span [data-feather]="'edit'"></span>
