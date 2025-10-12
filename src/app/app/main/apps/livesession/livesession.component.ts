@@ -7,7 +7,7 @@ import { ar } from './ar';
 import { InstructorsListService } from 'app/main/users/instructors/instructors-list.service';
 import { PermissionListService } from 'app/main/users/permissions/permission-list.service';
 import { Role } from 'app/auth/models';
-
+import Swal from 'sweetalert2';
 @Component({
   selector: 'app-livesession',
   templateUrl: './livesession.component.html',
@@ -21,7 +21,7 @@ export class LivesessionComponent implements OnInit {
   statusMessage: string = '';
   statusType: 'success' | 'error' | '' = '';
   
-  teachers: any[] = [];   // هنا هنخزن الـ instructors
+  teachers: any[] = [];   
      
   availableTimes: string[] = [
     '08:00','09:00','10:00','11:00',
@@ -51,7 +51,6 @@ export class LivesessionComponent implements OnInit {
     this.translate.use('en');
 
     this.translate.onLangChange.subscribe((event: LangChangeEvent) => {
-      // أي حاجة محتاجة إعادة تحميل ترجمة
     });
   }
 
@@ -126,19 +125,44 @@ export class LivesessionComponent implements OnInit {
     return `${hour12}:${m.toString().padStart(2,'0')} ${ampm}`;
   }
 
-  loadSessions() {
-    this.sessionService.getSlots().subscribe({
-      next: (res: any) => {
-        if (res?.status && res?.innerData) {
-          this.sessions = res.innerData;
-          this.filterSessions();
-        }
-      },
-      error: () => {
-        this.showMessage('❌ Error fetching sessions', 'error');
+ loadSessions() {
+  this.sessionService.getSlots().subscribe({
+    next: (res: any) => {
+      if (res?.status && res?.innerData) {
+        const now = new Date().getTime();
+
+        // 🔹 نحذف فعليًا من السيرفر الجلسات المنتهية
+        res.innerData.forEach((s: any) => {
+          const sessionTime = new Date(s.slotDateAndTime).getTime();
+          if (sessionTime < now) {
+            this.sessionService.deleteSlot(s.id).subscribe({
+              next: () => console.log(`⏰ Deleted expired session ID: ${s.id}`),
+              error: (err) => console.warn(`⚠️ Failed to delete expired session ID: ${s.id}`, err)
+            });
+          }
+        });
+
+        // 🔹 نفلتر ونحتفظ فقط بالجلسات الفعالة وغير المحجوزة
+        this.sessions = res.innerData.filter((s: any) => {
+          const sessionTime = new Date(s.slotDateAndTime).getTime();
+
+          // 1️⃣ نحذف الجلسات القديمة
+          if (sessionTime < now) return false;
+
+          // 2️⃣ نحذف جلسات الـ Solo المحجوزة
+          if (s.sessionType === 'solo' && s.numberOfSeats === 0) return false;
+
+          return true;
+        });
+
+        this.filterSessions();
       }
-    });
-  }
+    },
+    error: () => {
+      this.showMessage('❌ Error fetching sessions', 'error');
+    }
+  });
+}
 
   filterSessions() {
     this.filteredSessions = this.sessions.filter(s => s.sessionType === this.selectedType);
@@ -254,16 +278,28 @@ if (this.selectedDate && this.selectedTime) {
 
 
   deleteSession(id: number) {
-    if (confirm('Are you sure you want to delete this session?')) {
+  Swal.fire({
+    title: 'Are you sure?',
+    text: 'Do you really want to delete this session?',
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonText: 'Yes, delete it',
+    cancelButtonText: 'No, keep it',
+    confirmButtonColor: '#d33',
+    cancelButtonColor: '#3085d6'
+  }).then((result) => {
+    if (result.isConfirmed) {
       this.sessionService.deleteSlot(id).subscribe({
         next: () => {
           this.showMessage('🗑️ Session deleted successfully', 'success');
           this.loadSessions();
+          Swal.fire('Deleted!', 'The session has been deleted.', 'success');
         },
         error: (err) => {
           this.showMessage(err.error?.message || '❌ Failed to delete session', 'error');
         }
       });
     }
-  }
+  });
+}
 }

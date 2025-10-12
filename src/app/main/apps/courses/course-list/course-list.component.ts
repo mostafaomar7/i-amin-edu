@@ -78,13 +78,28 @@ export class CourseListComponent implements OnInit {
      * @param event
      */
     filterUpdate(event) {
-        const val = event.target.value.toLowerCase();
-        const temp = this.tempData.filter(function (d) {
-            return d.nameEn.toLowerCase().indexOf(val) !== -1 || !val;
-        });
-        this.rows = temp;
-        this.table.offset = 0;
-    }
+    const val = event.target.value.toLowerCase();
+
+    const temp = this.tempData.filter(function (d) {
+        const courseName = d.nameEn?.toLowerCase() || '';
+        const teacherFirst = d.teacher?.user?.firstName?.toLowerCase() || '';
+        const teacherLast = d.teacher?.user?.lastName?.toLowerCase() || '';
+        const teacherFull = `${teacherFirst} ${teacherLast}`.trim();
+
+        // ابحث بالاسم أو باسم المدرس (الأول أو الأخير أو الكامل)
+        return (
+            courseName.includes(val) ||
+            teacherFirst.includes(val) ||
+            teacherLast.includes(val) ||
+            teacherFull.includes(val) ||
+            !val
+        );
+    });
+
+    this.rows = temp;
+    this.table.offset = 0;
+}
+
 
     ConfirmColorOpen(message: string, isSuccess: boolean) {
         Swal.fire({

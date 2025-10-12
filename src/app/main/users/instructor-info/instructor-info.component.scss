@@ -1,0 +1,10 @@
+::ng-deep ngx-datatable {
+  border-radius: 8px;
+  overflow: hidden;
+  font-size: 14px;
+}
+
+::ng-deep .datatable-header-cell {
+  background-color: #f8f9fa;
+  font-weight: 600;
+}

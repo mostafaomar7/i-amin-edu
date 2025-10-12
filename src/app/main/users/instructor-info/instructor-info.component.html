@@ -1,126 +1,246 @@
-<div class="content-wrapper container-xxl p-0" >
+<div class="content-wrapper container-xxl p-0">
   <div class="content-body">
 
-    <div class="" >
-      <div class="card-body">
-        <h3 class="p-2 bg-white">Instructor Details</h3>
-        <ul style="margin-top: -10px;" ngbNav #navJustified="ngbNav" class="nav nav-pills nav-justified bg-white p-2">
-           
-          <!-- Overview -->
-          <li ngbNavItem>
-            <a ngbNavLink>{{ 'INSTRUCTOR.OVERVIEW' | translate }}</a>
-            <ng-template ngbNavContent>
-              
-              <!-- Statistics Section -->
-              <section id="statistics-card" class="p-3 rounded"  *ngIf="statistics">
-                <div class="row">
+    <div class="card-body">
+      <h3 class="p-3 bg-white">
+        {{ 'INSTRUCTOR.DETAILS' | translate }}
+      </h3>
 
-                  <!-- Wallet Balance -->
-                  <div class="col-md-6 col-sm-12 mb-2">
-                    <div class="p-3 bg-white text-center rounded shadow-sm">
-                      <div class="d-flex justify-content-center align-items-center mb-2">
-                        <div class="avatar bg-light-info p-50 m-0 rounded-circle">
-                          <div class="avatar-content">
-                            <i data-feather="activity" class="font-medium-5 text-info"></i>
-                          </div>
-                        </div>
+      <ul ngbNav #navJustified="ngbNav" class="nav nav-pills nav-justified bg-white p-2" style="margin-top: -10px;">
+
+        <!-- Overview -->
+        <li ngbNavItem>
+          <a ngbNavLink>{{ 'INSTRUCTOR.OVERVIEW' | translate }}</a>
+          <ng-template ngbNavContent>
+
+            <!-- Statistics Section -->
+            <section id="statistics-card" class="p-3 rounded" *ngIf="statistics">
+              <div class="row">
+
+                <!-- Wallet Balance -->
+                <div class="col-md-6 col-sm-12 mb-2">
+                  <div class="p-3 bg-white text-center rounded shadow-sm">
+                    <div class="avatar bg-light-info p-50 mb-2 rounded-circle">
+                      <div class="avatar-content">
+                        <i data-feather="activity" class="font-medium-5 text-info"></i>
                       </div>
-                      <h2 class="font-weight-bolder mb-0">{{ statistics.totalWalletBalance | number }} EGP</h2>
-                      <p class="text-muted mb-0">{{ 'STATISTICS.CURRENT_BALANCE' | translate }}</p>
                     </div>
+                    <h2 class="font-weight-bolder mb-0">{{ statistics.totalWalletBalance | number }} EGP</h2>
+                    <p class="text-muted mb-0">{{ 'STATISTICS.CURRENT_BALANCE' | translate }}</p>
                   </div>
-
-                  <!-- Total Courses -->
-                  <div class="col-md-6 col-sm-6 mb-2">
-                    <div class="p-3 bg-white text-center rounded shadow-sm">
-                      <div class="d-flex justify-content-center align-items-center mb-2">
-                        <div class="avatar bg-light-warning p-50 rounded-circle">
-                          <div class="avatar-content">
-                            <i data-feather="book-open" class="font-medium-5 text-warning"></i>
-                          </div>
-                        </div>
-                      </div>
-                      <h2 class="font-weight-bolder mb-0">{{ statistics.totalCourses }}</h2>
-                      <p class="text-muted mb-0">{{ 'STATISTICS.TOTAL_COURSES' | translate }}</p>
-                    </div>
-                  </div>
-
-                  <!-- Total Sessions -->
-                  <div class="col-md-4 mt-3 col-sm-6 mb-2">
-                    <div class="p-3 bg-white text-center rounded shadow-sm">
-                      <div class="d-flex justify-content-center align-items-center mb-2">
-                        <div class="avatar bg-light-danger p-50 rounded-circle">
-                          <div class="avatar-content">
-                            <i data-feather="git-pull-request" class="font-medium-5 text-danger"></i>
-                          </div>
-                        </div>
-                      </div>
-                      <h2 class="font-weight-bolder mb-0">{{ statistics.totalSessions }}</h2>
-                      <p class="text-muted mb-0">{{ 'STATISTICS.TOTAL_SESSIONS' | translate }}</p>
-                    </div>
-                  </div>
-
-                  <!-- Total Enrollments -->
-                  <div class="col-md-4 mt-3 col-sm-6 mb-2">
-                    <div class="p-3 bg-white text-center rounded shadow-sm">
-                      <div class="d-flex justify-content-center align-items-center mb-2">
-                        <div class="avatar bg-light-success p-50 rounded-circle">
-                          <div class="avatar-content">
-                            <i data-feather="user-check" class="font-medium-5 text-success"></i>
-                          </div>
-                        </div>
-                      </div>
-                      <h2 class="font-weight-bolder mb-0">{{ statistics.totalEnrollments }}</h2>
-                      <p class="text-muted mb-0">{{ 'STATISTICS.TOTAL_ENROLLMENTS' | translate }}</p>
-                    </div>
-                  </div>
-
-                  <!-- Total Students -->
-                  <div class="col-md-4 mt-3 col-sm-6 mb-2">
-                    <div class="p-3 bg-white text-center rounded shadow-sm">
-                      <div class="d-flex justify-content-center align-items-center mb-2">
-                        <div class="avatar bg-light-primary p-50 rounded-circle">
-                          <div class="avatar-content">
-                            <i data-feather="users" class="font-medium-5 text-primary"></i>
-                          </div>
-                        </div>
-                      </div>
-                      <h2 class="font-weight-bolder mb-0">{{ statistics.totalStudents }}</h2>
-                      <p class="text-muted mb-0">{{ 'STATISTICS.TOTAL_STUDENTS' | translate }}</p>
-                    </div>
-                  </div>
-
                 </div>
-              </section>
 
-            </ng-template>
-          </li>
+                <!-- Total Courses -->
+                <div class="col-md-6 col-sm-6 mb-2">
+                  <div class="p-3 bg-white text-center rounded shadow-sm">
+                    <div class="avatar bg-light-warning p-50 mb-2 rounded-circle">
+                      <div class="avatar-content">
+                        <i data-feather="book-open" class="font-medium-5 text-warning"></i>
+                      </div>
+                    </div>
+                    <h2 class="font-weight-bolder mb-0">{{ statistics.totalCourses }}</h2>
+                    <p class="text-muted mb-0">{{ 'STATISTICS.TOTAL_COURSES' | translate }}</p>
+                  </div>
+                </div>
 
-          <li ngbNavItem>
-            <a ngbNavLink>{{ 'INSTRUCTOR.COURSES' | translate }}</a>
-            <ng-template ngbNavContent>
-              <app-course-list [instructorId]="instructorId"></app-course-list>
-            </ng-template>
-          </li>
+                <!-- Total Sessions -->
+                <div class="col-md-4 mt-3 col-sm-6 mb-2">
+                  <div class="p-3 bg-white text-center rounded shadow-sm">
+                    <div class="avatar bg-light-danger p-50 mb-2 rounded-circle">
+                      <div class="avatar-content">
+                        <i data-feather="git-pull-request" class="font-medium-5 text-danger"></i>
+                      </div>
+                    </div>
+                    <h2 class="font-weight-bolder mb-0">{{ statistics.totalSessions }}</h2>
+                    <p class="text-muted mb-0">{{ 'STATISTICS.TOTAL_SESSIONS' | translate }}</p>
+                  </div>
+                </div>
 
-          <li ngbNavItem>
-            <a ngbNavLink>{{ 'INSTRUCTOR.Sessions' | translate }}</a>
-            <ng-template ngbNavContent>
-              <app-course-list [instructorId]="instructorId"></app-course-list>
-            </ng-template>
-          </li>
+                <!-- Total Enrollments -->
+                <div class="col-md-4 mt-3 col-sm-6 mb-2">
+                  <div class="p-3 bg-white text-center rounded shadow-sm">
+                    <div class="avatar bg-light-success p-50 mb-2 rounded-circle">
+                      <div class="avatar-content">
+                        <i data-feather="user-check" class="font-medium-5 text-success"></i>
+                      </div>
+                    </div>
+                    <h2 class="font-weight-bolder mb-0">{{ statistics.totalEnrollments }}</h2>
+                    <p class="text-muted mb-0">{{ 'STATISTICS.TOTAL_ENROLLMENTS' | translate }}</p>
+                  </div>
+                </div>
 
-          <li ngbNavItem>
-            <a ngbNavLink>{{ 'INSTRUCTOR.Payout Requests' | translate }}</a>
-            <ng-template ngbNavContent>
-              <app-course-list [instructorId]="instructorId"></app-course-list>
-            </ng-template>
-          </li>
+                <!-- Total Students -->
+                <div class="col-md-4 mt-3 col-sm-6 mb-2">
+                  <div class="p-3 bg-white text-center rounded shadow-sm">
+                    <div class="avatar bg-light-primary p-50 mb-2 rounded-circle">
+                      <div class="avatar-content">
+                        <i data-feather="users" class="font-medium-5 text-primary"></i>
+                      </div>
+                    </div>
+                    <h2 class="font-weight-bolder mb-0">{{ statistics.totalStudents }}</h2>
+                    <p class="text-muted mb-0">{{ 'STATISTICS.TOTAL_STUDENTS' | translate }}</p>
+                  </div>
+                </div>
 
-        </ul>
-        <div [ngbNavOutlet]="navJustified" class="mt-2"></div>
-      </div>
+              </div>
+            </section>
+          </ng-template>
+        </li>
+
+        <!-- Courses -->
+        <li ngbNavItem>
+          <a ngbNavLink>{{ 'INSTRUCTOR.COURSES' | translate }}</a>
+          <ng-template ngbNavContent>
+            <div class="p-3 bg-white rounded shadow-sm mt-4">
+  <h4 class="mb-3">الدورات المدفوعة</h4>
+
+  <ngx-datatable
+    class="bootstrap"
+    [rows]="paidCourses"
+    [columnMode]="'force'"
+    [headerHeight]="50"
+    [footerHeight]="50"
+    [rowHeight]="'auto'"
+    [limit]="10"
+    [messages]="{
+      emptyMessage: 'لا توجد دورات مدفوعة لهذا المدرّس.',
+      totalMessage: 'إجمالي',
+      selectedMessage: 'محدد'
+    }"
+  >
+    <!-- اسم الكورس -->
+    <ngx-datatable-column name="اسم الدورة" prop="nameAr" [width]="200">
+      <ng-template let-row="row" ngx-datatable-cell-template>
+        {{ row.nameAr || row.nameEn }}
+      </ng-template>
+    </ngx-datatable-column>
+
+    <!-- السعر -->
+    <ngx-datatable-column name="السعر" [width]="100">
+      <ng-template let-row="row" ngx-datatable-cell-template>
+        {{ row.price }} EGP
+      </ng-template>
+    </ngx-datatable-column>
+
+    <!-- المرحلة -->
+    <!-- <ngx-datatable-column name="المرحلة" [width]="150">
+      <ng-template let-row="row" ngx-datatable-cell-template>
+        {{ row.stage?.nameAr || '-' }}
+      </ng-template>
+    </ngx-datatable-column>
+
+    <ngx-datatable-column name="البوابة التعليمية" [width]="200">
+      <ng-template let-row="row" ngx-datatable-cell-template>
+        {{ row.educationalportal?.nameAr || '-' }}
+      </ng-template>
+    </ngx-datatable-column> -->
+
+    <!-- الوصف -->
+    <ngx-datatable-column name="الوصف" [width]="300">
+      <ng-template let-row="row" ngx-datatable-cell-template>
+        {{ row.infoAr || row.infoEn }}
+      </ng-template>
+    </ngx-datatable-column>
+    <!-- اسم الطالب -->
+<ngx-datatable-column name="اسم الطالب" [width]="150">
+  <ng-template let-row="row" ngx-datatable-cell-template>
+    {{ row.student?.firstName }} {{ row.student?.lastName }}
+  </ng-template>
+</ngx-datatable-column>
+
+<!-- تاريخ الشراء -->
+<ngx-datatable-column name="تاريخ الشراء" [width]="150">
+  <ng-template let-row="row" ngx-datatable-cell-template>
+    {{ row.createdDate | date: 'medium' }}
+  </ng-template>
+</ngx-datatable-column>
+
+<!-- المبلغ -->
+<ngx-datatable-column name="المبلغ" [width]="100">
+  <ng-template let-row="row" ngx-datatable-cell-template>
+    {{ row.amount }} {{ row.studentcourse?.course?.currency || 'EGP' }}
+  </ng-template>
+</ngx-datatable-column>
+  </ngx-datatable>
+  
+</div>
+
+          </ng-template>
+        </li>
+
+        <!-- Sessions -->
+        <li ngbNavItem>
+  <a ngbNavLink>{{ 'INSTRUCTOR.SESSIONS' | translate }}</a>
+  <ng-template ngbNavContent>
+    <div class="p-3 bg-white rounded shadow-sm mt-4">
+      <h4 class="mb-3">الجلسات المدفوعة</h4>
+
+      <ngx-datatable
+        class="bootstrap"
+        [rows]="sessionPurchases"
+        [columnMode]="'force'"
+        [headerHeight]="50"
+        [footerHeight]="50"
+        [rowHeight]="'auto'"
+        [limit]="10"
+        [messages]="{
+          emptyMessage: 'لا توجد جلسات مدفوعة لهذا المدرّس.',
+          totalMessage: 'إجمالي',
+          selectedMessage: 'محدد'
+        }"
+      >
+
+        <!-- عنوان الجلسة -->
+        <ngx-datatable-column name="عنوان الجلسة" prop="title" [width]="200">
+          <ng-template let-row="row" ngx-datatable-cell-template>
+            {{ row.title }}
+          </ng-template>
+        </ngx-datatable-column>
+
+        <!-- الطالب -->
+        <ngx-datatable-column name="الطالب" [width]="200">
+          <ng-template let-row="row" ngx-datatable-cell-template>
+            {{ row.student?.firstName }} {{ row.student?.lastName }}
+          </ng-template>
+        </ngx-datatable-column>
+
+        <!-- المبلغ -->
+        <ngx-datatable-column name="المبلغ" [width]="100">
+          <ng-template let-row="row" ngx-datatable-cell-template>
+            {{ row.amount }} {{ row.currency }}
+          </ng-template>
+        </ngx-datatable-column>
+
+        <!-- الحالة -->
+        <ngx-datatable-column name="الحالة" [width]="120">
+          <ng-template let-row="row" ngx-datatable-cell-template>
+            {{ row.status === 'scheduled' ? 'مجدولة' : row.status }}
+          </ng-template>
+        </ngx-datatable-column>
+
+        <!-- التاريخ -->
+        <ngx-datatable-column name="تاريخ الإنشاء" [width]="180">
+          <ng-template let-row="row" ngx-datatable-cell-template>
+            {{ row.createdDate | date:'medium' }}
+          </ng-template>
+        </ngx-datatable-column>
+
+      </ngx-datatable>
     </div>
+  </ng-template>
+</li>
 
+
+        <!-- Payout Requests -->
+        <li ngbNavItem>
+          <a ngbNavLink>{{ 'INSTRUCTOR.PAYOUT_REQUESTS' | translate }}</a>
+          <ng-template ngbNavContent>
+            <app-payout-requests-list [instructorId]="instructorId"></app-payout-requests-list>
+          </ng-template>
+        </li>
+      </ul>
+
+      <div [ngbNavOutlet]="navJustified" class="mt-2"></div>
+    </div>
   </div>
 </div>

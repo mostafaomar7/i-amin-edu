@@ -81,7 +81,9 @@ constructor(
   editItem(row: any) {
   this.router.navigate([`/users/brokers/list/new/${row.user.id}`]);
 }
-
+viewItem(row: any) {
+  this.router.navigate([`/users/brokers/list/info/${row.userId}`]);
+}
   async deleteItem(id: number) {
   Swal.fire({
     title: 'Are you sure?',

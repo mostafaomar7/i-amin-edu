@@ -12,6 +12,7 @@ import { BrokersViewComponent } from './admin-brokers/brokers-view/brokers-view.
 import { NewBrokerComponent } from './admin-brokers/new-broker/new-broker.component';
 import { InstructorInfoComponent } from './instructor-info/instructor-info.component';
 import { NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
+import { BrokerInfoComponent } from './broker-info/broker-info.component';
 
 // routing
 const routes: Routes = [
@@ -53,6 +54,10 @@ const routes: Routes = [
     {
         path : 'instructors/list/info/:id',
         component : InstructorInfoComponent
+    },
+    {
+        path : 'brokers/list/info/:id',
+        component : BrokerInfoComponent
     }
 ];
 
@@ -64,7 +69,8 @@ const routes: Routes = [
     BrokersListComponent,
     BrokersViewComponent,
     NewBrokerComponent,
-    InstructorInfoComponent
+    InstructorInfoComponent,
+    BrokerInfoComponent
   ],
     imports: [NgbNavModule,CommonModule, RouterModule.forChild(routes),NgxDatatableModule,TranslateModule,ReactiveFormsModule , FormsModule]
 })

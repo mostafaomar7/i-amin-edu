@@ -72,6 +72,16 @@ export class InstructorsListService extends ApiService {
   getStatistics(id: string): Promise<ApiResult<any>> {
   return this.getResponse(`dashboard/statistics/${id}`);
 }
+// getPaidCourses(teacherId: string): Promise<ApiResult<any>> {
+//   return this.getResponse(`course/teacher/${teacherId}/paid`);
+// }
+getTeacherCoursePurchases(teacherId: string): Promise<ApiResult<any>> {
+  return this.getResponse(`transaction-history/teacher/${teacherId}/course-purchases`);
+}
+getTeacherSessionPurchases(teacherId: string): Promise<ApiResult<any>> {
+  return this.getResponse(`transaction-history/teacher/${teacherId}/session-purchases`);
+}
+
 
 
 }
