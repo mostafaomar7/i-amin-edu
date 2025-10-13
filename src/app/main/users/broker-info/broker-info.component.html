@@ -3,226 +3,301 @@
 
     <div class="card-body">
       <h3 class="p-3 bg-white">
-        تفاصيل الوسيط
+        {{ 'BROKER.DETAILS' | translate }}
       </h3>
 
-      <ul ngbNav #navJustified="ngbNav" class="nav nav-pills nav-justified bg-white p-2" style="margin-top: -10px;">
-
+      <ul
+        ngbNav
+        #navJustified="ngbNav"
+        class="nav nav-pills nav-justified bg-white p-2"
+        style="margin-top: -10px;"
+      >
         <!-- Overview -->
         <li ngbNavItem>
-  <a ngbNavLink>نظرة عامة</a>
-  <ng-template ngbNavContent>
-    <section id="statistics-card" class="p-3 rounded" *ngIf="statistics">
-      <div class="row">
+          <a ngbNavLink>{{ 'BROKER.OVERVIEW' | translate }}</a>
+          <ng-template ngbNavContent>
+            <section id="statistics-card" class="p-3 rounded" *ngIf="statistics">
+              <div class="row">
 
-        <!-- Wallet Balance -->
-        <div class="col-md-6 col-sm-12 mb-2">
-          <div class="p-3 bg-white text-center rounded shadow-sm">
-            <div class="avatar bg-light-info p-50 mb-2 rounded-circle">
-              <div class="avatar-content">
-                <i data-feather="activity" class="font-medium-5 text-info"></i>
+                <!-- Wallet Balance -->
+                <div class="col-md-6 col-sm-12 mb-2">
+                  <div class="p-3 bg-white text-center rounded shadow-sm">
+                    <div class="avatar bg-light-info p-50 mb-2 rounded-circle">
+                      <div class="avatar-content">
+                        <i data-feather="activity" class="font-medium-5 text-info"></i>
+                      </div>
+                    </div>
+                    <h2 class="font-weight-bolder mb-0">
+                      {{ statistics.walletBalance | number }} EGP
+                    </h2>
+                    <p class="text-muted mb-0">
+                      {{ 'STATISTICS.CURRENT_BALANCE' | translate }}
+                    </p>
+                  </div>
+                </div>
+
+                <!-- Total Instructors -->
+                <div class="col-md-6 col-sm-6 mb-2">
+                  <div class="p-3 bg-white text-center rounded shadow-sm">
+                    <div class="avatar bg-light-warning p-50 mb-2 rounded-circle">
+                      <div class="avatar-content">
+                        <i data-feather="user" class="font-medium-5 text-warning"></i>
+                      </div>
+                    </div>
+                    <h2 class="font-weight-bolder mb-0">
+                      {{ statistics.instructorCount }}
+                    </h2>
+                    <p class="text-muted mb-0">
+                      {{ 'STATISTICS.TOTAL_TEACHERS' | translate }}
+                    </p>
+                  </div>
+                </div>
+
+                <!-- Total Organizations -->
+                <div class="col-md-6 col-sm-6 mb-2">
+                  <div class="p-3 bg-white text-center rounded shadow-sm">
+                    <div class="avatar bg-light-success p-50 mb-2 rounded-circle">
+                      <div class="avatar-content">
+                        <i data-feather="home" class="font-medium-5 text-success"></i>
+                      </div>
+                    </div>
+                    <h2 class="font-weight-bolder mb-0">
+                      {{ statistics.organizationCount }}
+                    </h2>
+                    <p class="text-muted mb-0">
+                      {{ 'STATISTICS.TOTAL_CENTERS' | translate }}
+                    </p>
+                  </div>
+                </div>
+
               </div>
-            </div>
-            <h2 class="font-weight-bolder mb-0">
-              {{ statistics.walletBalance | number }} EGP
-            </h2>
-            <p class="text-muted mb-0">الرصيد الحالي</p>
-          </div>
-        </div>
-
-        <!-- Total Instructors -->
-        <div class="col-md-6 col-sm-6 mb-2">
-          <div class="p-3 bg-white text-center rounded shadow-sm">
-            <div class="avatar bg-light-warning p-50 mb-2 rounded-circle">
-              <div class="avatar-content">
-                <i data-feather="user" class="font-medium-5 text-warning"></i>
-              </div>
-            </div>
-            <h2 class="font-weight-bolder mb-0">
-              {{ statistics.instructorCount }}
-            </h2>
-            <p class="text-muted mb-0">عدد المدرسين التابعين</p>
-          </div>
-        </div>
-
-        <!-- Total Organizations -->
-        <div class="col-md-6 col-sm-6 mb-2">
-          <div class="p-3 bg-white text-center rounded shadow-sm">
-            <div class="avatar bg-light-success p-50 mb-2 rounded-circle">
-              <div class="avatar-content">
-                <i data-feather="home" class="font-medium-5 text-success"></i>
-              </div>
-            </div>
-            <h2 class="font-weight-bolder mb-0">
-              {{ statistics.organizationCount }}
-            </h2>
-            <p class="text-muted mb-0">عدد المؤسسات التابعة</p>
-          </div>
-        </div>
-
-      </div>
-    </section>
-  </ng-template>
-</li>
-
+            </section>
+          </ng-template>
+        </li>
 
         <!-- Teachers -->
         <li ngbNavItem>
-  <a ngbNavLink>المدرسين</a>
-  <ng-template ngbNavContent>
-    <div class="p-3 bg-white rounded shadow-sm mt-4">
-      <h4 class="mb-3">المدرسين المسجلين</h4>
+          <a ngbNavLink>{{ 'BROKER.TEACHERS' | translate }}</a>
+          <ng-template ngbNavContent>
+            <div class="p-3 bg-white rounded shadow-sm mt-4">
+              <h4 class="mb-3">{{ 'BROKER.TEACHERS' | translate }}</h4>
 
-      <div style="overflow-x: auto;">
-        <ngx-datatable
-          class="bootstrap"
-          [rows]="teachers"
-          columnMode="standard"
-          [headerHeight]="50"
-          [footerHeight]="50"
-          [rowHeight]="'auto'"
-          [limit]="10"
-          [messages]="{
-            emptyMessage: 'لا يوجد مدرسين.',
-            totalMessage: 'إجمالي',
-            selectedMessage: 'محدد'
-          }"
-          style="min-width: 1000px;"
-        >
-          <!-- الصورة -->
-          <ngx-datatable-column name="الصورة" [width]="80">
-            <ng-template let-row="row" ngx-datatable-cell-template>
-              <img
-                [src]="row.image"
-                alt="teacher"
-                width="40"
-                height="40"
-                class="rounded-circle"
-              />
-            </ng-template>
-          </ngx-datatable-column>
+              <div style="overflow-x: auto;">
+                <ngx-datatable
+                  class="bootstrap"
+                  [rows]="teachers"
+                  columnMode="standard"
+                  [headerHeight]="50"
+                  [footerHeight]="50"
+                  [rowHeight]="'auto'"
+                  [limit]="10"
+                  [messages]="{
+                    emptyMessage: ('TEACHER_TABLE.EMPTY' | translate),
+                    totalMessage: ('TEACHER_TABLE.TOTAL' | translate),
+                    selectedMessage: ('TEACHER_TABLE.SELECTED' | translate)
+                  }"
+                  style="min-width: 1000px;"
+                >
+                  <!-- الصورة -->
+                  <ngx-datatable-column
+                    [name]="'TEACHER_TABLE.IMAGE' | translate"
+                    [width]="80"
+                  >
+                    <ng-template let-row="row" ngx-datatable-cell-template>
+                      <img
+                        [src]="row.image"
+                        alt="teacher"
+                        width="40"
+                        height="40"
+                        class="rounded-circle"
+                      />
+                    </ng-template>
+                  </ngx-datatable-column>
 
-          <!-- الاسم -->
-          <ngx-datatable-column name="الاسم" prop="name" [flexGrow]="2">
-            <ng-template let-row="row" ngx-datatable-cell-template>
-              {{ row.name }}
-            </ng-template>
-          </ngx-datatable-column>
+                  <!-- الاسم -->
+                  <ngx-datatable-column
+                    [name]="'TEACHER_TABLE.NAME' | translate"
+                    prop="name"
+                    [flexGrow]="2"
+                  >
+                    <ng-template let-row="row" ngx-datatable-cell-template>
+                      {{ row.name }}
+                    </ng-template>
+                  </ngx-datatable-column>
 
-          <!-- البريد الإلكتروني -->
-          <ngx-datatable-column name="البريد الإلكتروني" prop="email" [flexGrow]="3">
-            <ng-template let-row="row" ngx-datatable-cell-template>
-              {{ row.email }}
-            </ng-template>
-          </ngx-datatable-column>
+                  <!-- البريد الإلكتروني -->
+                  <ngx-datatable-column
+                    [name]="'TEACHER_TABLE.EMAIL' | translate"
+                    prop="email"
+                    [flexGrow]="3"
+                  >
+                    <ng-template let-row="row" ngx-datatable-cell-template>
+                      {{ row.email }}
+                    </ng-template>
+                  </ngx-datatable-column>
 
-          <!-- رقم الهاتف -->
-          <ngx-datatable-column name="رقم الهاتف" prop="phone" [flexGrow]="2">
-            <ng-template let-row="row" ngx-datatable-cell-template>
-              {{ row.phone }}
-            </ng-template>
-          </ngx-datatable-column>
+                  <!-- رقم الهاتف -->
+                  <ngx-datatable-column
+                    [name]="'TEACHER_TABLE.PHONE' | translate"
+                    prop="phone"
+                    [flexGrow]="2"
+                  >
+                    <ng-template let-row="row" ngx-datatable-cell-template>
+                      {{ row.phone }}
+                    </ng-template>
+                  </ngx-datatable-column>
 
-          <!-- العمولة -->
-          <ngx-datatable-column name="العمولة" prop="commission" [width]="120">
-            <ng-template let-row="row" ngx-datatable-cell-template>
-              {{ row.commission }}
-            </ng-template>
-          </ngx-datatable-column>
+                  <!-- العمولة -->
+                  <ngx-datatable-column
+                    [name]="'TEACHER_TABLE.COMMISSION' | translate"
+                    prop="commission"
+                    [width]="120"
+                  >
+                    <ng-template let-row="row" ngx-datatable-cell-template>
+                      {{ row.commission }}
+                    </ng-template>
+                  </ngx-datatable-column>
 
-          <!-- الحالة -->
-          <ngx-datatable-column name="الحالة" [flexGrow]="2">
-            <ng-template let-row="row" ngx-datatable-cell-template>
-              <span
-                [ngClass]="{
-                  'text-success': row.canGoLive,
-                  'text-warning': !row.canGoLive && row.documentsCompleted,
-                  'text-danger': !row.documentsCompleted
+                  <!-- الحالة -->
+                  <!-- <ngx-datatable-column
+                    [name]="'TEACHER_TABLE.STATUS' | translate"
+                    [flexGrow]="2"
+                  >
+                    <ng-template let-row="row" ngx-datatable-cell-template>
+                      <span
+                        [ngClass]="{
+                          'text-success': row.canGoLive,
+                          'text-warning': !row.canGoLive && row.documentsCompleted,
+                          'text-danger': !row.documentsCompleted
+                        }"
+                      >
+                        {{
+                          row.canGoLive
+                            ? ('TEACHER_TABLE.ACTIVE' | translate)
+                            : row.documentsCompleted
+                            ? ('TEACHER_TABLE.WAITING' | translate)
+                            : ('TEACHER_TABLE.INCOMPLETE' | translate)
+                        }}
+                      </span>
+                    </ng-template>
+                  </ngx-datatable-column> -->
+
+                  <!-- تاريخ التسجيل -->
+                  <ngx-datatable-column
+                    [name]="'TEACHER_TABLE.REGISTER_DATE' | translate"
+                    [flexGrow]="3"
+                  >
+                    <ng-template let-row="row" ngx-datatable-cell-template>
+                      {{ row.createdAt | date: 'medium' }}
+                    </ng-template>
+                  </ngx-datatable-column>
+                </ngx-datatable>
+              </div>
+            </div>
+          </ng-template>
+        </li>
+
+        <!-- Centers -->
+        <li ngbNavItem>
+          <a ngbNavLink>{{ 'BROKER.CENTERS' | translate }}</a>
+          <ng-template ngbNavContent>
+            <div class="p-3 bg-white rounded shadow-sm mt-4">
+              <h4 class="mb-3">{{ 'BROKER.CENTERS' | translate }}</h4>
+
+              <ngx-datatable
+                class="bootstrap"
+                [rows]="centers"
+                [columnMode]="'force'"
+                [headerHeight]="50"
+                [footerHeight]="50"
+                [rowHeight]="'auto'"
+                [limit]="10"
+                [messages]="{
+                  emptyMessage: ('CENTER_TABLE.EMPTY' | translate),
+                  totalMessage: ('CENTER_TABLE.TOTAL' | translate),
+                  selectedMessage: ('CENTER_TABLE.SELECTED' | translate)
                 }"
               >
-                {{
-                  row.canGoLive
-                    ? 'نشط'
-                    : row.documentsCompleted
-                    ? 'بانتظار التفعيل'
-                    : 'غير مكتمل'
-                }}
-              </span>
-            </ng-template>
-          </ngx-datatable-column>
+                <ngx-datatable-column
+                  [name]="'CENTER_TABLE.NAME' | translate"
+                  prop="name"
+                  [width]="200"
+                >
+                  <ng-template let-row="row" ngx-datatable-cell-template>
+                    {{ row.name }}
+                  </ng-template>
+                </ngx-datatable-column>
 
-          <!-- تاريخ التسجيل -->
-          <ngx-datatable-column name="تاريخ التسجيل" [flexGrow]="2">
-            <ng-template let-row="row" ngx-datatable-cell-template>
-              {{ row.createdAt | date: 'medium' }}
-            </ng-template>
-          </ngx-datatable-column>
-        </ngx-datatable>
-      </div>
-    </div>
-  </ng-template>
-</li>
+                <ngx-datatable-column
+                  [name]="'CENTER_TABLE.EMAIL' | translate"
+                  prop="email"
+                  [width]="250"
+                >
+                  <ng-template let-row="row" ngx-datatable-cell-template>
+                    {{ row.email }}
+                  </ng-template>
+                </ngx-datatable-column>
 
-<li ngbNavItem>
-  <a ngbNavLink>المراكز</a>
-  <ng-template ngbNavContent>
-    <div class="p-3 bg-white rounded shadow-sm mt-4">
-      <h4 class="mb-3">المراكز المسجلة</h4>
+                <ngx-datatable-column
+                  [name]="'CENTER_TABLE.PHONE' | translate"
+                  prop="phone"
+                  [width]="150"
+                >
+                  <ng-template let-row="row" ngx-datatable-cell-template>
+                    {{ row.phone }}
+                  </ng-template>
+                </ngx-datatable-column>
 
-      <ngx-datatable
-        class="bootstrap"
-        [rows]="centers"
-        [columnMode]="'force'"
-        [headerHeight]="50"
-        [footerHeight]="50"
-        [rowHeight]="'auto'"
-        [limit]="10"
-        [messages]="{
-          emptyMessage: 'لا يوجد مراكز.',
-          totalMessage: 'إجمالي',
-          selectedMessage: 'محدد'
-        }"
-      >
-        <ngx-datatable-column name="الاسم" prop="name" [width]="200">
-          <ng-template let-row="row" ngx-datatable-cell-template>
-            {{ row.name }}
+                <ngx-datatable-column
+                  [name]="'CENTER_TABLE.COMMISSION' | translate"
+                  prop="commission"
+                  [width]="100"
+                >
+                  <ng-template let-row="row" ngx-datatable-cell-template>
+                    {{ row.commission }}
+                  </ng-template>
+                </ngx-datatable-column>
+
+                <ngx-datatable-column
+                  [name]="'CENTER_TABLE.STATUS' | translate"
+                  prop="isActive"
+                  [width]="120"
+                >
+                  <ng-template let-row="row" ngx-datatable-cell-template>
+                    {{ row.isActive }}
+                  </ng-template>
+                </ngx-datatable-column>
+              </ngx-datatable>
+            </div>
           </ng-template>
-        </ngx-datatable-column>
-
-        <ngx-datatable-column name="البريد الإلكتروني" prop="email" [width]="250">
-          <ng-template let-row="row" ngx-datatable-cell-template>
-            {{ row.email }}
-          </ng-template>
-        </ngx-datatable-column>
-
-        <ngx-datatable-column name="رقم الهاتف" prop="phone" [width]="150">
-          <ng-template let-row="row" ngx-datatable-cell-template>
-            {{ row.phone }}
-          </ng-template>
-        </ngx-datatable-column>
-
-        <ngx-datatable-column name="العمولة" prop="commission" [width]="100">
-          <ng-template let-row="row" ngx-datatable-cell-template>
-            {{ row.commission }}
-          </ng-template>
-        </ngx-datatable-column>
-
-        <ngx-datatable-column name="الحالة" prop="isActive" [width]="120">
-          <ng-template let-row="row" ngx-datatable-cell-template>
-            {{ row.isActive }}
-          </ng-template>
-        </ngx-datatable-column>
-      </ngx-datatable>
-    </div>
-  </ng-template>
-</li>
+        </li>
 
         <!-- Payout Requests -->
         <li ngbNavItem>
-          <a ngbNavLink>طلبات السحب</a>
+          <a ngbNavLink>{{ 'BROKER.PAYOUT_REQUESTS' | translate }}</a>
           <ng-template ngbNavContent>
             <div class="p-3 bg-white rounded shadow-sm mt-4">
-              <h4 class="mb-3">طلبات السحب الأخيرة</h4>
+              <div class="row d-flex justify-content-between align-items-center mb-3">
+  <h4 class="mb-0 mx-2">{{ 'PAYOUTS.TITLE' | translate }}</h4>
+
+  <!-- زر إظهار الحقل -->
+  <button class="btn btn-primary mx-2" (click)="toggleRequestInput()">
+    {{ showRequestInput ? ('PAYOUTS.CANCEL' | translate) : ('PAYOUTS.ADD_REQUEST' | translate) }}
+  </button>
+</div>
+
+<!-- حقل المبلغ + زر الإرسال -->
+          <div *ngIf="showRequestInput" class="d-flex align-items-center mb-3 px-2">
+            <input
+              type="number"
+              class="form-control w-auto mx-2"
+              placeholder="{{ 'PAYOUTS.ENTER_AMOUNT' | translate }}"
+              [(ngModel)]="withdrawAmount"
+            />
+            <button class="btn btn-success" (click)="submitWithdrawRequest()">
+              {{ 'PAYOUTS.SEND_REQUEST' | translate }}
+            </button>
+          </div>
 
               <ngx-datatable
                 class="bootstrap"
@@ -233,33 +308,94 @@
                 [rowHeight]="'auto'"
                 [limit]="10"
                 [messages]="{
-                  emptyMessage: 'لا توجد طلبات سحب.',
-                  totalMessage: 'إجمالي',
-                  selectedMessage: 'محدد'
+                  emptyMessage: ('PAYOUTS.EMPTY' | translate),
+                  totalMessage: ('PAYOUTS.TOTAL' | translate),
+                  selectedMessage: ('PAYOUTS.SELECTED' | translate)
                 }"
               >
-                <ngx-datatable-column name="المبلغ" prop="amount" [width]="150">
+                <ngx-datatable-column
+                  [name]="'PAYOUTS.AMOUNT' | translate"
+                  prop="amount"
+                  [width]="150"
+                >
                   <ng-template let-row="row" ngx-datatable-cell-template>
                     {{ row.amount }} EGP
                   </ng-template>
                 </ngx-datatable-column>
 
-                <ngx-datatable-column name="الحالة" prop="status" [width]="150">
+                <ngx-datatable-column
+                  [name]="'PAYOUTS.STATUS' | translate"
+                  prop="status"
+                  [width]="150"
+                >
                   <ng-template let-row="row" ngx-datatable-cell-template>
-                    {{ row.status }}
+  <span
+  [ngClass]="{
+    'text-warning': row.status === 'Pending',
+    'text-success': row.status === 'Approved',
+    'text-danger': row.status === 'Rejected'
+  }"
+>
+  {{ row.status }}
+</span>
+
+</ng-template>
+
+                </ngx-datatable-column>
+                <ngx-datatable-column
+                  [name]="'PAYOUTS.BANK' | translate"
+                  [width]="250"
+                >
+                  <ng-template let-row="row" ngx-datatable-cell-template>
+                    <div>
+                      <strong>BankAccountName : {{ row.bankAccountName }}</strong><br>
+                    Bank Name  {{ row.bankName }}<br>
+                    Bank Account Number  {{ row.bankAccountNumber }}
+                    </div>
                   </ng-template>
                 </ngx-datatable-column>
 
-                <ngx-datatable-column name="التاريخ" prop="date" [width]="200">
+                <ngx-datatable-column
+                  [name]="'PAYOUTS.DATE' | translate"
+                  prop="date"
+                  [width]="200"
+                >
                   <ng-template let-row="row" ngx-datatable-cell-template>
-                    {{ row.date | date:'medium' }}
+                    {{ row.date | date: 'medium' }}
+                  </ng-template>
+                </ngx-datatable-column>
+                <ngx-datatable-column
+                  [name]="'PAYOUTS.ACTIONS' | translate"
+                  [width]="200"
+                >
+                  <ng-template let-row="row" ngx-datatable-cell-template>
+                    <button
+                      *ngIf="row.status === 'Pending'"
+                      class="btn btn-sm btn-outline-success"
+                      (click)="activateWithdraw(row)"
+                    >
+                      Active
+                    </button>
+                    <button
+                      *ngIf="row.status !== 'Pending'"
+                      class="btn btn-sm btn-secondary"
+                      disabled
+                    >
+                      {{ row.status === 'Approved' ? 'Approved' : 'Rejected' }}
+                    </button>
+                    <button
+      *ngIf="row.status === 'Rejected'"
+      class="btn btn-sm btn-outline-danger mx-1"
+      (click)="confirmDelete(row)"
+    >
+      Delete
+    </button>
                   </ng-template>
                 </ngx-datatable-column>
               </ngx-datatable>
             </div>
           </ng-template>
         </li>
-
       </ul>
 
       <div [ngbNavOutlet]="navJustified" class="mt-2"></div>

@@ -41,14 +41,20 @@
 
         <!-- Role / User Type -->
         <div class="mb-3">
-          <label class="form-label fw-semibold">{{ 'NEW_BROKER_USER.ROLE' | translate }}</label>
+          <label class="form-label fw-semibold mx-1">{{ 'NEW_BROKER_USER.ROLE' | translate }}</label>
           <select class="form-select" formControlName="userType">
             <option [value]="2">{{ 'NEW_BROKER_USER.ROLE_ORGANIZATION' | translate }}</option>
             <option [value]="3">{{ 'NEW_BROKER_USER.ROLE_INSTRUCTOR' | translate }}</option>
           </select>
 
         </div>
-
+        <div class="mb-3">
+          <label class="form-label fw-semibold">{{ 'NEW_BROKER_USER.Nationality' | translate }}</label>
+          <select class="form-select mx-1" formControlName="NationalityType">
+            <option [value]="1">Egyptian</option>
+            <option [value]="2">Saudian</option>
+          </select>
+        </div>
         <!-- Bio English -->
         <div class="mb-3">
           <label class="form-label fw-semibold">{{ 'NEW_BROKER_USER.BIO_EN' | translate }}</label>

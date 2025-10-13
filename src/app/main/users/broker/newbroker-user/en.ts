@@ -18,7 +18,8 @@ export const locale = {
       ROLE_ORGANIZATION: 'Organization',
       SUBMIT: 'Submit',
       PASSWORD: 'User Password',
-      EMAIL : 'User Email'
+      EMAIL : 'User Email',
+      Nationality : 'Nationality'
     }
   }
 };

@@ -1,10 +1,12 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { ApiService } from '@core/services/api.service';
 import { ApiResult } from '@core/types/api-result';
+import { environment } from 'environments/environment';
 
 import { ToastrService } from 'ngx-toastr';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +14,12 @@ import { ToastrService } from 'ngx-toastr';
 export class InstructorsListService extends ApiService {
 
   public routeEndPoint: string = 'teacher';
-
+  private getHeaders(): HttpHeaders {
+      const token = localStorage.getItem('authToken');
+      return new HttpHeaders({
+        'Authorization': `Bearer ${token}`
+      });
+    }
   /**
    * Constructor 
    *
@@ -81,7 +88,29 @@ getTeacherCoursePurchases(teacherId: string): Promise<ApiResult<any>> {
 getTeacherSessionPurchases(teacherId: string): Promise<ApiResult<any>> {
   return this.getResponse(`transaction-history/teacher/${teacherId}/session-purchases`);
 }
+getBrokerPayouts(userId: number) {
+  return this.http.get<any>(
+    `${environment.apiUrl}/transaction-history/withdraw/requests/${userId}`,
+    { headers: this.getHeaders() }
+  );
+} 
 
+createWithdrawRequest(body: any) {
+  return this.http.post<any>(`${environment.apiUrl}/transaction-history/withdraw/request`, body, {
+    headers: this.getHeaders()
+  });
+}
 
+processWithdrawRequest(id: number) {
+  return this.http.post<any>(`${environment.apiUrl}/transaction-history/withdraw/process/${id}`, {}, {
+    headers: this.getHeaders()
+  });
+}
+
+deleteBrokerPayouts(id: number) {
+  return this.http.delete<any>(`${environment.apiUrl}/transaction-history/withdraw/requests/${id}`, {
+    headers: this.getHeaders()
+  });
+}
 
 }

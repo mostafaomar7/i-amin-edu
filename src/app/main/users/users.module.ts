@@ -56,7 +56,7 @@ const routes: Routes = [
         component : InstructorInfoComponent
     },
     {
-        path : 'brokers/list/info/:id',
+        path : 'brokers/list/info/:userId',
         component : BrokerInfoComponent
     }
 ];

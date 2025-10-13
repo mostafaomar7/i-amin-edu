@@ -106,4 +106,31 @@ export class BrokerinfoService {
       { headers: this.getHeaders() }
     );
   }
+  createWithdrawRequest(data: { receiverId: number; amount: number }) {
+  return this.http.post<any>(
+    `${environment.apiUrl}/transaction-history/withdraw/request`,
+    data,
+    { headers: this.getHeaders() } // ✅ أضفنا الهيدر هنا
+  );
+}
+
+getBrokerPayouts(brokerId: number): Observable<any> {
+  return this.http.get<any>(
+    `${environment.apiUrl}/transaction-history/withdraw/requests/${brokerId}`,
+    { headers: this.getHeaders() }
+  );
+}
+processWithdrawRequest(id: number) {
+  return this.http.post<any>(
+    `${environment.apiUrl}/transaction-history/withdraw/process/${id}`,
+    {},
+    { headers: this.getHeaders() }
+  );
+}
+deleteBrokerPayouts(brokerId: number): Observable<any> {
+  return this.http.delete<any>(
+    `${environment.apiUrl}/transaction-history/withdraw/requests/${brokerId}`,
+    { headers: this.getHeaders() }
+  );
+}
 }

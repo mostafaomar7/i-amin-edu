@@ -31,6 +31,7 @@ export class NewbrokerUserComponent implements OnInit {
       password: ['', [Validators.required, Validators.minLength(8)]],
       phone: ['', Validators.required],
       userType: [3, [Validators.required]], // 2 أو 3 فقط
+NationalityType: ['', [Validators.required]],
       bioAr: ['', [Validators.required, Validators.minLength(3)]],
       bioEn: ['', [Validators.required, Validators.minLength(3)]],
       image: [null]
@@ -65,7 +66,8 @@ export class NewbrokerUserComponent implements OnInit {
   formData.append('email', this.userForm.get('email')?.value.trim());
   formData.append('password', this.userForm.get('password')?.value);
   formData.append('phone', this.userForm.get('phone')?.value.trim());
-  formData.append('userType', this.userForm.get('userType')?.value.toString());
+formData.append('userType', this.userForm.get('userType')?.value.toString());
+formData.append('countryId', this.userForm.get('NationalityType')?.value.toString());
   formData.append('bioAr', this.userForm.get('bioAr')?.value.trim());
   formData.append('bioEn', this.userForm.get('bioEn')?.value.trim());
 

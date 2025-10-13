@@ -18,7 +18,8 @@ export const locale = {
       ROLE_ORGANIZATION: 'منظمة',
       SUBMIT: 'إرسال',
       PASSWORD: 'كلمة سر المستخدم',
-      EMAIL : 'ايميل المستخدم'
+      EMAIL : 'ايميل المستخدم',
+      Nationality : 'الجنسية'
     }
   }
 };

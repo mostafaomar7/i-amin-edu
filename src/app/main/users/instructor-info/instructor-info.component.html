@@ -233,11 +233,134 @@
 
         <!-- Payout Requests -->
         <li ngbNavItem>
-          <a ngbNavLink>{{ 'INSTRUCTOR.PAYOUT_REQUESTS' | translate }}</a>
-          <ng-template ngbNavContent>
-            <app-payout-requests-list [instructorId]="instructorId"></app-payout-requests-list>
+  <a ngbNavLink>{{ 'INSTRUCTOR.PAYOUT_REQUESTS' | translate }}</a>
+  <ng-template ngbNavContent>
+    <div class="p-3 bg-white rounded shadow-sm mt-4">
+      <div class="row d-flex justify-content-between align-items-center mb-3">
+        <h4 class="mb-0 mx-2">{{ 'PAYOUTS.TITLE' | translate }}</h4>
+
+        <button class="btn btn-primary mx-2" (click)="toggleRequestInput()">
+          {{ showRequestInput ? ('PAYOUTS.CANCEL' | translate) : ('PAYOUTS.ADD_REQUEST' | translate) }}
+        </button>
+      </div>
+
+      <!-- حقل المبلغ + زر الإرسال -->
+      <div *ngIf="showRequestInput" class="d-flex align-items-center mb-3 px-2">
+        <input
+          type="number"
+          class="form-control w-auto mx-2"
+          placeholder="{{ 'PAYOUTS.ENTER_AMOUNT' | translate }}"
+          [(ngModel)]="withdrawAmount"
+        />
+        <button class="btn btn-success" (click)="submitWithdrawRequest()">
+          {{ 'PAYOUTS.SEND_REQUEST' | translate }}
+        </button>
+      </div>
+
+      <!-- جدول الطلبات -->
+      <ngx-datatable
+        class="bootstrap"
+        [rows]="payouts"
+        [columnMode]="'force'"
+        [headerHeight]="50"
+        [footerHeight]="50"
+        [rowHeight]="'auto'"
+        [limit]="10"
+        [messages]="{
+          emptyMessage: ('PAYOUTS.EMPTY' | translate),
+          totalMessage: ('PAYOUTS.TOTAL' | translate),
+          selectedMessage: ('PAYOUTS.SELECTED' | translate)
+        }"
+      >
+        <ngx-datatable-column
+          [name]="'PAYOUTS.AMOUNT' | translate"
+          prop="amount"
+          [width]="150"
+        >
+          <ng-template let-row="row" ngx-datatable-cell-template>
+            {{ row.amount }} EGP
           </ng-template>
-        </li>
+        </ngx-datatable-column>
+
+        <ngx-datatable-column
+          [name]="'PAYOUTS.STATUS' | translate"
+          prop="status"
+          [width]="150"
+        >
+          <ng-template let-row="row" ngx-datatable-cell-template>
+            <span
+              [ngClass]="{
+                'text-warning': row.status === 'Pending',
+                'text-success': row.status === 'Approved',
+                'text-danger': row.status === 'Rejected'
+              }"
+            >
+              {{ row.status }}
+            </span>
+          </ng-template>
+        </ngx-datatable-column>
+
+        <ngx-datatable-column
+          [name]="'PAYOUTS.BANK' | translate"
+          [width]="250"
+        >
+          <ng-template let-row="row" ngx-datatable-cell-template>
+            <div>
+              <strong>BankAccountName: {{ row.bankAccountName }}</strong><br />
+              Bank Name {{ row.bankName }}<br />
+              Account Number {{ row.bankAccountNumber }}
+            </div>
+          </ng-template>
+        </ngx-datatable-column>
+
+        <ngx-datatable-column
+          [name]="'PAYOUTS.DATE' | translate"
+          prop="date"
+          [width]="200"
+        >
+          <ng-template let-row="row" ngx-datatable-cell-template>
+            {{ row.date | date: 'medium' }}
+          </ng-template>
+        </ngx-datatable-column>
+
+        <ngx-datatable-column
+          [name]="'PAYOUTS.ACTIONS' | translate"
+          [width]="220"
+        >
+          <ng-template let-row="row" ngx-datatable-cell-template>
+            <!-- Pending -->
+            <button
+              *ngIf="row.status === 'Pending'"
+              class="btn btn-sm btn-outline-success mx-1"
+              (click)="activateWithdraw(row)"
+            >
+              Active
+            </button>
+
+            <!-- Approved -->
+            <button
+              *ngIf="row.status === 'Approved'"
+              class="btn btn-sm btn-secondary mx-1"
+              disabled
+            >
+              Approved
+            </button>
+
+            <!-- Rejected -->
+            <button
+              *ngIf="row.status === 'Rejected'"
+              class="btn btn-sm btn-outline-danger mx-1"
+              (click)="confirmDelete(row)"
+            >
+              Delete
+            </button>
+          </ng-template>
+        </ngx-datatable-column>
+      </ngx-datatable>
+    </div>
+  </ng-template>
+</li>
+
       </ul>
 
       <div [ngbNavOutlet]="navJustified" class="mt-2"></div>
