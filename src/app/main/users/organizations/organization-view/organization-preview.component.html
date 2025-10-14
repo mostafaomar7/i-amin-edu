@@ -37,8 +37,90 @@
           <li ngbNavItem>
             <a ngbNavLink>{{ 'ORGANIZATION.PAYOUT_REQUESTS' | translate }}</a>
             <ng-template ngbNavContent>
-              <app-payout-requests-list [selectedCenterId]="1" [hasHeader]="false"></app-payout-requests-list>
-            </ng-template>
+  <div class="p-3 bg-white rounded shadow-sm mt-4">
+    <div class="row d-flex justify-content-between align-items-center mb-3">
+      <h4 class="mb-0 mx-2">Payout Requests</h4>
+      <button class="btn btn-primary mx-2" (click)="toggleRequestInput()">
+        {{ showRequestInput ? 'Cancel' : 'Add Request' }}
+      </button>
+    </div>
+
+    <!-- حقل المبلغ -->
+    <div *ngIf="showRequestInput" class="d-flex align-items-center mb-3 px-2">
+      <input
+        type="number"
+        class="form-control w-auto mx-2"
+        placeholder="Enter amount"
+        [(ngModel)]="withdrawAmount"
+      />
+      <button class="btn btn-success" (click)="submitWithdrawRequest()">Send</button>
+    </div>
+
+    <ngx-datatable
+      class="bootstrap"
+      [rows]="payouts"
+      [columnMode]="'force'"
+      [headerHeight]="50"
+      [footerHeight]="50"
+      [rowHeight]="'auto'"
+      [limit]="10"
+    >
+      <ngx-datatable-column name="Amount" prop="amount" [width]="120">
+        <ng-template let-row="row" ngx-datatable-cell-template>
+          {{ row.amount }} EGP
+        </ng-template>
+      </ngx-datatable-column>
+
+      <ngx-datatable-column name="Status" prop="status" [width]="120">
+        <ng-template let-row="row" ngx-datatable-cell-template>
+          <span
+            [ngClass]="{
+              'text-warning': row.status === 'Pending',
+              'text-success': row.status === 'Approved',
+              'text-danger': row.status === 'Rejected'
+            }"
+          >
+            {{ row.status }}
+          </span>
+        </ng-template>
+      </ngx-datatable-column>
+
+      <ngx-datatable-column name="Bank Info" [width]="300">
+        <ng-template let-row="row" ngx-datatable-cell-template>
+          <div>
+            <strong>{{ row.bankAccountName }}</strong><br />
+            {{ row.bankName }} - {{ row.bankAccountNumber }}
+          </div>
+        </ng-template>
+      </ngx-datatable-column>
+
+      <ngx-datatable-column name="Date" prop="date" [width]="200">
+        <ng-template let-row="row" ngx-datatable-cell-template>
+          {{ row.date | date: 'medium' }}
+        </ng-template>
+      </ngx-datatable-column>
+
+      <ngx-datatable-column name="Actions" [width]="200">
+        <ng-template let-row="row" ngx-datatable-cell-template>
+          <button
+            *ngIf="row.status === 'Pending'"
+            class="btn btn-sm btn-outline-success"
+            (click)="activateWithdraw(row)"
+          >
+            Approve
+          </button>
+          <button
+            *ngIf="row.status === 'Rejected'"
+            class="btn btn-sm btn-outline-danger mx-1"
+            (click)="confirmDelete(row)"
+          >
+            Delete
+          </button>
+        </ng-template>
+      </ngx-datatable-column>
+    </ngx-datatable>
+  </div>
+</ng-template>
           </li>
 
         </ul>

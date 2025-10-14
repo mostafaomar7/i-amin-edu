@@ -269,7 +269,7 @@
             </div>
 
             <!-- Recently Added Instructors -->
-            <div class="col-lg-12 col-sm-6 col-12" *ngIf="currentUser !== 3">
+            <div class="col-lg-12 col-sm-6 col-12" *ngIf="currentUser !== 3 && currentUser !== 5">
                 <h4>{{ 'RECENTLY_ADDED_INSTRUCTORS' | translate }}</h4>
                 <app-instructors-list [selectedCenterId]="0" [isBestSelling]="true" [hasActions]="false"
                     [hasHeader]="false"></app-instructors-list>
@@ -334,4 +334,96 @@
             </div> -->
         </div>
     </div>
+</div>
+<!-- Broker Tables -->
+<div *ngIf="currentUser === 5" class="content-body mt-3">
+  <h3 class="mb-2">Instructors</h3>
+  <ngx-datatable
+    [rows]="instructorsList"
+    class="bootstrap core-bootstrap"
+    [headerHeight]="50"
+    [footerHeight]="50"
+    [rowHeight]="60"
+    [columnMode]="ColumnMode.force">
+
+    <ngx-datatable-column name="#">
+      <ng-template let-rowIndex="rowIndex" ngx-datatable-cell-template>
+        {{ rowIndex + 1 }}
+      </ng-template>
+    </ngx-datatable-column>
+
+    <ngx-datatable-column name="Image">
+      <ng-template let-row="row" ngx-datatable-cell-template>
+        <img [src]="row.image || 'assets/images/default-avatar.png'" 
+             alt="user" width="40" height="40" style="border-radius: 50%;" />
+      </ng-template>
+    </ngx-datatable-column>
+
+    <ngx-datatable-column name="Username">
+      <ng-template let-row="row" ngx-datatable-cell-template>
+        {{ row.username }}
+      </ng-template>
+    </ngx-datatable-column>
+
+    <ngx-datatable-column name="Phone">
+      <ng-template let-row="row" ngx-datatable-cell-template>
+        {{ row.phone }}
+      </ng-template>
+    </ngx-datatable-column>
+
+    <ngx-datatable-column name="Status">
+      <ng-template let-row="row" ngx-datatable-cell-template>
+        <span [ngClass]="{
+          'badge badge-success': row.status === 'Approved',
+          'badge badge-warning': row.status === 'Pending'
+        }">{{ row.status }}</span>
+      </ng-template>
+    </ngx-datatable-column>
+  </ngx-datatable>
+
+  <hr class="my-4" />
+
+  <h3 class="mb-2">Organizations</h3>
+  <ngx-datatable
+    [rows]="organizationsList"
+    class="bootstrap core-bootstrap"
+    [headerHeight]="50"
+    [footerHeight]="50"
+    [rowHeight]="60"
+    [columnMode]="ColumnMode.force">
+
+    <ngx-datatable-column name="#">
+      <ng-template let-rowIndex="rowIndex" ngx-datatable-cell-template>
+        {{ rowIndex + 1 }}
+      </ng-template>
+    </ngx-datatable-column>
+
+    <ngx-datatable-column name="Image">
+      <ng-template let-row="row" ngx-datatable-cell-template>
+        <img [src]="row.image || 'assets/images/default-avatar.png'" 
+             alt="org" width="40" height="40" style="border-radius: 50%;" />
+      </ng-template>
+    </ngx-datatable-column>
+
+    <ngx-datatable-column name="Username">
+      <ng-template let-row="row" ngx-datatable-cell-template>
+        {{ row.username }}
+      </ng-template>
+    </ngx-datatable-column>
+
+    <ngx-datatable-column name="Phone">
+      <ng-template let-row="row" ngx-datatable-cell-template>
+        {{ row.phone }}
+      </ng-template>
+    </ngx-datatable-column>
+
+    <ngx-datatable-column name="Status">
+      <ng-template let-row="row" ngx-datatable-cell-template>
+        <span [ngClass]="{
+          'badge badge-success': row.status === 'Approved',
+          'badge badge-warning': row.status === 'Pending'
+        }">{{ row.status }}</span>
+      </ng-template>
+    </ngx-datatable-column>
+  </ngx-datatable>
 </div>

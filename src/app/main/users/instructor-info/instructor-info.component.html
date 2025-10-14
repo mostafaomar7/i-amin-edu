@@ -92,7 +92,7 @@
           <a ngbNavLink>{{ 'INSTRUCTOR.COURSES' | translate }}</a>
           <ng-template ngbNavContent>
             <div class="p-3 bg-white rounded shadow-sm mt-4">
-  <h4 class="mb-3">الدورات المدفوعة</h4>
+  <h4 class="mb-3">{{ 'COURSES.TITLE' | translate }}</h4>
 
   <ngx-datatable
     class="bootstrap"
@@ -109,14 +109,14 @@
     }"
   >
     <!-- اسم الكورس -->
-    <ngx-datatable-column name="اسم الدورة" prop="nameAr" [width]="200">
+    <ngx-datatable-column name="{{ 'COURSES.NAME' | translate }}" prop="nameAr" [width]="200">
       <ng-template let-row="row" ngx-datatable-cell-template>
         {{ row.nameAr || row.nameEn }}
       </ng-template>
     </ngx-datatable-column>
 
     <!-- السعر -->
-    <ngx-datatable-column name="السعر" [width]="100">
+    <ngx-datatable-column name="{{ 'COURSES.PRICE' | translate }}" [width]="100">
       <ng-template let-row="row" ngx-datatable-cell-template>
         {{ row.price }} EGP
       </ng-template>
@@ -136,27 +136,27 @@
     </ngx-datatable-column> -->
 
     <!-- الوصف -->
-    <ngx-datatable-column name="الوصف" [width]="300">
+    <ngx-datatable-column name="{{ 'COURSES.DESCRIPTION' | translate }}" [width]="300">
       <ng-template let-row="row" ngx-datatable-cell-template>
         {{ row.infoAr || row.infoEn }}
       </ng-template>
     </ngx-datatable-column>
     <!-- اسم الطالب -->
-<ngx-datatable-column name="اسم الطالب" [width]="150">
+<ngx-datatable-column name="{{ 'COURSES.STUDENT_NAME' | translate }}" [width]="150">
   <ng-template let-row="row" ngx-datatable-cell-template>
     {{ row.student?.firstName }} {{ row.student?.lastName }}
   </ng-template>
 </ngx-datatable-column>
 
 <!-- تاريخ الشراء -->
-<ngx-datatable-column name="تاريخ الشراء" [width]="150">
+<ngx-datatable-column name="{{ 'COURSES.PURCHASE_DATE' | translate }}" [width]="150">
   <ng-template let-row="row" ngx-datatable-cell-template>
     {{ row.createdDate | date: 'medium' }}
   </ng-template>
 </ngx-datatable-column>
 
 <!-- المبلغ -->
-<ngx-datatable-column name="المبلغ" [width]="100">
+<ngx-datatable-column name="{{ 'COURSES.AMOUNT' | translate }}" [width]="100">
   <ng-template let-row="row" ngx-datatable-cell-template>
     {{ row.amount }} {{ row.studentcourse?.course?.currency || 'EGP' }}
   </ng-template>

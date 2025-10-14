@@ -27,7 +27,8 @@ export class AnalyticsComponent implements OnInit {
   public currentUser: any;
   public loading = false;
     public isLoading = true;
-
+public instructorsList: any[] = [];
+public organizationsList: any[] = [];
 
 
   public enrollment;
@@ -63,7 +64,7 @@ export class AnalyticsComponent implements OnInit {
   public walletBalanceChart: any;
   ngOnInit(): void {
        this.loadSessions();
-
+ this.loadUsers();
     // get the currentUser details from localStorage
     this.currentUser = JSON.parse(localStorage.getItem('userType'));
 
@@ -336,5 +337,20 @@ public walletBalance: any;
       this.isLoading = false;
     });
   }
+loadUsers() {
+  this.isLoading = true;
+  this._dashboardService.getAllUsers().then((res: any) => {
+    if (res.status) {
+      const users = res.data.users || [];
 
+      // فلترة حسب الدور
+      this.instructorsList = users.filter((u: any) => u.role === 'Instructor');
+      this.organizationsList = users.filter((u: any) => u.role === 'Organization');
+    }
+    this.isLoading = false;
+  }).catch(err => {
+    this.isLoading = false;
+    console.error('Error loading users:', err);
+  });
+}
 }

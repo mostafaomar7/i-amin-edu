@@ -60,5 +60,8 @@ export class DashboardService extends ApiService {
   getDashboardStatistics(): Promise<ApiResult<any>> {
   return this.getResponse(`${this.routeEndPoint}/statistics`);
 }
+getAllUsers(): Promise<ApiResult<any>> {
+  return this.getResponse(`broker/user-management/list-users`);
+}
 
 }

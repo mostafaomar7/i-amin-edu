@@ -67,5 +67,21 @@ export class OrganizationListService extends ApiService {
     formData.append('file', file, file.name);
     return this.postMultiDataResponse(`upload-media`, formData);
   }
+  // ✅ Withdraw / Payout Requests Methods
+createWithdrawRequest(data: { receiverId: number; amount: number }) {
+  return this.postResponse(`transaction-history/withdraw/request`, data);
+}
+
+getOrganizationPayouts(orgId: number) {
+  return this.getResponse(`transaction-history/withdraw/requests/${orgId}`);
+}
+
+processWithdrawRequest(id: number) {
+  return this.postResponse(`transaction-history/withdraw/process/${id}`, {});
+}
+
+deleteOrganizationPayout(id: number) {
+  return this.deleteResponse(`transaction-history/withdraw/requests/${id}`);
+}
 
 }

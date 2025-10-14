@@ -24,7 +24,8 @@ export const locale = {
       ACTIVE: 'نشط',
       WAITING: 'بانتظار التفعيل',
       INCOMPLETE: 'غير مكتمل',
-      TOTAL: 'إجمالي'
+      TOTAL: 'إجمالي',
+      EMPTY: 'لا يوجد مدرسين.',
     },
     CENTER_TABLE: {
       NAME: 'الاسم',
@@ -34,7 +35,8 @@ export const locale = {
       STATUS: 'الحالة',
       ACTIVE: 'نشط',
       INACTIVE: 'غير نشط',
-      TOTAL: 'إجمالي'
+      TOTAL: 'إجمالي',
+      EMPTY: 'لا توجد منظمات .',
     },
     PAYOUTS: {
       TITLE: 'طلبات السحب الأخيرة',
@@ -49,7 +51,8 @@ export const locale = {
       AMOUNT: 'المبلغ',
       STATUS: 'الحالة',
       BANK: 'معلومات البنك',
-      DATE: 'التاريخ'
+      DATE: 'التاريخ',
+      TOTAL: 'إجمالي'
     }
   }
 };

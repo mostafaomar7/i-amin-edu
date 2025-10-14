@@ -77,125 +77,102 @@
 
         <!-- Teachers -->
         <li ngbNavItem>
-          <a ngbNavLink>{{ 'BROKER.TEACHERS' | translate }}</a>
-          <ng-template ngbNavContent>
-            <div class="p-3 bg-white rounded shadow-sm mt-4">
-              <h4 class="mb-3">{{ 'BROKER.TEACHERS' | translate }}</h4>
+  <a ngbNavLink>{{ 'BROKER.TEACHERS' | translate }}</a>
+  <ng-template ngbNavContent>
+    <div class="p-3 bg-white rounded shadow-sm mt-4">
+      <h4 class="mb-3">{{ 'BROKER.TEACHERS' | translate }}</h4>
 
-              <div style="overflow-x: auto;">
-                <ngx-datatable
-                  class="bootstrap"
-                  [rows]="teachers"
-                  columnMode="standard"
-                  [headerHeight]="50"
-                  [footerHeight]="50"
-                  [rowHeight]="'auto'"
-                  [limit]="10"
-                  [messages]="{
-                    emptyMessage: ('TEACHER_TABLE.EMPTY' | translate),
-                    totalMessage: ('TEACHER_TABLE.TOTAL' | translate),
-                    selectedMessage: ('TEACHER_TABLE.SELECTED' | translate)
-                  }"
-                  style="min-width: 1000px;"
-                >
-                  <!-- الصورة -->
-                  <ngx-datatable-column
-                    [name]="'TEACHER_TABLE.IMAGE' | translate"
-                    [width]="80"
-                  >
-                    <ng-template let-row="row" ngx-datatable-cell-template>
-                      <img
-                        [src]="row.image"
-                        alt="teacher"
-                        width="40"
-                        height="40"
-                        class="rounded-circle"
-                      />
-                    </ng-template>
-                  </ngx-datatable-column>
+      <div style="overflow-x: auto;">
+        <ngx-datatable
+          class="bootstrap"
+          [rows]="teachers"
+          columnMode="force"
+          [headerHeight]="50"
+          [footerHeight]="50"
+          [rowHeight]="'auto'"
+          [limit]="10"
+          [messages]="{
+            emptyMessage: ('TEACHER_TABLE.EMPTY' | translate),
+            totalMessage: ('TEACHER_TABLE.TOTAL' | translate),
+            selectedMessage: ('TEACHER_TABLE.SELECTED' | translate)
+          }"
+          style="width: 100%;"
+        >
+          <!-- الصورة -->
+          <ngx-datatable-column
+            [name]="'TEACHER_TABLE.IMAGE' | translate"
+            [width]="80"
+          >
+            <ng-template let-row="row" ngx-datatable-cell-template>
+              <img
+                [src]="row.image"
+                alt="teacher"
+                width="40"
+                height="40"
+                class="rounded-circle"
+              />
+            </ng-template>
+          </ngx-datatable-column>
 
-                  <!-- الاسم -->
-                  <ngx-datatable-column
-                    [name]="'TEACHER_TABLE.NAME' | translate"
-                    prop="name"
-                    [flexGrow]="2"
-                  >
-                    <ng-template let-row="row" ngx-datatable-cell-template>
-                      {{ row.name }}
-                    </ng-template>
-                  </ngx-datatable-column>
+          <!-- الاسم -->
+          <ngx-datatable-column
+            [name]="'TEACHER_TABLE.NAME' | translate"
+            prop="name"
+            [flexGrow]="2"
+          >
+            <ng-template let-row="row" ngx-datatable-cell-template>
+              {{ row.name }}
+            </ng-template>
+          </ngx-datatable-column>
 
-                  <!-- البريد الإلكتروني -->
-                  <ngx-datatable-column
-                    [name]="'TEACHER_TABLE.EMAIL' | translate"
-                    prop="email"
-                    [flexGrow]="3"
-                  >
-                    <ng-template let-row="row" ngx-datatable-cell-template>
-                      {{ row.email }}
-                    </ng-template>
-                  </ngx-datatable-column>
+          <!-- البريد الإلكتروني -->
+          <ngx-datatable-column
+            [name]="'TEACHER_TABLE.EMAIL' | translate"
+            prop="email"
+            [flexGrow]="3"
+          >
+            <ng-template let-row="row" ngx-datatable-cell-template>
+              {{ row.email }}
+            </ng-template>
+          </ngx-datatable-column>
 
-                  <!-- رقم الهاتف -->
-                  <ngx-datatable-column
-                    [name]="'TEACHER_TABLE.PHONE' | translate"
-                    prop="phone"
-                    [flexGrow]="2"
-                  >
-                    <ng-template let-row="row" ngx-datatable-cell-template>
-                      {{ row.phone }}
-                    </ng-template>
-                  </ngx-datatable-column>
+          <!-- رقم الهاتف -->
+          <ngx-datatable-column
+            [name]="'TEACHER_TABLE.PHONE' | translate"
+            prop="phone"
+            [flexGrow]="2"
+          >
+            <ng-template let-row="row" ngx-datatable-cell-template>
+              {{ row.phone }}
+            </ng-template>
+          </ngx-datatable-column>
 
-                  <!-- العمولة -->
-                  <ngx-datatable-column
-                    [name]="'TEACHER_TABLE.COMMISSION' | translate"
-                    prop="commission"
-                    [width]="120"
-                  >
-                    <ng-template let-row="row" ngx-datatable-cell-template>
-                      {{ row.commission }}
-                    </ng-template>
-                  </ngx-datatable-column>
+          <!-- العمولة -->
+          <ngx-datatable-column
+            [name]="'TEACHER_TABLE.COMMISSION' | translate"
+            prop="commission"
+            [width]="120"
+          >
+            <ng-template let-row="row" ngx-datatable-cell-template>
+              {{ row.commission }}
+            </ng-template>
+          </ngx-datatable-column>
 
-                  <!-- الحالة -->
-                  <!-- <ngx-datatable-column
-                    [name]="'TEACHER_TABLE.STATUS' | translate"
-                    [flexGrow]="2"
-                  >
-                    <ng-template let-row="row" ngx-datatable-cell-template>
-                      <span
-                        [ngClass]="{
-                          'text-success': row.canGoLive,
-                          'text-warning': !row.canGoLive && row.documentsCompleted,
-                          'text-danger': !row.documentsCompleted
-                        }"
-                      >
-                        {{
-                          row.canGoLive
-                            ? ('TEACHER_TABLE.ACTIVE' | translate)
-                            : row.documentsCompleted
-                            ? ('TEACHER_TABLE.WAITING' | translate)
-                            : ('TEACHER_TABLE.INCOMPLETE' | translate)
-                        }}
-                      </span>
-                    </ng-template>
-                  </ngx-datatable-column> -->
+          <!-- تاريخ التسجيل -->
+          <ngx-datatable-column
+            [name]="'TEACHER_TABLE.REGISTER_DATE' | translate"
+            [flexGrow]="3"
+          >
+            <ng-template let-row="row" ngx-datatable-cell-template>
+              {{ row.createdAt | date: 'medium' }}
+            </ng-template>
+          </ngx-datatable-column>
+        </ngx-datatable>
+      </div>
+    </div>
+  </ng-template>
+</li>
 
-                  <!-- تاريخ التسجيل -->
-                  <ngx-datatable-column
-                    [name]="'TEACHER_TABLE.REGISTER_DATE' | translate"
-                    [flexGrow]="3"
-                  >
-                    <ng-template let-row="row" ngx-datatable-cell-template>
-                      {{ row.createdAt | date: 'medium' }}
-                    </ng-template>
-                  </ngx-datatable-column>
-                </ngx-datatable>
-              </div>
-            </div>
-          </ng-template>
-        </li>
 
         <!-- Centers -->
         <li ngbNavItem>

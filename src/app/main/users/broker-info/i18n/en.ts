@@ -24,7 +24,8 @@ export const locale = {
       ACTIVE: 'Active',
       WAITING: 'Pending Activation',
       INCOMPLETE: 'Incomplete',
-      TOTAL: 'Total'
+      TOTAL: 'Total',
+      EMPTY: 'No Teachers found.',
     },
     CENTER_TABLE: {
       NAME: 'Name',
@@ -34,7 +35,8 @@ export const locale = {
       STATUS: 'Status',
       ACTIVE: 'Active',
       INACTIVE: 'Inactive',
-      TOTAL: 'Total'
+      TOTAL: 'Total',
+      EMPTY: 'No Centers found.',
     },
     PAYOUTS: {
       TITLE: 'Recent Payout Requests',
@@ -49,7 +51,8 @@ export const locale = {
       AMOUNT: 'Amount',
       STATUS: 'Status',
       BANK: 'Bank Information',
-      DATE: 'Date'
+      DATE: 'Date',
+      TOTAL : 'Total'
     }
   }
 };
