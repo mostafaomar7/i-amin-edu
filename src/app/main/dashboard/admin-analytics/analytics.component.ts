@@ -40,6 +40,8 @@ public organizationsList: any[] = [];
   public totalOrganizationsOverYear = 0;
   public totalInstructorOverYear = 0;
   public totalCoursesOverYear = 0;
+public brokerInstructorsChart: any;
+public brokerOrganizationsChart: any;
 
   // Chart Colors
   private $warning = '#FF9F43';
@@ -248,6 +250,26 @@ public walletBalance: any;
       tooltip: { x: { format: 'dd/MM/yy HH:mm' } },
       colors: ['#db5cb9ff']
     };
+    this.brokerInstructorsChart = {
+  series: [{ name: "Instructors", data: [0] }],
+  chart: { height: 200, type: 'area', toolbar: { show: false }, sparkline: { enabled: false }},
+  dataLabels: { enabled: false },
+  stroke: { curve: 'smooth', width: 2.5 },
+  fill: { opacity: 1 },
+  tooltip: { x: { format: 'dd/MM/yy HH:mm' }},
+  colors: ['#7367F0']
+};
+
+this.brokerOrganizationsChart = {
+  series: [{ name: "Organizations", data: [0] }],
+  chart: { height: 200, type: 'area', toolbar: { show: false }, sparkline: { enabled: false }},
+  dataLabels: { enabled: false },
+  stroke: { curve: 'smooth', width: 2.5 },
+  fill: { opacity: 1 },
+  tooltip: { x: { format: 'dd/MM/yy HH:mm' }},
+  colors: ['#FF5888']
+};
+
   }
 
   private setStatsFromStorage(stats: any) {
@@ -341,16 +363,28 @@ loadUsers() {
   this.isLoading = true;
   this._dashboardService.getAllUsers().then((res: any) => {
     if (res.status) {
-      const users = res.data.users || [];
+  const users = res.data.users || [];
 
-      // فلترة حسب الدور
-      this.instructorsList = users.filter((u: any) => u.role === 'Instructor');
-      this.organizationsList = users.filter((u: any) => u.role === 'Organization');
-    }
+  this.instructorsList = users.filter((u: any) => u.role === 'Instructor');
+  this.organizationsList = users.filter((u: any) => u.role === 'Organization');
+
+  // تحديث الرسوم بناءً على العدد
+  this.brokerInstructorsChart.series = [{
+    name: "Instructors",
+    data: [0, this.instructorsList.length]
+  }];
+
+  this.brokerOrganizationsChart.series = [{
+    name: "Organizations",
+    data: [0, this.organizationsList.length]
+  }];
+}
+
     this.isLoading = false;
   }).catch(err => {
     this.isLoading = false;
     console.error('Error loading users:', err);
   });
 }
+
 }

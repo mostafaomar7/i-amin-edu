@@ -62,7 +62,8 @@ export const locale = {
       COURSES: 'Courses',
       INSTRUCTORS: 'Instructors',
       PAYOUT_REQUESTS: 'Payout Requests',
-      LOADING: 'Loading...'
+      LOADING: 'Loading...',
+      SESSIONS : 'Sessions'
     }
   }
 };

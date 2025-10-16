@@ -9,11 +9,23 @@ import { Component, Input, OnInit } from '@angular/core';
 export class CourseOverviewComponent implements OnInit {
 
   @Input() course: any;
+currency: string = 'EGP';
 
   constructor(
   ) { }
 
   ngOnInit(): void {
+  const userData = JSON.parse(localStorage.getItem('userData') || '{}');
+  const countryId = userData?.countryId;
+
+  if (countryId === 1) {
+    this.currency = 'EGP';
+  } else if (countryId === 2) {
+    this.currency = 'SAR';
+  } else {
+    this.currency = 'EGP'; // افتراضي
   }
+}
+
 
 }

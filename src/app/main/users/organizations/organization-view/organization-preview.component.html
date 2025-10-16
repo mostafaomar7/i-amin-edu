@@ -6,123 +6,287 @@
       <div class="card pb-3 pr-3 pl-3">
         <h5 class="card-header">{{ 'ORGANIZATION.DETAILS' | translate }}</h5>
 
-        <ul ngbNav #navJustified="ngbNav" class="nav nav-pills nav-justified bg-light-info">
-
-          <!-- Organization Overview -->
+        <ul
+          ngbNav
+          #navJustified="ngbNav"
+          class="nav nav-pills nav-justified bg-light-info"
+        >
+          <!-- Overview -->
           <li ngbNavItem>
             <a ngbNavLink>{{ 'ORGANIZATION.OVERVIEW' | translate }}</a>
             <ng-template ngbNavContent>
-              <app-organization-overview [selectedCenterId]="centerId"></app-organization-overview>
+              <app-organization-overview
+                [selectedCenterId]="centerId"
+              ></app-organization-overview>
             </ng-template>
           </li>
 
-          <!-- Organization Courses -->
+          <!-- Courses -->
           <li ngbNavItem>
             <a ngbNavLink>{{ 'ORGANIZATION.COURSES' | translate }}</a>
             <ng-template ngbNavContent>
-              <app-course-list  [selectedCenterId]="centerId" [hasHeader]="false" [hasActions]="false"></app-course-list>
+              <div class="p-3 bg-white rounded shadow-sm mt-3">
+                <h4 class="mb-3">Course Purchases</h4>
+
+                <ngx-datatable
+                  class="bootstrap"
+                  [rows]="courses"
+                  [columnMode]="'force'"
+                  [headerHeight]="50"
+                  [footerHeight]="50"
+                  [rowHeight]="'auto'"
+                  [limit]="10"
+                >
+                  <ngx-datatable-column
+                    name="Student"
+                    prop="studentName"
+                  ></ngx-datatable-column>
+
+                  <ngx-datatable-column
+                    name="Course Name"
+                    prop="courseName"
+                  ></ngx-datatable-column>
+
+                  <ngx-datatable-column name="Amount">
+                    <ng-template let-row="row" ngx-datatable-cell-template>
+                      {{ row.amount }} {{ row.currency }}
+                    </ng-template>
+                  </ngx-datatable-column>
+
+                  <ngx-datatable-column name="Date">
+                    <ng-template let-row="row" ngx-datatable-cell-template>
+                      {{ row.date | date: 'medium' }}
+                    </ng-template>
+                  </ngx-datatable-column>
+                </ngx-datatable>
+
+                <p
+                  *ngIf="!courses?.length"
+                  class="text-center mt-3 text-muted"
+                >
+                  No course purchases found.
+                </p>
+              </div>
             </ng-template>
           </li>
 
-          <!-- Organization Instructors -->
+          <!-- Sessions -->
+          <li ngbNavItem>
+            <a ngbNavLink>{{ 'ORGANIZATION.SESSIONS' | translate }}</a>
+            <ng-template ngbNavContent>
+              <div class="p-3 bg-white rounded shadow-sm mt-3">
+                <h4 class="mb-3">Session Purchases</h4>
+
+                <ngx-datatable
+                  class="bootstrap"
+                  [rows]="sessions"
+                  [columnMode]="'force'"
+                  [headerHeight]="50"
+                  [footerHeight]="50"
+                  [rowHeight]="'auto'"
+                  [limit]="10"
+                >
+                  <ngx-datatable-column
+                    name="Session Title"
+                    prop="sessionTitle"
+                  ></ngx-datatable-column>
+
+                  <ngx-datatable-column
+                    name="Student"
+                    prop="studentName"
+                  ></ngx-datatable-column>
+
+                  <ngx-datatable-column name="Amount">
+                    <ng-template let-row="row" ngx-datatable-cell-template>
+                      {{ row.amount }} {{ row.currency }}
+                    </ng-template>
+                  </ngx-datatable-column>
+
+                  <ngx-datatable-column name="Date">
+                    <ng-template let-row="row" ngx-datatable-cell-template>
+                      {{ row.date | date: 'medium' }}
+                    </ng-template>
+                  </ngx-datatable-column>
+                </ngx-datatable>
+
+                <p
+                  *ngIf="!sessions?.length"
+                  class="text-center mt-3 text-muted"
+                >
+                  No session purchases found.
+                </p>
+              </div>
+            </ng-template>
+          </li>
+
+          <!-- Instructors -->
           <li ngbNavItem>
             <a ngbNavLink>{{ 'ORGANIZATION.INSTRUCTORS' | translate }}</a>
             <ng-template ngbNavContent>
-              <app-instructors-list [selectedCenterId]="centerId" [hasHeader]="false" [hasActions]="false">
-              </app-instructors-list>
+              <div class="p-3 bg-white rounded shadow-sm mt-3">
+                <h4 class="mb-3">Instructors</h4>
+
+                <ngx-datatable
+                  class="bootstrap"
+                  [rows]="instructors"
+                  [columnMode]="'force'"
+                  [headerHeight]="50"
+                  [footerHeight]="50"
+                  [rowHeight]="'auto'"
+                  [limit]="10"
+                >
+                  <ngx-datatable-column
+                    name="Name"
+                    prop="name"
+                  ></ngx-datatable-column>
+
+                  <ngx-datatable-column
+                    name="Phone"
+                    prop="phone"
+                  ></ngx-datatable-column>
+
+                  <ngx-datatable-column
+                    name="Subject"
+                    prop="subject"
+                  ></ngx-datatable-column>
+
+                  <ngx-datatable-column name="Image">
+                    <ng-template let-row="row" ngx-datatable-cell-template>
+                      <img
+                        [src]="row.image || 'assets/images/placeholder.jpg'"
+                        alt="instructor"
+                        width="50"
+                        height="50"
+                        class="rounded-circle"
+                      />
+                    </ng-template>
+                  </ngx-datatable-column>
+                </ngx-datatable>
+
+                <p
+                  *ngIf="!instructors?.length"
+                  class="text-center mt-3 text-muted"
+                >
+                  No instructors found.
+                </p>
+              </div>
             </ng-template>
           </li>
 
-          <!-- Organization Payout Requests -->
+          <!-- Payout Requests -->
           <li ngbNavItem>
             <a ngbNavLink>{{ 'ORGANIZATION.PAYOUT_REQUESTS' | translate }}</a>
             <ng-template ngbNavContent>
-  <div class="p-3 bg-white rounded shadow-sm mt-4">
-    <div class="row d-flex justify-content-between align-items-center mb-3">
-      <h4 class="mb-0 mx-2">Payout Requests</h4>
-      <button class="btn btn-primary mx-2" (click)="toggleRequestInput()">
-        {{ showRequestInput ? 'Cancel' : 'Add Request' }}
-      </button>
-    </div>
+              <div class="p-3 bg-white rounded shadow-sm mt-4">
+                <div
+                  class="row d-flex justify-content-between align-items-center mb-3"
+                >
+                  <h4 class="mb-0 mx-2">Payout Requests</h4>
+                  <button
+                    class="btn btn-primary mx-2"
+                    (click)="toggleRequestInput()"
+                  >
+                    {{ showRequestInput ? 'Cancel' : 'Add Request' }}
+                  </button>
+                </div>
 
-    <!-- حقل المبلغ -->
-    <div *ngIf="showRequestInput" class="d-flex align-items-center mb-3 px-2">
-      <input
-        type="number"
-        class="form-control w-auto mx-2"
-        placeholder="Enter amount"
-        [(ngModel)]="withdrawAmount"
-      />
-      <button class="btn btn-success" (click)="submitWithdrawRequest()">Send</button>
-    </div>
+                <!-- حقل المبلغ -->
+                <div
+                  *ngIf="showRequestInput"
+                  class="d-flex align-items-center mb-3 px-2"
+                >
+                  <input
+                    type="number"
+                    class="form-control w-auto mx-2"
+                    placeholder="Enter amount"
+                    [(ngModel)]="withdrawAmount"
+                  />
+                  <button
+                    class="btn btn-success"
+                    (click)="submitWithdrawRequest()"
+                  >
+                    Send
+                  </button>
+                </div>
 
-    <ngx-datatable
-      class="bootstrap"
-      [rows]="payouts"
-      [columnMode]="'force'"
-      [headerHeight]="50"
-      [footerHeight]="50"
-      [rowHeight]="'auto'"
-      [limit]="10"
-    >
-      <ngx-datatable-column name="Amount" prop="amount" [width]="120">
-        <ng-template let-row="row" ngx-datatable-cell-template>
-          {{ row.amount }} EGP
-        </ng-template>
-      </ngx-datatable-column>
+                <ngx-datatable
+                  class="bootstrap"
+                  [rows]="payouts"
+                  [columnMode]="'force'"
+                  [headerHeight]="50"
+                  [footerHeight]="50"
+                  [rowHeight]="'auto'"
+                  [limit]="10"
+                >
+                  <ngx-datatable-column
+                    name="Amount"
+                    prop="amount"
+                    [width]="120"
+                  >
+                    <ng-template let-row="row" ngx-datatable-cell-template>
+                      {{ row.amount }} EGP
+                    </ng-template>
+                  </ngx-datatable-column>
 
-      <ngx-datatable-column name="Status" prop="status" [width]="120">
-        <ng-template let-row="row" ngx-datatable-cell-template>
-          <span
-            [ngClass]="{
-              'text-warning': row.status === 'Pending',
-              'text-success': row.status === 'Approved',
-              'text-danger': row.status === 'Rejected'
-            }"
-          >
-            {{ row.status }}
-          </span>
-        </ng-template>
-      </ngx-datatable-column>
+                  <ngx-datatable-column
+                    name="Status"
+                    prop="status"
+                    [width]="120"
+                  >
+                    <ng-template let-row="row" ngx-datatable-cell-template>
+                      <span
+                        [ngClass]="{
+                          'text-warning': row.status === 'Pending',
+                          'text-success': row.status === 'Approved',
+                          'text-danger': row.status === 'Rejected'
+                        }"
+                      >
+                        {{ row.status }}
+                      </span>
+                    </ng-template>
+                  </ngx-datatable-column>
 
-      <ngx-datatable-column name="Bank Info" [width]="300">
-        <ng-template let-row="row" ngx-datatable-cell-template>
-          <div>
-            <strong>{{ row.bankAccountName }}</strong><br />
-            {{ row.bankName }} - {{ row.bankAccountNumber }}
-          </div>
-        </ng-template>
-      </ngx-datatable-column>
+                  <ngx-datatable-column name="Bank Info" [width]="300">
+                    <ng-template let-row="row" ngx-datatable-cell-template>
+                      <div>
+                        <strong>{{ row.bankAccountName }}</strong><br />
+                        {{ row.bankName }} - {{ row.bankAccountNumber }}
+                      </div>
+                    </ng-template>
+                  </ngx-datatable-column>
 
-      <ngx-datatable-column name="Date" prop="date" [width]="200">
-        <ng-template let-row="row" ngx-datatable-cell-template>
-          {{ row.date | date: 'medium' }}
-        </ng-template>
-      </ngx-datatable-column>
+                  <ngx-datatable-column
+                    name="Date"
+                    prop="date"
+                    [width]="200"
+                  >
+                    <ng-template let-row="row" ngx-datatable-cell-template>
+                      {{ row.date | date: 'medium' }}
+                    </ng-template>
+                  </ngx-datatable-column>
 
-      <ngx-datatable-column name="Actions" [width]="200">
-        <ng-template let-row="row" ngx-datatable-cell-template>
-          <button
-            *ngIf="row.status === 'Pending'"
-            class="btn btn-sm btn-outline-success"
-            (click)="activateWithdraw(row)"
-          >
-            Approve
-          </button>
-          <button
-            *ngIf="row.status === 'Rejected'"
-            class="btn btn-sm btn-outline-danger mx-1"
-            (click)="confirmDelete(row)"
-          >
-            Delete
-          </button>
-        </ng-template>
-      </ngx-datatable-column>
-    </ngx-datatable>
-  </div>
-</ng-template>
+                  <ngx-datatable-column name="Actions" [width]="200">
+                    <ng-template let-row="row" ngx-datatable-cell-template>
+                      <button
+                        *ngIf="row.status === 'Pending'"
+                        class="btn btn-sm btn-outline-success"
+                        (click)="activateWithdraw(row)"
+                      >
+                        Approve
+                      </button>
+                      <button
+  *ngIf="row.status?.toLowerCase() === 'rejected'"
+  class="btn btn-sm btn-outline-danger mx-1"
+  (click)="confirmDelete(row)"
+>
+  Delete
+</button>
+                    </ng-template>
+                  </ngx-datatable-column>
+                </ngx-datatable>
+              </div>
+            </ng-template>
           </li>
-
         </ul>
       </div>
 
@@ -132,7 +296,6 @@
       </div>
 
       <div [ngbNavOutlet]="navJustified" class="mt-1"></div>
-
     </section>
   </div>
 </div>

@@ -13,7 +13,7 @@
           {{ course?.teacher?.user?.firstName }} {{ course?.teacher?.user?.lastName }}
         </li>
         <li class="list-group-item">
-          <strong>{{ 'PRICE' | translate }}: </strong> {{ course?.price }} EGP
+<strong>{{ 'PRICE' | translate }}: </strong> {{ course?.price | number:'1.2-2' }} {{ currency }}
         </li>
         <li class="list-group-item">
           <strong>{{ 'DURATION' | translate }}: </strong> {{ course?.duration }} {{ 'MINUTES' | translate }}

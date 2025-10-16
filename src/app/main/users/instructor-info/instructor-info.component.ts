@@ -145,6 +145,7 @@ async loadPaidCourses(id: string) {
         nameAr: t.studentcourse?.course?.nameAr,
         nameEn: t.studentcourse?.course?.nameEn,
         price: t.studentcourse?.course?.price,
+        currency: t.currency,
         infoAr: t.studentcourse?.course?.infoAr,
         infoEn: t.studentcourse?.course?.infoEn,
         stage: t.studentcourse?.course?.stage,

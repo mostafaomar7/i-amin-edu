@@ -83,5 +83,19 @@ processWithdrawRequest(id: number) {
 deleteOrganizationPayout(id: number) {
   return this.deleteResponse(`transaction-history/withdraw/requests/${id}`);
 }
+// ✅ الكورسات المدفوعة
+getOrganizationCourses(centerId: number) {
+  return this.getResponse(`transaction-history/organization/${centerId}/course-purchases`);
+}
+
+// ✅ السيشنز
+getOrganizationSessions(centerId: number) {
+  return this.getResponse(`transaction-history/organization/${centerId}/session-purchases`);
+}
+
+// ✅ المدرسين
+getOrganizationInstructors(centerId: number) {
+  return this.getResponse(`center/${centerId}/instructors`);
+}
 
 }

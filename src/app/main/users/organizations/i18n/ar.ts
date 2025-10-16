@@ -65,7 +65,8 @@ export const locale = {
       COURSES: 'الدورات',
       INSTRUCTORS: 'المدربون',
       PAYOUT_REQUESTS: 'طلبات الدفع',
-      LOADING: 'جاري التحميل...'
+      LOADING: 'جاري التحميل...',
+      SESSIONS : 'الجلسات'
     }
   }
 };

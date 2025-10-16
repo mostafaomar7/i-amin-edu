@@ -36,6 +36,7 @@ export class WalletComponent implements OnInit {
   sessionSelectedLimit = 10;
   sessionTotal = 0;
   isSessionLoading = false;
+currency: string = 'EGP'; // القيمة الافتراضية
 
   // Debounce Subjects
   private courseSearchSubject = new Subject<void>();
@@ -49,8 +50,20 @@ export class WalletComponent implements OnInit {
       this._coreTranslationService.translate(english, arabic);
   }
 
-  ngOnInit(): void {
-  this.userType = Number(localStorage.getItem('userType')); // الأول هنا ✅
+ngOnInit(): void {
+  this.userType = Number(localStorage.getItem('userType'));
+  
+  const userData = JSON.parse(localStorage.getItem('userData') || '{}');
+  const countryId = userData?.countryId;
+
+  // تحديد العملة حسب الدولة
+  if (countryId === 1) {
+    this.currency = 'EGP';
+  } else if (countryId === 2) {
+    this.currency = 'SAR';
+  } else {
+    this.currency = 'EGP'; // افتراضي لو مفيش countryId
+  }
 
   if (this.userType === 2 || this.userType === 3) {
     this.loadStats();
@@ -70,6 +83,7 @@ export class WalletComponent implements OnInit {
     this.loadSessionBookings();
   });
 }
+
 
 
   async loadStats() {
@@ -131,17 +145,14 @@ async getBrokerTransaction() {
         {
           label: 'WALLET.COURSES_AMOUNT',
           value: data.totalCourseAmount.toFixed(2),
-          currency: 'EGP'
         },
         {
           label: 'WALLET.SESSIONS_AMOUNT',
           value: data.totalConsultantAmount.toFixed(2),
-          currency: 'EGP'
         },
         {
           label: 'WALLET.TOTAL',
           value: data.totalAmountTransactions.toFixed(2),
-          currency: 'EGP',
           isTotal: true // علامة للـ HTML لإضافة الكلاس total
         }
       ];

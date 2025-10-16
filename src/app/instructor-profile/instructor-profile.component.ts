@@ -18,7 +18,7 @@ export class InstructorProfileComponent implements OnInit {
   bankAccounts: any[] = [];
   usertype : any = localStorage.getItem("userType")
   columns: any[] = [];
-
+  currency: string = 'EGP';
   bankAccountData = {
     bankAccountNumber: '',
     bankAccountName: '',
@@ -40,14 +40,28 @@ export class InstructorProfileComponent implements OnInit {
     this.translate.use('en'); // أو 'en' حسب اللغة الحالية
   }
 
-  ngOnInit(): void {
-    this.loadProfileData();
-    this.loadBankAccounts();
-    this.loadTranslatedColumns();
-    this.translate.onLangChange.subscribe((event: LangChangeEvent) => {
+ngOnInit(): void {
+  this.loadProfileData();
+  this.loadBankAccounts();
+  this.loadTranslatedColumns();
+
+  // 👇 تحديد العملة بناءً على الدولة من localStorage
+  const userData = JSON.parse(localStorage.getItem('userData') || '{}');
+  const countryId = userData?.countryId;
+
+  if (countryId === 1) {
+    this.currency = 'EGP';
+  } else if (countryId === 2) {
+    this.currency = 'SAR';
+  } else {
+    this.currency = 'EGP'; // افتراضي
+  }
+
+  this.translate.onLangChange.subscribe((event: LangChangeEvent) => {
     this.loadTranslatedColumns();
   });
-  }
+}
+
 
   loadTranslatedColumns(): void {
   this.translate.get([

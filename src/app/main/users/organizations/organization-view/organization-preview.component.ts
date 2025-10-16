@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { OrganizationListService } from '../organization-list.service';
 import Swal from 'sweetalert2';
+import { ChangeDetectorRef } from '@angular/core';
 
 @Component({
   selector: 'app-organization-preview',
@@ -15,11 +16,15 @@ export class OrganizationPreviewComponent implements OnInit, OnDestroy {
   payouts: any[] = [];
   showRequestInput = false;
   withdrawAmount: number | null = null;
+  public courses: any[] = [];
+public sessions: any[] = [];
+public instructors: any[] = [];
 
   constructor(
     private router: Router,
     private route: ActivatedRoute,
     private _organizationListService: OrganizationListService,
+      private cdr: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
@@ -30,11 +35,16 @@ export class OrganizationPreviewComponent implements OnInit, OnDestroy {
   }
 
   async getItem(id: string) {
-    await this._organizationListService.getItem(id).then((response: any) => {
-      this.centerId = response.innerData.userId;
-      this.loadPayouts();
-    });
-  }
+  await this._organizationListService.getItem(id).then((response: any) => {
+    this.centerId = response.innerData.userId;
+    this.loadPayouts();
+    this.loadCourses();
+    this.loadSessions();
+    this.loadInstructors();
+    this.cdr.detectChanges();
+  });
+}
+
 
   toggleRequestInput(): void {
     this.showRequestInput = !this.showRequestInput;
@@ -88,9 +98,16 @@ export class OrganizationPreviewComponent implements OnInit, OnDestroy {
       } else {
         Swal.fire('Error', res.message || 'Something went wrong!', 'error');
       }
-    }).catch(() => {
-      Swal.fire('Error', 'Failed to submit request!', 'error');
-    });
+    }).catch((err: any) => {
+  console.error('Withdraw request error:', err);
+  const errorMsg =
+    err?.error?.message ||
+    err?.message ||
+    'Failed to submit request!';
+
+  Swal.fire('Error', errorMsg, 'error');
+});
+
   }
 
   activateWithdraw(row: any): void {
@@ -145,6 +162,57 @@ export class OrganizationPreviewComponent implements OnInit, OnDestroy {
       }
     });
   }
+loadCourses(): void {
+  this.isLoading = true;
+  this._organizationListService.getOrganizationCourses(+this.centerId).then((res: any) => {
+    this.isLoading = false;
+    if (res.status && res.innerData?.courseTransactions) {
+      this.courses = res.innerData.courseTransactions.map((item: any) => ({
+        id: item.id,
+        amount: item.amount,
+        currency: item.currency,
+        date: item.createdAt,
+        studentName: `${item.studentcourse?.student?.user?.firstName || ''} ${item.studentcourse?.student?.user?.lastName || ''}`,
+        courseName: item.studentcourse?.course?.nameEn 
+      }));
+    }
+  });
+}
+
+loadSessions(): void {
+  this.isLoading = true;
+  this._organizationListService.getOrganizationSessions(+this.centerId).then((res: any) => {
+    this.isLoading = false;
+    if (res.status && res.innerData?.sessionTransactions) {
+      this.sessions = res.innerData.sessionTransactions.map((item: any) => ({
+        id: item.id,
+        amount: item.amount,
+        currency: item.currency,
+        date: item.createdAt,
+        sessionTitle: item.livesession?.title,
+        studentName: `${item.livesession?.student?.user?.firstName || ''} ${item.livesession?.student?.user?.lastName || ''}`,
+        teacherName: item.livesession?.teacher?.id || ''
+      }));
+    }
+  });
+}
+
+loadInstructors(): void {
+  this.isLoading = true;
+  this._organizationListService.getOrganizationInstructors(+this.centerId).then((res: any) => {
+    this.isLoading = false;
+    if (res.status && res.innerData?.length) {
+      this.instructors = res.innerData.map((t: any) => ({
+        id: t.id,
+        image: t.user?.image || '',
+        name: `${t.user?.firstName} ${t.user?.lastName}`,
+        subject: t.subject?.nameEn || '',
+        phone: t.user?.phone || ''
+      }));
+    }
+  });
+}
+
 
   ngOnDestroy(): void {}
 }

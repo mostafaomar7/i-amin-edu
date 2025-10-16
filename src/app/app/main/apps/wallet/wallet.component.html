@@ -11,15 +11,15 @@
   </div>
   <div class="card">
     <h4>{{ 'WALLET.COURSES_AMOUNT' | translate }}</h4>
-    <p>{{ stats.coursesAmount.toFixed(2) }} EGP</p>
+    <p>{{ stats.coursesAmount.toFixed(2) }} {{ currency }}</p>
   </div>
   <div class="card">
     <h4>{{ 'WALLET.SESSIONS_AMOUNT' | translate }}</h4>
-    <p>{{ stats.sessionsAmount.toFixed(2) }} EGP</p>
+    <p>{{ stats.sessionsAmount.toFixed(2) }} {{ currency }}</p>
   </div>
   <div class="card total">
     <h4>{{ 'WALLET.TOTAL' | translate }}</h4>
-    <p>{{ stats.totalAmount.toFixed(2) }} EGP</p>
+<p>{{ stats.totalAmount.toFixed(2) }} {{ currency }}</p>
   </div>
 </div>
 <div class="wallet-cards" *ngIf="userType == 5">
@@ -103,11 +103,15 @@
       </ng-template>
     </ngx-datatable-column>
 
-    <ngx-datatable-column [name]="'WALLET.AMOUNT' | translate" prop="amount"></ngx-datatable-column>
+<ngx-datatable-column [name]="'WALLET.AMOUNT' | translate">
+  <ng-template let-row="row" ngx-datatable-cell-template>
+    {{ row.amount }} {{ currency }}
+  </ng-template>
+</ngx-datatable-column>
 
     <ngx-datatable-column [name]="'WALLET.STATUS' | translate">
       <ng-template let-row="row" ngx-datatable-cell-template>
-        {{ row.transactinStatus === 2 ? ('WALLET.SUCCESS' | translate) : ('WALLET.FAILED' | translate) }}
+        {{ row.transactinStatus === 2 ? ('WALLET.SUCCESS' | translate) : ('WALLET.FAILED' | translate) }} 
       </ng-template>
     </ngx-datatable-column>
 
@@ -209,7 +213,7 @@
 
     <ngx-datatable-column [name]="'WALLET.AMOUNT_AFTER_DISCOUNT' | translate">
       <ng-template let-row="row" ngx-datatable-cell-template>
-        {{ row.amount }} EGP
+        {{ row.amount }} {{currency}}
       </ng-template>
     </ngx-datatable-column>
 
