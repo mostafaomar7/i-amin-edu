@@ -42,7 +42,7 @@ public organizationsList: any[] = [];
   public totalCoursesOverYear = 0;
 public brokerInstructorsChart: any;
 public brokerOrganizationsChart: any;
-
+currency: string = '';
   // Chart Colors
   private $warning = '#FF9F43';
   private $textHeadingColor = '#FF5888';
@@ -65,6 +65,14 @@ public brokerOrganizationsChart: any;
   public totalEnrollmentsChart: any;
   public walletBalanceChart: any;
   ngOnInit(): void {
+    const userData = JSON.parse(localStorage.getItem('userData') || '{}');
+  const countryId = userData?.countryId;
+
+  if (countryId === 1) {
+    this.currency = 'EGP';
+  } else if (countryId === 2) {
+    this.currency = 'SAR';
+  } 
        this.loadSessions();
  this.loadUsers();
     // get the currentUser details from localStorage

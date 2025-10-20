@@ -49,7 +49,7 @@ export class PortalListService extends ApiService {
    * Delete Item
    */
   deleteItem(id: string): Promise<ApiResult<any>> {
-    return this.deleteResponse(`${this.routeEndPoint}/delete/${id}`);
+    return this.deleteResponse(`${this.routeEndPoint}/${id}`);
   }
 
   /**

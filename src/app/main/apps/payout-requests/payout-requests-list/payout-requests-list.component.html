@@ -83,7 +83,7 @@
                     <ngx-datatable-column name="{{ 'AMOUNT' | translate }}" prop="amount">
                         <ng-template let-row="row" let-name="value" ngx-datatable-cell-template>
                             <div class="d-flex align-items-center">
-                                {{ row.amount }} EGP
+                                {{ row.amount }} {{currency}}
                             </div>
                         </ng-template>
                     </ngx-datatable-column>

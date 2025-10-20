@@ -28,7 +28,7 @@
                       </div>
                     </div>
                     <h2 class="font-weight-bolder mb-0">
-                      {{ statistics.walletBalance | number }} EGP
+                      {{ statistics.walletBalance | number }} {{currency}}
                     </h2>
                     <p class="text-muted mb-0">
                       {{ 'STATISTICS.CURRENT_BALANCE' | translate }}
@@ -296,7 +296,7 @@
                   [width]="150"
                 >
                   <ng-template let-row="row" ngx-datatable-cell-template>
-                    {{ row.amount }} EGP
+                    {{ row.amount }} {{currency}}
                   </ng-template>
                 </ngx-datatable-column>
 

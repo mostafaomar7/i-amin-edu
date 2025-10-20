@@ -21,8 +21,10 @@ public userId: number | null = null;
   public paidCourses: any[] = [];
   sessionPurchases: any[] = [];
   payouts: any[] = [];
+    currency: string = '';
 showRequestInput = false;
 withdrawAmount: number | null = null;
+  public currentUser: any = JSON.parse(localStorage.getItem('userType'));
 
   constructor(
     private route: ActivatedRoute,
@@ -34,6 +36,14 @@ withdrawAmount: number | null = null;
   }
 
   ngOnInit(): void {
+    const userData = JSON.parse(localStorage.getItem('userData') || '{}');
+  const countryId = userData?.countryId;
+
+  if (countryId === 1) {
+    this.currency = 'EGP';
+  } else if (countryId === 2) {
+    this.currency = 'SAR';
+  } 
   // نجيب الـ instructorId من الـ URL (اللي بيكون /info/:id)
   this.route.params.subscribe(params => {
     this.instructorId = params['id'];

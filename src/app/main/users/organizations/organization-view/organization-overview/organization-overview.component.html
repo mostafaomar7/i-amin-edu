@@ -13,7 +13,7 @@
                             <i data-feather="activity" class="font-medium-5"></i>
                         </div>
                     </div>
-                    <h2 class="font-weight-bolder">{{currnetBalance}} EGP</h2>
+                    <h2 class="font-weight-bolder">{{currnetBalance.toFixed(2)}} {{currency}}</h2>
                     <p class="mb-0 line-ellipsis">{{ 'STATISTICS.CURRENT_BALANCE' | translate }}</p>
                 </div>
             </div>
@@ -28,14 +28,14 @@
                             <i data-feather="check-circle" class="font-medium-5"></i>
                         </div>
                     </div>
-                    <h2 class="font-weight-bolder">{{totalWithdrawBalance}} EGP</h2>
+                    <h2 class="font-weight-bolder">{{totalWithdrawBalance.toFixed(2)}} {{currency}}</h2>
                     <p class="mb-0 line-ellipsis">{{ 'STATISTICS.TOTAL_WITHDRAWN' | translate }}</p>
                 </div>
             </div>
         </div>
 
         <!-- Total Courses -->
-        <div class="col-md-3 col-sm-3">
+        <div class="col-md-4 col-sm-3">
             <div class="card text-center">
                 <div class="card-body">
                     <div class="avatar bg-light-warning p-50 m-0 mb-4">
@@ -50,7 +50,7 @@
         </div>
 
         <!-- Total Instructors -->
-        <div class="col-md-3 col-sm-3">
+        <div class="col-md-4 col-sm-3">
             <div class="card text-center">
                 <div class="card-body">
                     <div class="avatar bg-light-warning p-50 m-0 mb-4">
@@ -65,7 +65,7 @@
         </div>
 
         <!-- Total Students -->
-        <div class="col-md-3 col-sm-3">
+        <div class="col-md-4 col-sm-3">
             <div class="card text-center">
                 <div class="card-body">
                     <div class="avatar bg-light-warning p-50 m-0 mb-4">
@@ -80,7 +80,7 @@
         </div>
 
         <!-- Total Enrollment -->
-        <div class="col-md-3 col-sm-3">
+        <!-- <div class="col-md-4 col-sm-3">
             <div class="card text-center">
                 <div class="card-body">
                     <div class="avatar bg-light-warning p-50 m-0 mb-4">
@@ -92,7 +92,7 @@
                     <p class="mb-0 line-ellipsis">{{ 'STATISTICS.Live_Session' | translate }}</p>
                 </div>
             </div>
-        </div>
+        </div> -->
 
     </div>
 

@@ -7,6 +7,7 @@ import { UserService } from '../user.service';
 import { locale as english } from './en';
 import { locale as arabic } from './ar';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-broker-user',

@@ -30,6 +30,7 @@ export class PayoutRequestsListComponent implements OnInit {
   public isLoading = true;
   public currentRow: any;
   public locale: any;
+  currency: string = '';
 
   // Decorator
   @ViewChild(DatatableComponent) table: DatatableComponent;
@@ -56,6 +57,14 @@ export class PayoutRequestsListComponent implements OnInit {
    * On init
    */
   async ngOnInit() {
+    const userData = JSON.parse(localStorage.getItem('userData') || '{}');
+  const countryId = userData?.countryId;
+
+  if (countryId === 1) {
+    this.currency = 'EGP';
+  } else if (countryId === 2) {
+    this.currency = 'SAR';
+  } 
     await this.getRows()
 
     this._coreConfigService.config.subscribe(config => {

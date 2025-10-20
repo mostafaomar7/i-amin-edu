@@ -113,7 +113,7 @@ export class NewBrokerComponent implements OnInit {
           this.isLoading = false;
           if (response.status) {
             Swal.fire('SUCCESS', 'BROKER_CREATED_SUCCESSFULLY', 'success');
-            this.router.navigate(['/users/brokers/list']); 
+            this.router.navigate(['/users/broker-list']); 
           } else {
             Swal.fire('FAILED', response.message, 'error');
           }

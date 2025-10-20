@@ -9,7 +9,7 @@
       <ul ngbNav #navJustified="ngbNav" class="nav nav-pills nav-justified bg-white p-2" style="margin-top: -10px;">
 
         <!-- Overview -->
-        <li ngbNavItem>
+        <li ngbNavItem *ngIf="currentUser !== 2">
           <a ngbNavLink>{{ 'INSTRUCTOR.OVERVIEW' | translate }}</a>
           <ng-template ngbNavContent>
 
@@ -25,7 +25,7 @@
                         <i data-feather="activity" class="font-medium-5 text-info"></i>
                       </div>
                     </div>
-                    <h2 class="font-weight-bolder mb-0">{{ statistics.totalWalletBalance | number }} EGP</h2>
+                    <h2 class="font-weight-bolder mb-0">{{ statistics.totalWalletBalance | number }} {{currency}}</h2>
                     <p class="text-muted mb-0">{{ 'STATISTICS.CURRENT_BALANCE' | translate }}</p>
                   </div>
                 </div>
@@ -232,7 +232,7 @@
 
 
         <!-- Payout Requests -->
-        <li ngbNavItem>
+        <li ngbNavItem *ngIf="currentUser !== 2">
   <a ngbNavLink>{{ 'INSTRUCTOR.PAYOUT_REQUESTS' | translate }}</a>
   <ng-template ngbNavContent>
     <div class="p-3 bg-white rounded shadow-sm mt-4">
@@ -278,7 +278,7 @@
           [width]="150"
         >
           <ng-template let-row="row" ngx-datatable-cell-template>
-            {{ row.amount }} EGP
+            {{ row.amount }} {{currency}}
           </ng-template>
         </ngx-datatable-column>
 

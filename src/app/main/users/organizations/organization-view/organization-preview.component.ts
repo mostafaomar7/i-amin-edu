@@ -16,6 +16,7 @@ export class OrganizationPreviewComponent implements OnInit, OnDestroy {
   payouts: any[] = [];
   showRequestInput = false;
   withdrawAmount: number | null = null;
+    currency: string = '';
   public courses: any[] = [];
 public sessions: any[] = [];
 public instructors: any[] = [];
@@ -28,6 +29,14 @@ public instructors: any[] = [];
   ) {}
 
   ngOnInit(): void {
+const userData = JSON.parse(localStorage.getItem('userData') || '{}');
+  const countryId = userData?.countryId;
+
+  if (countryId === 1) {
+    this.currency = 'EGP';
+  } else if (countryId === 2) {
+    this.currency = 'SAR';
+  } 
     const itemId = this.route.snapshot.paramMap.get('id');
     if (itemId) {
       this.getItem(itemId);

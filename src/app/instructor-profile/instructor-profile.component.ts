@@ -18,7 +18,7 @@ export class InstructorProfileComponent implements OnInit {
   bankAccounts: any[] = [];
   usertype : any = localStorage.getItem("userType")
   columns: any[] = [];
-  currency: string = 'EGP';
+  currency: string = '';
   bankAccountData = {
     bankAccountNumber: '',
     bankAccountName: '',
@@ -53,9 +53,7 @@ ngOnInit(): void {
     this.currency = 'EGP';
   } else if (countryId === 2) {
     this.currency = 'SAR';
-  } else {
-    this.currency = 'EGP'; // افتراضي
-  }
+  } 
 
   this.translate.onLangChange.subscribe((event: LangChangeEvent) => {
     this.loadTranslatedColumns();

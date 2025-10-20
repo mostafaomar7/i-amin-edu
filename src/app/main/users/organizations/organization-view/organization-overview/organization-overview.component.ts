@@ -19,6 +19,7 @@ export class OrganizationOverviewComponent implements OnInit {
   
   public userId: any;
   public centerId: any;
+  currency: string = '';
 
   public currnetBalance = 0;
   public totalWithdrawBalance = 0;
@@ -40,7 +41,14 @@ export class OrganizationOverviewComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    const userData = JSON.parse(localStorage.getItem('userData') || '{}');
+  const countryId = userData?.countryId;
 
+  if (countryId === 1) {
+    this.currency = 'EGP';
+  } else if (countryId === 2) {
+    this.currency = 'SAR';
+  } 
     const itemId = this.route.snapshot.paramMap.get('id');
     if (itemId != null) {
       this.userId = itemId;
@@ -49,7 +57,7 @@ export class OrganizationOverviewComponent implements OnInit {
     }
     this.getItem(this.userId)
   }
-
+  
   /**
  * Handle Api's Calls
  */

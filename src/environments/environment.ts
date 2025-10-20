@@ -8,9 +8,9 @@ export const environment = {
     // apiUrl: 'https://www.iamin-edu.com/stage/api/v1', //staging
     // apiUrl: 'https://www.iamin-edu.com/develop/api/v1' //dev
     // apiUrl: 'http://localhost:5050/api/v1'
-    apiUrl: 'http://192.168.1.4:5050/api/v1',
+    apiUrl: 'http://192.168.1.4:5050/api/v1'
 
-    // apiUrl: 'https://test.iamin-edu.com/api/v1',
+    // apiUrl: 'https://test.iamin-edu.com/api/v1'
 
 };
 

@@ -9,7 +9,7 @@ import { Component, Input, OnInit } from '@angular/core';
 export class CourseOverviewComponent implements OnInit {
 
   @Input() course: any;
-currency: string = 'EGP';
+currency: string = '';
 
   constructor(
   ) { }
@@ -22,9 +22,7 @@ currency: string = 'EGP';
     this.currency = 'EGP';
   } else if (countryId === 2) {
     this.currency = 'SAR';
-  } else {
-    this.currency = 'EGP'; // افتراضي
-  }
+  } 
 }
 
 

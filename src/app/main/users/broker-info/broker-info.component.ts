@@ -27,7 +27,7 @@ export class BrokerInfoComponent implements OnInit {
   withdrawAmount: number | null = null;
 
   brokerId!: number; // 👈 هنخليها متغيرة مش ثابتة
-
+     currency: string = '';
   constructor(
     private brokerInfoService: BrokerinfoService,
     private route: ActivatedRoute, // 👈 نضيفها هنا
@@ -37,6 +37,14 @@ export class BrokerInfoComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    const userData = JSON.parse(localStorage.getItem('userData') || '{}');
+  const countryId = userData?.countryId;
+
+  if (countryId === 1) {
+    this.currency = 'EGP';
+  } else if (countryId === 2) {
+    this.currency = 'SAR';
+  } 
     // 👇 ناخد brokerId من الـ URL
     this.route.paramMap.subscribe(params => {
       const id = params.get('userId');

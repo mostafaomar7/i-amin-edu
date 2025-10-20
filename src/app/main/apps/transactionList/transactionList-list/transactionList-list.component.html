@@ -54,7 +54,7 @@
     <ngx-datatable-column name="{{ 'AMOUNT' | translate }}" prop="name">
         <ng-template let-row="row" let name="value" ngx-datatable-cell-template>
             <div class="d-flex align-items-center">
-                {{ row.amount }} {{ 'EGP' | translate }}
+                {{ row.amount }} {{ row.currency }}
             </div>
         </ng-template>
     </ngx-datatable-column>
@@ -69,7 +69,7 @@
     </ngx-datatable-column>
 
     <!-- Transaction Type -->
-    <ngx-datatable-column name="{{ 'TRANSACTION_TYPE' | translate }}" prop="transactionType">
+    <!-- <ngx-datatable-column name="{{ 'TRANSACTION_TYPE' | translate }}" prop="transactionType">
         <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
             <div *ngIf="row.transactionType == 0" class="badge badge-light-secondary">{{ 'NOT_SET' | translate }}</div>
             <div *ngIf="row.transactionType == 1" class="badge badge-light-primary">{{ 'CREDIT_CARD' | translate }}
@@ -84,7 +84,7 @@
             <div *ngIf="row.transactionType == 7" class="badge badge-light-primary">{{ 'COURSE_RESERVATION' | translate
                 }}</div>
         </ng-template>
-    </ngx-datatable-column>
+    </ngx-datatable-column> -->
 
     <!-- Created At -->
     <ngx-datatable-column name="{{ 'CREATED_AT' | translate }}" prop="createdAt">
