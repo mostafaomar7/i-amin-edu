@@ -1,0 +1,30 @@
+<div class="p-6 bg-gray-50 min-h-screen font-sans">
+  <h2 class="text-3xl font-bold text-gray-800 mb-6 text-center">
+    تحليل التقارير 
+  </h2>
+
+  <!-- حالة التحميل -->
+  <div *ngIf="loading" class="flex justify-center items-center h-64">
+    <div class="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-blue-500"></div>
+    <span class="ml-4 text-gray-600">جاري تحميل البيانات...</span>
+  </div>
+
+  <!-- حالة الخطأ -->
+  <div *ngIf="error" class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-lg relative" role="alert">
+    <strong class="font-bold">خطأ!</strong>
+    <span class="block sm:inline">{{ error }}</span>
+  </div>
+
+  <!-- عرض الشارتات -->
+  <div *ngIf="!loading && !error" class="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-6">
+    <div class="bg-white rounded-lg shadow-lg">
+      <h2 class=" font-semibold mb-4 p-3 text-gray-700 text-center">الإيرادات مقابل المدفوعات</h2>
+      <div #pieChartDiv class="chart-container"></div>
+    </div>
+
+    <div class="bg-white p-6 rounded-lg shadow-lg">
+      <h2 class="text-lg font-semibold mb-4 text-gray-700 text-center p-2">System Entity Overview</h2>
+      <div #barChartDiv class="chart-container"></div>
+    </div>
+  </div>
+</div>

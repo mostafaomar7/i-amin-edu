@@ -36,8 +36,12 @@ export class WalletService extends ApiService {
 }
 
 async getBrokerWallet(): Promise<ApiResult<any>> {
-    return this.getResponse(`broker/transactions/wallet/statistics`);
-  }
+  // 🔴 الكود القديم (مش هيتحذف، بس هيتعلق):
+  return this.getResponse(`broker/transactions/wallet/statistics`);
+
+  // ✅ الكود الجديد:
+  // return this.getResponse(`${this.baseRoute}/stats`);
+}
 
   async getSessionBookings(
   page: number = 1,

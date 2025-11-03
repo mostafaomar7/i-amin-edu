@@ -17,6 +17,8 @@ export class NewBrokerComponent implements OnInit {
   isLoading = false;
   selectedFile: any;
 
+  private baseUrl = 'https://www.iamin-edu.com/develop/api/v1/iam-in-backend-value/uploads'; // ✅ مسار الصور الأساسي
+
   constructor(
     private fb: FormBuilder,
     private brokerService: BrokerService,
@@ -30,46 +32,64 @@ export class NewBrokerComponent implements OnInit {
 
   ngOnInit(): void {
     this.brokerForm = this.fb.group({
-      id: [''], // ✅ حقل id
+      id: [''],
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],
       phone: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
-      password: [''], // في التعديل ممكن تخليه optional
+      password: [''],
       image: [''],
       isActive: [true, Validators.required],
       info: ['']
     });
 
-    // ✅ لو فيه id في الـ route يبقى تعديل
     const brokerId = this.route.snapshot.paramMap.get('id');
     if (brokerId) {
       this.loadBroker(+brokerId);
     }
   }
 
+  /** ✅ دالة لتكوين رابط الصورة الكامل */
+  private getFullImageUrl(imagePath: string): string | null {
+    if (!imagePath) return null;
+    return imagePath.startsWith('http')
+      ? imagePath
+      : `${this.baseUrl}/${imagePath}`;
+  }
+
+  /** ✅ تحميل بيانات البروكر */
   async loadBroker(id: number) {
   this.isLoading = true;
   await this.brokerService.getBrokerById(id).then(response => {
     this.isLoading = false;
-    if (response.status) {
-      const broker = response.innerData;
+    console.log('🟦 getBrokerById response:', response);
 
-      // نجهز object بنفس شكل الفورم
+    if (response.status) {
+      const broker = response.innerData || response.data;
+      const user = broker.user || broker.broker?.user || broker; // fallback
+
+      // 🧠 تأكد من استخراج الـ id الصحيح
+      const userId = user.id || broker.userId || broker.broker?.userId || id;
+
+      const imagePath = user.image || broker.broker?.image;
+      const fullImageUrl = this.getFullImageUrl(imagePath);
+
       const formData = {
-        id: broker.userId,                 // عشان الـ update يشتغل على userId
-        firstName: broker.user.firstName,
-        lastName: broker.user.lastName,
-        phone: broker.user.phone,
-        email: broker.user.email,
-        password: '',                      // سيبه فاضي في حالة التعديل
-        image: broker.user.image || broker.image,
-        isActive: broker.isActive,
-        info: broker.info
+        id: userId, // ✅ هنا المهم
+        firstName: user.firstName,
+        lastName: user.lastName,
+        phone: user.phone,
+        email: user.email,
+        password: '',
+        image: fullImageUrl,
+        isActive: broker.accountStatus === 2,
+        info: broker.broker?.info || ''
       };
 
+      console.log('🟩 Patched Form Data:', formData);
+
       this.brokerForm.patchValue(formData);
-      this.selectedFile = broker.user.image || broker.image; // لو عايز تعرض صورة حالية
+      this.selectedFile = fullImageUrl;
     } else {
       Swal.fire('FAILED', response.message, 'error');
     }
@@ -77,49 +97,67 @@ export class NewBrokerComponent implements OnInit {
 }
 
 
+  /** ✅ اختيار صورة جديدة */
   onFileSelected(event: any): void {
-    const imageFile = event.target.files[0];
-    const fileReader = new FileReader();
-    fileReader.onload = () => {
-      this.selectedFile = fileReader.result;
-    };
-    fileReader.readAsDataURL(imageFile);
-    this.brokerForm.get("image").setValue(imageFile.name);
-  }
+  const imageFile = event.target.files[0];
+  const fileReader = new FileReader();
 
+  fileReader.onload = () => {
+    this.selectedFile = fileReader.result;
+  };
+  fileReader.readAsDataURL(imageFile);
+
+  // ✅ ارفع الصورة فعليًا للسيرفر
+  this.brokerService.uploadImage(imageFile).then((response: any) => {
+    if (response.status) {
+      this.brokerForm.get('image')?.setValue(response.innerData.url);
+    } else {
+      console.error('Image upload failed:', response.message);
+    }
+  });
+}
+
+
+  /** ✅ حذف الصورة */
   deleteImage() {
-    this.brokerForm.get("image").setValue(null);
+    this.brokerForm.get('image')?.setValue(null);
     this.selectedFile = null;
   }
 
+  /** ✅ حفظ البيانات */
   async onSubmit() {
     if (this.brokerForm.valid) {
       this.isLoading = true;
 
-      if (this.brokerForm.get('id').value) {
-        // ✅ Update broker
-        await this.brokerService.updateBroker(this.brokerForm.value).then(response => {
+      const formValue = { ...this.brokerForm.value };
+      formValue.accountStatus = formValue.isActive ? 2 : 1;
+      delete formValue.isActive;
+
+      if (this.brokerForm.get('id')?.value) {
+        // Update broker
+        await this.brokerService.updateBroker(formValue).then(response => {
           this.isLoading = false;
+          console.log('🟩 updateBroker response:', response);
           if (response.status) {
             Swal.fire('SUCCESS', 'BROKER_UPDATED_SUCCESSFULLY', 'success');
-            this.router.navigate(['/users/broker-list']); 
+            this.router.navigate(['/users/broker-list']);
           } else {
             Swal.fire('FAILED', response.message, 'error');
           }
         });
       } else {
-        // ✅ Create broker
-        await this.brokerService.createBroker(this.brokerForm.value).then(response => {
+        // Create broker
+        await this.brokerService.createBroker(formValue).then(response => {
           this.isLoading = false;
+          console.log('🟩 createBroker response:', response);
           if (response.status) {
             Swal.fire('SUCCESS', 'BROKER_CREATED_SUCCESSFULLY', 'success');
-            this.router.navigate(['/users/broker-list']); 
+            this.router.navigate(['/users/broker-list']);
           } else {
             Swal.fire('FAILED', response.message, 'error');
           }
         });
       }
-
     } else {
       this.brokerForm.markAllAsTouched();
     }

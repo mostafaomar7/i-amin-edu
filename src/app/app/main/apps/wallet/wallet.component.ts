@@ -63,7 +63,7 @@ ngOnInit(): void {
     this.currency = ' SAR';
   }
 
-  if (this.userType === 2 || this.userType === 3) {
+  if (this.userType === 2 || this.userType === 3 ) {
     this.loadStats();
     this.loadTransactions();
     this.loadSessionBookings();
@@ -162,6 +162,47 @@ async getBrokerTransaction() {
   }
 }
 
+// async getBrokerTransaction() {
+//   try {
+//     const res = await this.walletService.getBrokerWallet();
+//     console.log('broker stats raw:', res);
+
+//     if (res.status) {
+//       const data = res.innerData; // لأن /stats غالبًا بيرجع innerData زي باقي الـ endpoints
+
+//       this.brokerStats = [
+//         {
+//           label: 'WALLET.SUCCESSFUL_TRANSACTIONS',
+//           value: data.successfulCount,
+//         },
+//         {
+//           label: 'WALLET.FAILED_TRANSACTIONS',
+//           value: data.failedCount,
+//         },
+//         {
+//           label: 'WALLET.COURSES_AMOUNT',
+//           value: data.coursesAmount.toFixed(2),
+//           currency: this.currency
+//         },
+//         {
+//           label: 'WALLET.SESSIONS_AMOUNT',
+//           value: data.sessionsAmount.toFixed(2),
+//           currency: this.currency
+//         },
+//         {
+//           label: 'WALLET.TOTAL',
+//           value: data.totalAmount.toFixed(2),
+//           currency: this.currency,
+//           isTotal: true
+//         }
+//       ];
+
+//       console.log('broker stats formatted:', this.brokerStats);
+//     }
+//   } catch (error) {
+//     console.error('Wallet Stats Error:', error);
+//   }
+// }
 
   onCourseSearchChange() {
     this.courseSearchSubject.next();

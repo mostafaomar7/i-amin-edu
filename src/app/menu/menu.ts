@@ -181,6 +181,31 @@ export const adminMenu: CoreMenu[] = [
             //     url: 'users/5/list',
             // },
         ]
+    },
+    {
+        id: 'application',
+        type: 'section',
+        title: 'Analysis',
+        translate: 'MENU.APP.analysis',
+        icon: 'package',
+        children: [
+            {
+                id: 'FinancialReport',
+                title: 'Financial Report',
+                translate: 'MENU.APP.FinancialReport',
+                type: 'item',
+                icon: 'credit-card',
+                url: 'apps/FinancialReport',
+            },
+            {
+                id: 'ReportAnalysis',
+                title: 'Report Analysis',
+                translate: 'MENU.APP.ReportAnalysis',
+                type: 'item',
+                icon: 'credit-card',
+                url: 'apps/reportanalysis',
+            }
+        ]
     }
 ];
 
@@ -323,7 +348,7 @@ export const organizationMenu: CoreMenu[] = [
         icon: 'life-buoy',
         type: 'item',
         role: ['organization'],
-        url: 'users/33/list',
+        url: 'apps/support/list/new',
     },
 
 ];
@@ -381,7 +406,7 @@ export const brokerMenu: CoreMenu[] = [
         icon: 'life-buoy',
         type: 'item',
         role: ['broker'],
-        url: 'users/33/list',
+        url: 'apps/support/list/new',
     },
 
 ];

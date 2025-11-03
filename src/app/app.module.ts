@@ -42,7 +42,7 @@ import { CurrencyComponent } from './main/apps/courselass/currency/currency.comp
         //NgBootstrap
         NgbModule,
         ToastrModule.forRoot(),
-
+        
         // Core modules
         CoreModule.forRoot(coreConfig),
         CoreCommonModule,

@@ -3,7 +3,9 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { LiveroomComponent } from './livesession/liveroom/liveroom.component';
 import { FormsModule } from '@angular/forms';
-
+import { FinancialReportComponent } from './financial-report/financial-report.component';
+import { NgxDatatableModule } from '@swimlane/ngx-datatable';
+import { ReportanalysisComponent } from './reportanalysis/reportanalysis.component';
 
 // routing
 const routes: Routes = [
@@ -59,14 +61,22 @@ const routes: Routes = [
     path: 'termsAndConditions',
     loadChildren: () => import('./termsAndConditions/termsAndConditions.module').then(m => m.TermsAndConditionsModule)
   },
+  {
+    path: 'FinancialReport', component : FinancialReportComponent
+  },
+  {
+    path: 'reportanalysis', component : ReportanalysisComponent
+  }
 ];
 
 @NgModule({
   declarations: [
     LiveroomComponent,
+    FinancialReportComponent,
+    ReportanalysisComponent,
             
 
   ],
-  imports: [CommonModule, RouterModule.forChild(routes),FormsModule]
+  imports: [CommonModule, RouterModule.forChild(routes),FormsModule , NgxDatatableModule]
 })
 export class AppsModule { }

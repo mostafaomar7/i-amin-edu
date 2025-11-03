@@ -1,0 +1,288 @@
+<!-- financial-report.component.html -->
+<div class="container mt-4">
+    <div class="card">
+                <h3 class="card-header rtl">التقارير المــالــيــة</h3>
+    </div>
+  <div class="row justify-content-center">
+    <div class="col-md-4 text-center">
+      <div class="card shadow-sm border-0 p-3 rounded-4">
+        <label class="form-label fw-bold text-muted mb-2">اختر الدولة</label>
+
+        <div class="input-group">
+
+          <select
+            class="form-select border-start-0 border-none shadow-none w-50 m-auto"
+            [value]="selectedCurrency"
+            (change)="onCurrencyChange($event)"
+          >
+            <option *ngFor="let c of currencies" [value]="c.value">
+              {{ c.label }}
+            </option>
+          </select>
+        </div>
+      </div>
+    </div>
+  <ng-container *ngIf="!isLoading; else loading">
+    <div class="row justify-content-center">
+
+      <div class="col-md-4 mb-3">
+        <div class="card text-center shadow-sm p-3">
+          <h6 class="text-muted">إجمالي أرباح المدربين</h6>
+          <h3 class="text-primary">
+            {{ financialData?.totalInstructorEarnings | number:'1.2-2' }} {{ selectedCurrency }}
+          </h3>
+        </div>
+      </div>
+
+      <div class="col-md-4 mb-3">
+        <div class="card text-center shadow-sm p-3">
+          <h6 class="text-muted">إجمالي أرباح المنظمات</h6>
+          <h3 class="text-primary">
+            {{ financialData?.totalOrganizationEarnings | number:'1.2-2' }} {{ selectedCurrency }}
+          </h3>
+        </div>
+      </div>
+
+      <div class="col-md-4 mb-3">
+        <div class="card text-center shadow-sm p-3">
+          <h6 class="text-muted">إجمالي أرباح الوسطاء</h6>
+          <h3 class="text-primary">
+            {{ financialData?.totalBrokerEarnings | number:'1.2-2' }} {{ selectedCurrency }}
+          </h3>
+        </div>
+      </div>
+
+      <div class="col-md-6 mb-3">
+        <div class="card text-center shadow-sm p-3">
+          <h6 class="text-muted">إجمالي أرباحك من الكورسات</h6>
+          <h3 class="text-primary">
+            {{ financialData?.totalAdminCourseProfit | number:'1.2-2' }} {{ selectedCurrency }}
+          </h3>
+        </div>
+      </div>
+
+      <div class="col-md-6 mb-3">
+        <div class="card text-center shadow-sm p-3">
+          <h6 class="text-muted">إجمالي أرباحك من السيشنات</h6>
+          <h3 class="text-primary">
+            {{ financialData?.totalAdminSessionProfit | number:'1.2-2' }} {{ selectedCurrency }}
+          </h3>
+        </div>
+      </div>
+            <div class="col-md-4 mb-3">
+        <div class="card text-center shadow-sm p-3">
+          <h6 class="text-muted">إجمالي ربح الإدارة</h6>
+          <h3 class="text-success">
+            {{ financialData?.totalAdminProfit | number:'1.2-2' }} {{ selectedCurrency }}
+          </h3>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+
+  <ng-template #loading>
+    <div class="text-center mt-5">
+      <div class="spinner-border text-primary" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+    </div>
+  </ng-template>
+</div>
+<div class="content-wrapper container-xxl p-0">
+  <div class="content-body">
+    <section>
+      <div class="card">
+        <h4 class="card-header">قائمة المعاملات المالية</h4>
+
+        <div *ngIf="isLoading" class="text-center p-3">
+          <div class="spinner-border text-primary" role="status"></div>
+        </div>
+
+        <div *ngIf="!isLoading" class="card-body">
+          <div class="d-flex justify-content-around align-items-center gap-2 mb-3 flex-wrap">
+  <!-- Search -->
+  <input
+  
+    type="search"
+    class="form-control w-auto rtl"
+    style="min-width: 200px;"
+    placeholder="بحث..."
+    [(ngModel)]="searchValue"
+    (input)="filterUpdate()"
+  />
+
+  <!-- 🆕 فلتر نوع المستخدم -->
+  <select
+    class="form-select w-auto"
+    style="min-width: 160px;"
+    [(ngModel)]="selectedUserType"
+    (change)="applyFilters()"
+  >
+    <option value="">كل المستخدمين</option>
+    <option value="1">Admin</option>
+    <option value="2">Instructor</option>
+    <option value="3">Organization</option>
+    <option value="4">Student</option>
+    <option value="5">Broker</option>
+  </select>
+
+  <!-- 🆕 فلتر الحالة -->
+  <select
+  class="form-select w-auto"
+  style="min-width: 160px;"
+  [(ngModel)]="selectedCurrency"
+  (change)="applyFilters()"
+>
+  <option value="">كل المعاملات</option>
+  <option value="EGP">المعاملات المصرية</option>
+  <option value="SAR">المعاملات السعودية</option>
+</select>
+<!-- 🗓️ فلتر التاريخ -->
+<!-- 🗓️ فلتر التاريخ -->
+<div class="d-flex align-items-center gap-2 flex-wrap">
+  <select
+    class="form-select w-auto"
+    style="min-width: 180px;"
+    [(ngModel)]="selectedDateFilter"
+    (change)="applyFilters()"
+  >
+    <option value="">كل الفترات</option>
+    <option value="today">اليوم</option>
+    <option value="last7days">آخر 7 أيام</option>
+    <option value="lastMonth">آخر شهر</option>
+    <option value="lastYear">آخر سنة</option>
+    <option value="custom">تاريخ مخصص</option>
+  </select>
+
+  <!-- 🆕 لما المستخدم يختار custom يظهر التقويم -->
+  <input
+    *ngIf="selectedDateFilter === 'custom'"
+    type="date"
+    class="form-control w-auto"
+    [(ngModel)]="customDate"
+    (change)="applyFilters()"
+  />
+</div>
+
+
+</div>
+
+
+          <ngx-datatable
+            class="bootstrap core-bootstrap"
+            [rows]="rows"
+            [columnMode]="ColumnMode.force"
+            [headerHeight]="50"
+            [footerHeight]="50"
+            [rowHeight]="60"
+            [limit]="25"
+          >
+            <!-- ID -->
+            <ngx-datatable-column name="#" [width]="40">
+              <ng-template let-rowIndex="rowIndex" ngx-datatable-cell-template>
+                {{ rowIndex + 1 }}
+              </ng-template>
+            </ngx-datatable-column>
+
+            <!-- Date -->
+            <ngx-datatable-column name="تاريخ العملية" prop="createdDate">
+              <ng-template let-row="row" ngx-datatable-cell-template>
+                {{ row.createdDate | date: 'medium' }}
+              </ng-template>
+            </ngx-datatable-column>
+
+            <!-- User -->
+            <ngx-datatable-column name="المستخدم" prop="user">
+              <ng-template let-row="row" ngx-datatable-cell-template>
+                {{ row.user?.firstName }} {{ row.user?.lastName }}
+                <br />
+                <small class="text-muted">{{ row.user?.email }}</small>
+              </ng-template>
+            </ngx-datatable-column>
+
+            <!-- Amount -->
+            <ngx-datatable-column name="المبلغ" prop="amount">
+              <ng-template let-row="row" ngx-datatable-cell-template>
+                <span [ngClass]="{'text-success': row.amount > 0, 'text-danger': row.amount < 0}">
+                  {{ row.amount | number: '1.2-2' }} {{ row.currency }}
+                </span>
+              </ng-template>
+            </ngx-datatable-column>
+
+            <!-- Type -->
+<!-- User Type -->
+<ngx-datatable-column name="نوع المستخدم" prop="user.userType">
+  <ng-template let-row="row" ngx-datatable-cell-template>
+    <span
+      class="badge"
+      [ngClass]="{
+        'badge-light-primary': row.user?.userType === 1,
+        'badge-light-info': row.user?.userType === 2,
+        'badge-light-warning': row.user?.userType === 3,
+        'badge-light-success': row.user?.userType === 4,
+        'badge-light-secondary': row.user?.userType === 5
+      }"
+    >
+      {{
+        row.user?.userType === 1
+          ? 'Admin'
+          : row.user?.userType === 2
+          ? 'Instructor'
+          : row.user?.userType === 3
+          ? 'Organization'
+          : row.user?.userType === 4
+          ? 'Student'
+          : row.user?.userType === 5
+          ? 'Broker'
+          : 'غير معروف'
+      }}
+    </span>
+  </ng-template>
+</ngx-datatable-column>
+
+            <!-- Status -->
+<!-- Transaction Status -->
+<ngx-datatable-column name="الحالة" prop="transactinStatus">
+  <ng-template let-row="row" ngx-datatable-cell-template>
+    <span
+      class="badge"
+      [ngClass]="{
+        'badge-light-warning': row.transactinStatus === 1,
+        'badge-light-success': row.transactinStatus === 2,
+        'badge-light-danger': row.transactinStatus === 3
+      }"
+    >
+      {{
+        row.transactinStatus === 1
+          ? 'قيد التنفيذ'
+          : row.transactinStatus === 2
+          ? 'ناجحة'
+          : row.transactinStatus === 3
+          ? 'غير ناجحة'
+          : 'غير معروف'
+      }}
+    </span>
+  </ng-template>
+</ngx-datatable-column>
+<ngx-datatable-column name="نوع العملية" prop="transactionType">
+  <ng-template let-row="row" ngx-datatable-cell-template>
+    <span
+      class="badge"
+      [ngClass]="{
+        'badge-light-success': [14, 15, 18, 19].includes(row.transactionType),
+        'badge-light-warning': row.transactionType === 13,
+        'badge-light-info': [16, 20].includes(row.transactionType),
+        'badge-light-secondary': [17, 21, 26].includes(row.transactionType)
+      }"
+    >
+      {{ getTransactionTypeText(row.transactionType) }}
+    </span>
+  </ng-template>
+</ngx-datatable-column>
+
+          </ngx-datatable>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>

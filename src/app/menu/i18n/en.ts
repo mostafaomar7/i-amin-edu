@@ -34,7 +34,9 @@ export const locale = {
                 Wallet : "Wallet Transaction",
                 Live : "Consulting Manage",
                 analysis : "Analysis",
-                currency : "Currency Transaction"
+                currency : "Currency Transaction",
+                FinancialReport : "Financial Report",
+                ReportAnalysis : "Report Analysis"
             },
             OTHERS: {
                 SUPPORT: 'Support & Help'

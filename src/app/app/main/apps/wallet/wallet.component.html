@@ -40,7 +40,7 @@
 </div>
 
 <div *ngIf="!isCourseLoading">
-  <div class="d-flex justify-content-between mb-2">
+  <div class="d-flex justify-content-between mb-2" *ngIf="userType !== 5">
     <div>
       <label>
         {{ 'WALLET.SHOW' | translate }}
@@ -63,11 +63,11 @@
     </div>
   </div>
 
-  <h3 style="text-align: left; margin-bottom: 10px;">
+  <h3 style="text-align: left; margin-bottom: 10px;" *ngIf="userType !== 5">
     {{ 'WALLET.COURSE_TRANSACTION_WALLET' | translate }}
   </h3>
 
-  <ngx-datatable
+  <ngx-datatable *ngIf="userType !== 5"
     class="bootstrap core-bootstrap"
     [rows]="rows"
     [columnMode]="ColumnMode.force"
@@ -129,7 +129,7 @@
 </div>
 
 <div *ngIf="!isSessionLoading" style="margin-top: 40px;">
-  <div class="d-flex justify-content-between mb-2">
+  <div class="d-flex justify-content-between mb-2" *ngIf="userType !== 5">
     <div>
       <label>
         {{ 'WALLET.SHOW' | translate }}
@@ -152,11 +152,11 @@
     </div>
   </div>
 
-  <h3 style="text-align: left;">
+  <h3 style="text-align: left;" *ngIf="userType !== 5">
     {{ 'WALLET.SESSION_BOOKING_WALLET' | translate }}
   </h3>
 
-  <ngx-datatable
+  <ngx-datatable *ngIf="userType !== 5"
     class="bootstrap core-bootstrap"
     [rows]="sessionRows"
     [columnMode]="ColumnMode.force"

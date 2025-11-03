@@ -36,6 +36,17 @@ getBrokerById(id: number) {
   const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
   return this.http.get<any>(`${this.api_url}/broker/${id}`, { headers }).toPromise();
 }
+uploadImage(file: File) {
+  const token = localStorage.getItem('authToken');
+  const headers = new HttpHeaders({
+    'Authorization': `Bearer ${token}`
+  });
+
+  const formData = new FormData();
+  formData.append('file', file, file.name);
+
+  return this.http.post<any>(`${this.api_url}/upload-media`, formData, { headers }).toPromise();
+}
 
 
 }

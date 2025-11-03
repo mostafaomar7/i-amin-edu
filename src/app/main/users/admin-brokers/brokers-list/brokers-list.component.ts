@@ -52,16 +52,21 @@ constructor(
   }
 
   async getRows() {
-    await this._brokerService.getDataTableRows().then(response => {
-      this.isLoading = false;
-      if (response.status) {
-        this.rows = response.innerData;
-        this.tempData = this.rows;
-      } else {
-        this.showAlert(response.message, false);
-      }
-    });
-  }
+  await this._brokerService.getDataTableRows().then(response => {
+    this.isLoading = false;
+    if (response.status) {
+      // 🔽 هنا نضيف mapping جديد
+      this.rows = response.innerData.map(broker => ({
+        ...broker,
+        isActive: broker.accountStatus === 2 || broker.user?.accountStatus === 2
+      }));
+      this.tempData = this.rows;
+    } else {
+      this.showAlert(response.message, false);
+    }
+  });
+}
+
 
   filterUpdate(event) {
     const val = event.target.value.toLowerCase();
