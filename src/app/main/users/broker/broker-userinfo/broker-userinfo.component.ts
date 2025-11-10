@@ -27,15 +27,25 @@ export class BrokerUserinfoComponent implements OnInit {
     this.userId = +this.route.snapshot.paramMap.get('id')!;
 
     this.userService.getUserById(this.userId).subscribe({
-      next: (res) => {
-        if (res.status && res.data) {
-          this.userData = res.data;
-        }
-      },
-      error: (err) => {
-        console.error('Error fetching user details', err);
+
+  next: (res) => {
+    console.log('User Data:', res.data);
+    if (res.status && res.data) {
+      const user = res.data;
+
+      // لو الصورة موجودة ولكن بدون المسار الكامل
+      if (user.image && !user.image.startsWith('http')) {
+        user.image = `https://www.iamin-edu.com/develop/api/v1/uploads/${user.image}`;
       }
-    });
+
+      this.userData = user;
+    }
+  },
+  error: (err) => {
+    console.error('Error fetching user details', err);
+  }
+});
+
   }
   mapUserType(type: any): string {
   if (type === 2 || type === '2') return 'Organization';

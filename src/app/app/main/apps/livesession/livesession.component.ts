@@ -39,20 +39,24 @@ export class LivesessionComponent implements OnInit {
   public userType: any;
 
   constructor(
-    private fb: FormBuilder,
-    private sessionService: LivesessionService,
-    private translate: TranslateService,
-    private _instructorsListService: InstructorsListService,
-    private _permissionListService: PermissionListService,
-  ) {
-    this.translate.setTranslation('en', en, true);
-    this.translate.setTranslation('ar', ar, true);
-    this.translate.setDefaultLang('en');
-    this.translate.use('en');
+  private fb: FormBuilder,
+  private sessionService: LivesessionService,
+  private translate: TranslateService,
+  private _instructorsListService: InstructorsListService,
+  private _permissionListService: PermissionListService,
+) {
+  this.translate.setTranslation('en', en, true);
+  this.translate.setTranslation('ar', ar, true);
 
-    this.translate.onLangChange.subscribe((event: LangChangeEvent) => {
-    });
-  }
+  // شوف اللغة المخزنة في localStorage أو خذ اللغة الحالية من translate
+  const currentLang = localStorage.getItem('language') || this.translate.currentLang || 'en';
+
+  this.translate.setDefaultLang(currentLang);
+  this.translate.use(currentLang);
+
+  this.translate.onLangChange.subscribe((event: LangChangeEvent) => {});
+}
+
 
   ngOnInit(): void {
     this.userType = Number(localStorage.getItem('userType'));

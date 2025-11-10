@@ -17,7 +17,7 @@ export class NewBrokerComponent implements OnInit {
   isLoading = false;
   selectedFile: any;
 
-  private baseUrl = 'https://www.iamin-edu.com/develop/api/v1/iam-in-backend-value/uploads'; // ✅ مسار الصور الأساسي
+  private baseUrl = 'https://www.iamin-edu.com/develop/api/v1/uploads'; // ✅ مسار الصور الأساسي
 
   constructor(
     private fb: FormBuilder,
@@ -31,23 +31,67 @@ export class NewBrokerComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.brokerForm = this.fb.group({
-      id: [''],
-      firstName: ['', Validators.required],
-      lastName: ['', Validators.required],
-      phone: ['', Validators.required],
-      email: ['', [Validators.required, Validators.email]],
-      password: [''],
-      image: [''],
-      isActive: [true, Validators.required],
-      info: ['']
-    });
+  this.brokerForm = this.fb.group({
+    id: [''],
+    firstName: ['', Validators.required],
+    lastName: ['', Validators.required],
+    phone: ['', Validators.required],
+    email: ['', [Validators.required, Validators.email]],
+    password: ['', Validators.required],
+    image: ['', Validators.required], // ✅ الصورة مطلوبة
+    isActive: [true, Validators.required],
+    info: ['', Validators.required]
+  });
 
-    const brokerId = this.route.snapshot.paramMap.get('id');
-    if (brokerId) {
-      this.loadBroker(+brokerId);
-    }
+  const brokerId = this.route.snapshot.paramMap.get('id');
+  if (brokerId) {
+    this.loadBroker(+brokerId);
   }
+}
+
+async loadBroker(id: number) {
+  this.isLoading = true;
+  await this.brokerService.getBrokerById(id).then(response => {
+    this.isLoading = false;
+
+    if (response.status) {
+      const broker = response.innerData || response.data;
+      const user = broker.user || broker.broker?.user || broker;
+      const userId = user.id || broker.userId || broker.broker?.userId || id;
+
+      const imagePath = user.image || broker.broker?.image;
+      const fullImageUrl = this.getFullImageUrl(imagePath);
+
+      this.brokerForm.patchValue({
+        id: userId,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        phone: user.phone,
+        email: user.email,
+        password: '',
+        image: fullImageUrl,
+        isActive: broker.accountStatus === 2,
+        info: broker.broker?.info || ''
+      });
+
+      this.selectedFile = fullImageUrl;
+
+      // 🟢 لو تحديث: الباسورد مش مطلوب
+      this.brokerForm.get('password')?.clearValidators();
+      this.brokerForm.get('password')?.updateValueAndValidity();
+
+      // 🟢 لو الصورة موجودة بالفعل → مش مطلوب يرفع جديدة
+      if (fullImageUrl) {
+        this.brokerForm.get('image')?.clearValidators();
+        this.brokerForm.get('image')?.updateValueAndValidity();
+      }
+
+    } else {
+      Swal.fire('FAILED', response.message, 'error');
+    }
+  });
+}
+
 
   /** ✅ دالة لتكوين رابط الصورة الكامل */
   private getFullImageUrl(imagePath: string): string | null {
@@ -58,44 +102,7 @@ export class NewBrokerComponent implements OnInit {
   }
 
   /** ✅ تحميل بيانات البروكر */
-  async loadBroker(id: number) {
-  this.isLoading = true;
-  await this.brokerService.getBrokerById(id).then(response => {
-    this.isLoading = false;
-    console.log('🟦 getBrokerById response:', response);
-
-    if (response.status) {
-      const broker = response.innerData || response.data;
-      const user = broker.user || broker.broker?.user || broker; // fallback
-
-      // 🧠 تأكد من استخراج الـ id الصحيح
-      const userId = user.id || broker.userId || broker.broker?.userId || id;
-
-      const imagePath = user.image || broker.broker?.image;
-      const fullImageUrl = this.getFullImageUrl(imagePath);
-
-      const formData = {
-        id: userId, // ✅ هنا المهم
-        firstName: user.firstName,
-        lastName: user.lastName,
-        phone: user.phone,
-        email: user.email,
-        password: '',
-        image: fullImageUrl,
-        isActive: broker.accountStatus === 2,
-        info: broker.broker?.info || ''
-      };
-
-      console.log('🟩 Patched Form Data:', formData);
-
-      this.brokerForm.patchValue(formData);
-      this.selectedFile = fullImageUrl;
-    } else {
-      Swal.fire('FAILED', response.message, 'error');
-    }
-  });
-}
-
+  
 
   /** ✅ اختيار صورة جديدة */
   onFileSelected(event: any): void {
