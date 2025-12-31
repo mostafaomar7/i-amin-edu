@@ -48,6 +48,6 @@ export const locale = {
     PHONE: "الهاتف",
     EDUCATIONAL_GATES: "البوابات التعليمية",
     EXPERIENCE_ARABIC: "الخبرة (بالعربية)",
-    EXPERIENCE_ENGLISH: "الخبرة (بالإنجليزية)"
+    EXPERIENCE_ENGLISH: "الخبرة (بالإنجليزية)",
   }
 };

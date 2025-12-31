@@ -66,7 +66,22 @@ export const locale = {
       INSTRUCTORS: 'المدربون',
       PAYOUT_REQUESTS: 'طلبات الدفع',
       LOADING: 'جاري التحميل...',
-      SESSIONS : 'الجلسات'
+      SESSIONS : 'الجلسات',
+          CoursePurchases : 'مشتريات الدورة',
+          Student : 'طالب',
+          courseName : 'اسم الكورس',
+          Amount : 'الكمية',
+          Date : 'تاريخ',
+          Nodatatodisplay : 'لا توجد بيانات لعرضها',
+          Nocoursepurchasesfound : 'لم يتم العثور على أي مشتريات دورات.',
+          SessionPurchases : 'مشتريات الجلسة' ,
+          Nosessionpurchasesfound : 'لم يتم العثور على أي عمليات شراء جلسات' ,
+          sessionTitle : 'عنوان الجلسة' ,
+          Noinstructorsfound : 'لا يوجد مدرسيين',
+          Name : 'اسم' ,
+          BankInfo : 'معلومات البنك' ,
+          Approve : 'تأكيد',
+          AddRequest : 'إضافة طلب',
     }
   }
 };

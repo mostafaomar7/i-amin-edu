@@ -26,7 +26,7 @@
             <a ngbNavLink>{{ 'ORGANIZATION.COURSES' | translate }}</a>
             <ng-template ngbNavContent>
               <div class="p-3 bg-white rounded shadow-sm mt-3">
-                <h4 class="mb-3">Course Purchases</h4>
+                <h4 class="mb-3">{{ 'ORGANIZATION.CoursePurchases' | translate }}</h4>
 
                 <ngx-datatable
                   class="bootstrap"
@@ -38,22 +38,22 @@
                   [limit]="10"
                 >
                   <ngx-datatable-column
-                    name="Student"
+                    name="{{ 'ORGANIZATION.Student' | translate }}"
                     prop="studentName"
                   ></ngx-datatable-column>
 
                   <ngx-datatable-column
-                    name="Course Name"
+                    name="{{ 'ORGANIZATION.courseName' | translate }}"
                     prop="courseName"
                   ></ngx-datatable-column>
 
-                  <ngx-datatable-column name="Amount">
+                  <ngx-datatable-column name="{{ 'ORGANIZATION.Amount' | translate }}">
                     <ng-template let-row="row" ngx-datatable-cell-template>
                       {{ row.amount }} {{ row.currency }}
                     </ng-template>
                   </ngx-datatable-column>
 
-                  <ngx-datatable-column name="Date">
+                  <ngx-datatable-column name="{{ 'ORGANIZATION.Date' | translate }}">
                     <ng-template let-row="row" ngx-datatable-cell-template>
                       {{ row.date | date: 'medium' }}
                     </ng-template>
@@ -64,7 +64,7 @@
                   *ngIf="!courses?.length"
                   class="text-center mt-3 text-muted"
                 >
-                  No course purchases found.
+                  {{ 'ORGANIZATION.Nocoursepurchasesfound' | translate }}
                 </p>
               </div>
             </ng-template>
@@ -75,7 +75,7 @@
             <a ngbNavLink>{{ 'ORGANIZATION.SESSIONS' | translate }}</a>
             <ng-template ngbNavContent>
               <div class="p-3 bg-white rounded shadow-sm mt-3">
-                <h4 class="mb-3">Session Purchases</h4>
+                <h4 class="mb-3">{{ 'ORGANIZATION.SessionPurchases' | translate }}</h4>
 
                 <ngx-datatable
                   class="bootstrap"
@@ -87,22 +87,22 @@
                   [limit]="10"
                 >
                   <ngx-datatable-column
-                    name="Session Title"
+                    name="{{ 'ORGANIZATION.sessionTitle' | translate }}"
                     prop="sessionTitle"
                   ></ngx-datatable-column>
 
                   <ngx-datatable-column
-                    name="Student"
+                    name="{{ 'ORGANIZATION.Student' | translate }}"
                     prop="studentName"
                   ></ngx-datatable-column>
 
-                  <ngx-datatable-column name="Amount">
+                  <ngx-datatable-column name="{{ 'ORGANIZATION.Amount' | translate }}">
                     <ng-template let-row="row" ngx-datatable-cell-template>
                       {{ row.amount }} {{ row.currency }}
                     </ng-template>
                   </ngx-datatable-column>
 
-                  <ngx-datatable-column name="Date">
+                  <ngx-datatable-column name="{{ 'ORGANIZATION.Date' | translate }}">
                     <ng-template let-row="row" ngx-datatable-cell-template>
                       {{ row.date | date: 'medium' }}
                     </ng-template>
@@ -113,7 +113,7 @@
                   *ngIf="!sessions?.length"
                   class="text-center mt-3 text-muted"
                 >
-                  No session purchases found.
+                  {{ 'ORGANIZATION.Nosessionpurchasesfound' | translate }}
                 </p>
               </div>
             </ng-template>
@@ -124,7 +124,7 @@
             <a ngbNavLink>{{ 'ORGANIZATION.INSTRUCTORS' | translate }}</a>
             <ng-template ngbNavContent>
               <div class="p-3 bg-white rounded shadow-sm mt-3">
-                <h4 class="mb-3">Instructors</h4>
+                <h4 class="mb-3">{{ 'ORGANIZATION.INSTRUCTORS' | translate }}</h4>
 
                 <ngx-datatable
                   class="bootstrap"
@@ -136,21 +136,21 @@
                   [limit]="10"
                 >
                   <ngx-datatable-column
-                    name="Name"
+                    name="{{ 'ORGANIZATION.Name' | translate }}"
                     prop="name"
                   ></ngx-datatable-column>
 
                   <ngx-datatable-column
-                    name="Phone"
+                    name="{{ 'PHONE_NUMBER' | translate }}"
                     prop="phone"
                   ></ngx-datatable-column>
 
                   <ngx-datatable-column
-                    name="Subject"
+                    name="{{ 'EDUCATIONAL_SUBJECT' | translate }}"
                     prop="subject"
                   ></ngx-datatable-column>
 
-                  <ngx-datatable-column name="Image">
+                  <ngx-datatable-column name="{{ 'IMAGE' | translate }}">
                     <ng-template let-row="row" ngx-datatable-cell-template>
                       <img
                         [src]="row.image || 'assets/images/placeholder.jpg'"
@@ -167,7 +167,7 @@
                   *ngIf="!instructors?.length"
                   class="text-center mt-3 text-muted"
                 >
-                  No instructors found.
+                  {{ 'ORGANIZATION.Noinstructorsfound' | translate }}
                 </p>
               </div>
             </ng-template>
@@ -181,7 +181,7 @@
                 <div
                   class="row d-flex justify-content-between align-items-center mb-3"
                 >
-                  <h4 class="mb-0 mx-2">Payout Requests</h4>
+                  <h4 class="mb-0 mx-2">{{ 'ORGANIZATION.PAYOUT_REQUESTS' | translate }}</h4>
                   <button
                     class="btn btn-primary mx-2"
                     (click)="toggleRequestInput()"
@@ -219,7 +219,7 @@
                   [limit]="10"
                 >
                   <ngx-datatable-column
-                    name="Amount"
+                    name="{{ 'ORGANIZATION.Amount' | translate }}"
                     prop="amount"
                     [width]="120"
                   >
@@ -229,7 +229,7 @@
                   </ngx-datatable-column>
 
                   <ngx-datatable-column
-                    name="Status"
+                    name="{{ 'STATUS' | translate }}"
                     prop="status"
                     [width]="120"
                   >
@@ -246,7 +246,7 @@
                     </ng-template>
                   </ngx-datatable-column>
 
-                  <ngx-datatable-column name="Bank Info" [width]="300">
+                  <ngx-datatable-column name="{{ 'ORGANIZATION.BankInfo' | translate }}" [width]="300">
                     <ng-template let-row="row" ngx-datatable-cell-template>
                       <div>
                         <strong>{{ row.bankAccountName }}</strong><br />
@@ -256,7 +256,7 @@
                   </ngx-datatable-column>
 
                   <ngx-datatable-column
-                    name="Date"
+                    name="{{ 'ORGANIZATION.Date' | translate }}"
                     prop="date"
                     [width]="200"
                   >
@@ -265,14 +265,14 @@
                     </ng-template>
                   </ngx-datatable-column>
 
-                  <ngx-datatable-column name="Actions" [width]="200">
+                  <ngx-datatable-column name="{{ 'ACTIONS' | translate }}" [width]="200">
                     <ng-template let-row="row" ngx-datatable-cell-template>
                       <button
                         *ngIf="row.status === 'Pending'"
                         class="btn btn-sm btn-outline-success"
                         (click)="activateWithdraw(row)"
                       >
-                        Approve
+                        {{ 'ORGANIZATION.Approve' | translate }}
                       </button>
                       <button
   *ngIf="row.status?.toLowerCase() === 'rejected'"

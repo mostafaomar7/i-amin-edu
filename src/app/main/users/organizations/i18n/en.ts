@@ -34,7 +34,8 @@ export const locale = {
     DELETE_SUCCESS: 'Your file has been deleted.',
     DELETE_CONFIRM: 'Yes, delete it!',
     COMMISSION: 'Commission',
-
+    PHONE_NUMBER: 'Phone Number',
+    EDUCATIONAL_SUBJECT: "Eductional Subject",
     STATISTICS: {
       CURRENT_BALANCE: 'Current Balance',
       TOTAL_WITHDRAWN: 'Total Withdrew Amount',
@@ -63,7 +64,22 @@ export const locale = {
       INSTRUCTORS: 'Instructors',
       PAYOUT_REQUESTS: 'Payout Requests',
       LOADING: 'Loading...',
-      SESSIONS : 'Sessions'
+      SESSIONS : 'Sessions',
+          CoursePurchases : 'Course Purchases',
+          Student : 'Student',
+          courseName : 'course Name',
+          Amount : 'Amount',
+          Date : 'Date',
+          Nodatatodisplay : 'No data to display',
+          Nocoursepurchasesfound : 'No course purchases found.',
+          SessionPurchases : 'Session Purchases' ,
+          Nosessionpurchasesfound : 'No session purchases found' ,
+          sessionTitle : 'sessionTitle' ,
+          Noinstructorsfound : 'No instructors found',
+          Name : 'Name' ,
+          BankInfo : 'Bank Info',
+          Approve : 'Approve' ,
+          AddRequest : 'Add Request',
     }
   }
 };
